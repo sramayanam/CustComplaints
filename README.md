@@ -158,25 +158,125 @@ python -m kafka.register_schemas --list
 ## Running the Producer
 
 ```bash
-python -m kafka.producer
+source .venv/bin/activate
+
+python -m kafka.producer                   # seed data only (default)
+python -m kafka.producer --dataset seed    # 20 passengers / 13 flights / 20 cases / 28 complaints
+python -m kafka.producer --dataset test    # 3 / 2 / 4 / 5 new test records (passengers 21-23)
+python -m kafka.producer --dataset all     # seed + test combined (23 / 15 / 24 / 33)
 ```
 
-Produces the full seed dataset in FK-safe order:
+Records are sent in FK-safe order (`passengers → flights → cases → complaints`) with a
+`flush()` after each table. Each message carries a `schema-id` Kafka header.
 
-| Topic | Records |
-|---|---|
-| `custcomplaints.passengers` | 20 |
-| `custcomplaints.flights` | 13 |
-| `custcomplaints.cases` | 20 |
-| `custcomplaints.complaints` | 28 |
+**Note:** always run as a module (`python -m kafka.producer`), not directly
+(`python kafka/producer.py`) — the package uses relative imports.
 
-Each message carries a `schema-id` Kafka header (32-char hex UUID) that consumers can use to retrieve the schema from the registry without inspecting the topic name.
+### Test batch relationship map
 
-To produce your own data, import `produce_dataset` directly:
+```
+Passenger 21 (Zara Thompson, AU)   → Case 21 → ZA1414 SIN→SYD → Complaints 29, 30
+Passenger 22 (Hiroshi Yamamoto, JP) → Case 22 → ZA1414 SIN→SYD → Complaint 31
+Passenger 23 (Lucia Ferreira, PT)   → Case 23 → ZA1515 SYD→LAX → Complaint 32
+Passenger 21 (again)                → Case 24 → ZA1515 SYD→LAX → Complaint 33
+```
 
-```python
-from kafka.producer import produce_dataset
-produce_dataset(passengers=[...], flights=[...], cases=[...], complaints=[...])
+---
+
+## Forwarding to Fabric (Event Hubs → Fabric Eventstream)
+
+Run one bridge process per topic. Use `--max-idle-secs 30` to exit automatically once
+the queue drains (useful after a one-off produce run):
+
+```bash
+source .venv/bin/activate
+
+python -m kafka.fabric_consumer --topic custcomplaints.passengers  --max-idle-secs 30 &
+python -m kafka.fabric_consumer --topic custcomplaints.flights     --max-idle-secs 30 &
+python -m kafka.fabric_consumer --topic custcomplaints.cases       --max-idle-secs 30 &
+python -m kafka.fabric_consumer --topic custcomplaints.complaints  --max-idle-secs 30 &
+wait
+```
+
+All four bridges run in parallel. Source offsets are committed **after** Fabric flush —
+at-least-once delivery, with `event_id` handling duplicates at the Fabric side.
+
+---
+
+## Fabric Eventhouse KQL Setup
+
+### 1 — Add `event_id` column to each table
+
+```kql
+.alter-merge table passengers (event_id: string)
+.alter-merge table flights    (event_id: string)
+.alter-merge table cases      (event_id: string)
+.alter-merge table complaints (event_id: string)
+```
+
+### 2 — Create ingestion mappings
+
+`event_id` is at the envelope root (`$.event_id`); all data columns are under `$.payload.*`.
+Example for `passengers` — repeat for the other three tables with their own column lists:
+
+```kql
+.create-or-alter table passengers ingestion json mapping "PassengersMapping"
+'[
+  {"column":"event_id",            "path":"$.event_id"},
+  {"column":"passenger_id",        "path":"$.payload.passenger_id"},
+  {"column":"first_name",          "path":"$.payload.first_name"},
+  {"column":"last_name",           "path":"$.payload.last_name"},
+  {"column":"email",               "path":"$.payload.email"},
+  {"column":"phone",               "path":"$.payload.phone"},
+  {"column":"country",             "path":"$.payload.country"},
+  {"column":"frequent_flyer_tier", "path":"$.payload.frequent_flyer_tier"},
+  {"column":"total_flights",       "path":"$.payload.total_flights"},
+  {"column":"member_since",        "path":"$.payload.member_since"}
+]'
+```
+
+Set the mapping name in the Fabric Eventstream destination config, then re-run the
+bridge with `--dataset all` to backfill `event_id` on rows ingested before this change.
+
+### 3 — Verification KQL queries
+
+**Row counts**
+```kql
+passengers | count
+flights    | count
+cases      | count
+complaints | count
+```
+
+**Duplicate check — should return 0 rows**
+```kql
+union
+  (passengers | summarize n=count() by event_id | where n > 1 | extend table="passengers"),
+  (flights    | summarize n=count() by event_id | where n > 1 | extend table="flights"),
+  (cases      | summarize n=count() by event_id | where n > 1 | extend table="cases"),
+  (complaints | summarize n=count() by event_id | where n > 1 | extend table="complaints")
+| project table, event_id, n
+```
+
+**Relationship integrity — complaints joined to passenger + flight (test batch)**
+```kql
+complaints
+| where complaint_id between (29 .. 33)
+| join kind=inner (cases      | project case_id, case_status, pnr) on case_id
+| join kind=inner (passengers | project passenger_id, first_name, last_name) on passenger_id
+| join kind=inner (flights    | project flight_id, flight_number, origin_code, destination_code) on flight_id
+| project complaint_id, first_name, last_name, flight_number, origin_code, destination_code,
+          category, subcategory, severity, case_status
+| order by complaint_id asc
+```
+
+**Multi-case passenger check (Passenger 21 — expects 3 complaints across 2 flights)**
+```kql
+complaints
+| where passenger_id == 21
+| join kind=inner (cases | project case_id, flight_id, pnr, case_status) on case_id
+| project complaint_id, case_id, flight_id, pnr, category, subcategory, severity, status
+| order by case_id asc, complaint_id asc
 ```
 
 ---
@@ -199,7 +299,9 @@ Every Kafka message value is a JSON-encoded `EventEnvelope`:
 }
 ```
 
-`event_id` is a UUIDv4 deduplication key suitable for idempotent consumer upserts.
+`event_id` is a **UUID v5** derived deterministically from `"{table}:{pk}"` — the same
+record always produces the same `event_id` across re-runs, enabling idempotent upserts
+in Fabric Eventhouse without double-counting.
 
 ---
 

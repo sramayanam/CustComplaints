@@ -31,6 +31,10 @@ from typing import Literal, Optional
 
 from pydantic import BaseModel, Field, field_validator
 
+# Stable namespace for deterministic UUID v5 deduplication keys.
+# Using NAMESPACE_URL as the base; the name is "<table>:<pk>".
+_DEDUP_NS = uuid.UUID("6ba7b810-9dad-11d1-80b4-00c04fd430c8")
+
 
 # ── Shared envelope header ────────────────────────────────────────────────────
 
@@ -40,14 +44,15 @@ class EventEnvelope(BaseModel):
 
     Fields
     ------
-    event_id      : UUIDv4 – deduplication key for idempotent consumer upserts.
+    event_id      : UUID v5 derived from (table, pk) – stable across re-runs so
+                    Fabric can deduplicate on event_id without double-counting.
     table         : target table name; consumer uses this for routing.
     schema_version: semver string; bump when payload shape changes.
     produced_at   : UTC timestamp when the producer serialised this message.
     payload       : the actual record dict (validated by the table-specific model).
     """
 
-    event_id:       str = Field(default_factory=lambda: str(uuid.uuid4()))
+    event_id:       str
     table:          str
     schema_version: str = "1.0"
     produced_at:    str = Field(
@@ -188,6 +193,12 @@ class ComplaintPayload(BaseModel):
 
 # ── Factory helpers ───────────────────────────────────────────────────────────
 
-def make_envelope(table: str, payload: BaseModel) -> EventEnvelope:
-    """Wrap a validated payload model into a sendable EventEnvelope."""
-    return EventEnvelope(table=table, payload=payload.model_dump())
+def make_envelope(table: str, payload: BaseModel, pk: str) -> EventEnvelope:
+    """Wrap a validated payload model into a sendable EventEnvelope.
+
+    event_id is derived deterministically from (table, pk) using UUID v5 so that
+    re-running the producer with the same seed data produces identical event_ids.
+    Fabric / PostgreSQL consumers can safely upsert on event_id without duplicates.
+    """
+    event_id = str(uuid.uuid5(_DEDUP_NS, f"{table}:{pk}"))
+    return EventEnvelope(event_id=event_id, table=table, payload=payload.model_dump())

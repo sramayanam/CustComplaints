@@ -119,7 +119,7 @@ def _send(
                     the topic name.  Format: 32-char lowercase hex UUID.
     """
     table_name = topic  # table == topic by convention
-    envelope = make_envelope(table_name, payload_model)
+    envelope = make_envelope(table_name, payload_model, pk=key)
     value_bytes = json.dumps(envelope.model_dump(), ensure_ascii=False).encode("utf-8")
     key_bytes = key.encode("utf-8")
     # Kafka headers: list of (name, value) byte-tuples.
@@ -315,16 +315,67 @@ SEED_COMPLAINTS: list[dict] = [
 ]
 
 
+# ── Test batch (new records, distinct PKs, clean FK chain) ────────────────────
+# Relationship map:
+#   Passenger 21 → Case 21 (ZA1414) → Complaints 29, 30   (two complaints, one case)
+#   Passenger 22 → Case 22 (ZA1414) → Complaint 31        (same flight, different passenger)
+#   Passenger 23 → Case 23 (ZA1515) → Complaint 32
+#   Passenger 21 → Case 24 (ZA1515) → Complaint 33        (same passenger, second flight)
+
+TEST_PASSENGERS: list[dict] = [
+    {"passenger_id": 21, "first_name": "Zara",   "last_name": "Thompson", "email": "zara.thompson@example.com",  "phone": "+61-2-5550-0121", "country": "Australia",  "frequent_flyer_tier": "Gold",   "total_flights": 89,  "member_since": "2017-04-12T00:00:00+00:00"},
+    {"passenger_id": 22, "first_name": "Hiroshi", "last_name": "Yamamoto", "email": "hiroshi.yamamoto@example.com", "phone": "+81-3-5550-0122", "country": "Japan",      "frequent_flyer_tier": "Silver", "total_flights": 47,  "member_since": "2019-09-03T00:00:00+00:00"},
+    {"passenger_id": 23, "first_name": "Lucia",   "last_name": "Ferreira", "email": "lucia.ferreira@example.com",  "phone": "+351-21-550-0123","country": "Portugal",   "frequent_flyer_tier": "Bronze", "total_flights": 15,  "member_since": "2023-02-18T00:00:00+00:00"},
+]
+
+TEST_FLIGHTS: list[dict] = [
+    {"flight_id": 14, "flight_number": "ZA1414", "origin_code": "SIN", "origin_city": "Singapore", "destination_code": "SYD", "destination_city": "Sydney",          "scheduled_departure": "2026-03-10T08:00:00+00:00", "actual_departure": "2026-03-10T08:00:00+00:00", "scheduled_arrival": "2026-03-10T19:30:00+00:00", "actual_arrival": "2026-03-10T19:30:00+00:00", "aircraft_type": "Crescent 787-9",   "flight_status": "On Time", "delay_minutes": 0},
+    {"flight_id": 15, "flight_number": "ZA1515", "origin_code": "SYD", "origin_city": "Sydney",    "destination_code": "LAX", "destination_city": "Los Angeles",     "scheduled_departure": "2026-03-11T22:00:00+00:00", "actual_departure": "2026-03-12T23:05:00+00:00", "scheduled_arrival": "2026-03-12T14:00:00+00:00", "actual_arrival": "2026-03-12T15:05:00+00:00", "aircraft_type": "Moonbeam A350",    "flight_status": "Delayed", "delay_minutes": 65},
+]
+
+TEST_CASES: list[dict] = [
+    {"case_id": 21, "passenger_id": 21, "flight_id": 14, "flight_number": "ZA1414", "pnr": "PNR2101", "case_status": "Escalated",    "opened_at": "2026-03-10T20:00:00+00:00", "last_updated_at": "2026-03-11T09:00:00+00:00", "closed_at": None},
+    {"case_id": 22, "passenger_id": 22, "flight_id": 14, "flight_number": "ZA1414", "pnr": "PNR2202", "case_status": "Open",         "opened_at": "2026-03-10T20:30:00+00:00", "last_updated_at": "2026-03-10T20:30:00+00:00", "closed_at": None},
+    {"case_id": 23, "passenger_id": 23, "flight_id": 15, "flight_number": "ZA1515", "pnr": "PNR2303", "case_status": "Under Review", "opened_at": "2026-03-12T16:00:00+00:00", "last_updated_at": "2026-03-12T17:30:00+00:00", "closed_at": None},
+    {"case_id": 24, "passenger_id": 21, "flight_id": 15, "flight_number": "ZA1515", "pnr": "PNR2401", "case_status": "Open",         "opened_at": "2026-03-12T15:30:00+00:00", "last_updated_at": "2026-03-12T15:30:00+00:00", "closed_at": None},
+]
+
+TEST_COMPLAINTS: list[dict] = [
+    {"complaint_id": 29, "case_id": 21, "passenger_id": 21, "flight_id": 14, "flight_number": "ZA1414", "pnr": "PNR2101", "complaint_date": "2026-03-10T20:05:00+00:00", "category": "Seating",           "subcategory": "Seat Malfunction",     "description": "Seat 14A power socket failed shortly after take-off on ZA1414 SIN-SYD. Crew were unable to reset the row and offered no alternative seating.", "severity": "High",     "status": "Escalated",    "assigned_agent": "Cosmo Lee",    "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    {"complaint_id": 30, "case_id": 21, "passenger_id": 21, "flight_id": 14, "flight_number": "ZA1414", "pnr": "PNR2101", "complaint_date": "2026-03-10T20:45:00+00:00", "category": "Customer Service",  "subcategory": "Staff Attitude",       "description": "After reporting the faulty power socket, a crew member told the passenger to 'just use the battery' and did not log the incident.",              "severity": "Medium",   "status": "Escalated",    "assigned_agent": "Cosmo Lee",    "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    {"complaint_id": 31, "case_id": 22, "passenger_id": 22, "flight_id": 14, "flight_number": "ZA1414", "pnr": "PNR2202", "complaint_date": "2026-03-10T20:40:00+00:00", "category": "Baggage",           "subcategory": "Lost Baggage",         "description": "One checked bag did not arrive at SYD carousel after ZA1414. Baggage desk could not locate it in the tracking system and filed a PIR report.", "severity": "High",     "status": "Open",         "assigned_agent": "Selene Park",  "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    {"complaint_id": 32, "case_id": 23, "passenger_id": 23, "flight_id": 15, "flight_number": "ZA1515", "pnr": "PNR2303", "complaint_date": "2026-03-12T16:10:00+00:00", "category": "Flight Operations", "subcategory": "Excessive Delay",      "description": "ZA1515 SYD-LAX departed 65 minutes late with no gate announcement. Connection to domestic LAX flight was missed as a result.",                   "severity": "Medium",   "status": "Under Review", "assigned_agent": "Orion Bailey", "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    {"complaint_id": 33, "case_id": 24, "passenger_id": 21, "flight_id": 15, "flight_number": "ZA1515", "pnr": "PNR2401", "complaint_date": "2026-03-12T15:40:00+00:00", "category": "Booking",           "subcategory": "Refund Delay",         "description": "Upgrade fee charged at SYD check-in for ZA1515 was not reflected in the booking system. Refund requested at the gate; no confirmation received.", "severity": "Medium",   "status": "Open",         "assigned_agent": "Cosmo Lee",    "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+]
+
+
 # ── CLI entry point ───────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Produce ZavaAir complaint data to Event Hubs")
+    parser.add_argument(
+        "--dataset", choices=["seed", "test", "all"], default="seed",
+        help="seed = original 20/13/20/28 records; test = new 3/2/4/5 records; all = both combined",
+    )
+    args = parser.parse_args()
+
+    if args.dataset == "seed":
+        p, f, c, co = SEED_PASSENGERS, SEED_FLIGHTS, SEED_CASES, SEED_COMPLAINTS
+    elif args.dataset == "test":
+        p, f, c, co = TEST_PASSENGERS, TEST_FLIGHTS, TEST_CASES, TEST_COMPLAINTS
+    else:  # all
+        p  = SEED_PASSENGERS + TEST_PASSENGERS
+        f  = SEED_FLIGHTS    + TEST_FLIGHTS
+        c  = SEED_CASES      + TEST_CASES
+        co = SEED_COMPLAINTS + TEST_COMPLAINTS
+
+    logger.info("Dataset: %s | passengers=%d flights=%d cases=%d complaints=%d",
+                args.dataset, len(p), len(f), len(c), len(co))
+
     try:
-        produce_dataset(
-            passengers=SEED_PASSENGERS,
-            flights=SEED_FLIGHTS,
-            cases=SEED_CASES,
-            complaints=SEED_COMPLAINTS,
-        )
+        produce_dataset(passengers=p, flights=f, cases=c, complaints=co)
     except KafkaException as exc:
         logger.error("Kafka error: %s", exc)
         sys.exit(1)

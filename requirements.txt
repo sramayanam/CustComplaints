@@ -1,0 +1,22 @@
+# ============================================================================
+# requirements.txt – Lunar Air / ZavaAir Event Hub producer
+# ============================================================================
+
+# Kafka client (librdkafka bindings)
+# Supports SASL OAUTHBEARER + custom oauth_cb callable
+confluent-kafka>=2.4.0
+
+# Azure passwordless authentication
+# ManagedIdentityCredential  – used on Azure compute with UAMI assigned
+# DefaultAzureCredential     – used locally (Azure CLI / VS Code fallback)
+azure-identity>=1.16.0
+
+# Schema validation and serialisation
+pydantic>=2.0.0
+
+# .env file loader
+python-dotenv>=1.0.0
+
+# Azure Event Hubs Schema Registry client
+# Registers and retrieves JSON / Avro schemas from the namespace schema registry.
+azure-schemaregistry>=1.2.0

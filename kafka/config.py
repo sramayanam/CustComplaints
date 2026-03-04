@@ -79,6 +79,42 @@ SCHEMA_GROUP: str = os.getenv("SCHEMA_GROUP", "custcomplaints")
 # parse 'eventhubs' as the tenant name and reject the token.
 NAMESPACE_FQDN: str = f"{EH_NAMESPACE}.servicebus.windows.net"
 
+# ── Fabric Eventstream Custom Endpoint ────────────────────────────────────────
+# Namespace and topic come from the Custom Endpoint panel in Eventstream:
+#   Canvas → Custom Endpoint node → Entra ID Authentication tab
+FABRIC_EH_NAMESPACE: str = os.getenv("FABRIC_EH_NAMESPACE", "esehblanjyq4f2v00gtf73")
+FABRIC_NAMESPACE_FQDN: str = f"{FABRIC_EH_NAMESPACE}.servicebus.windows.net"
+FABRIC_BOOTSTRAP_SERVERS: str = f"{FABRIC_NAMESPACE_FQDN}:9093"
+
+# ── Passengers ────────────────────────────────────────────────────────────────
+FABRIC_TOPIC_PASSENGERS: str = os.getenv(
+    "FABRIC_TOPIC_PASSENGERS", "es_8a5b16b5-9233-4f29-ad18-542dc0e3f74d"
+)
+
+# ── Flights ───────────────────────────────────────────────────────────────────
+FABRIC_EH_NAMESPACE_FLIGHTS: str = os.getenv("FABRIC_EH_NAMESPACE_FLIGHTS", "esehbloxqn2by5q7b0tzqj")
+FABRIC_NAMESPACE_FQDN_FLIGHTS: str = f"{FABRIC_EH_NAMESPACE_FLIGHTS}.servicebus.windows.net"
+FABRIC_BOOTSTRAP_SERVERS_FLIGHTS: str = f"{FABRIC_NAMESPACE_FQDN_FLIGHTS}:9093"
+FABRIC_TOPIC_FLIGHTS: str = os.getenv(
+    "FABRIC_TOPIC_FLIGHTS", "es_8e3eff12-0ab4-43f1-8b80-cd280f0ec557"
+)
+
+# ── Cases ───────────────────────────────────────────────────────────────────
+FABRIC_EH_NAMESPACE_CASES: str = os.getenv("FABRIC_EH_NAMESPACE_CASES", "esehbls4bhyt0ce9j3pxdm")
+FABRIC_NAMESPACE_FQDN_CASES: str = f"{FABRIC_EH_NAMESPACE_CASES}.servicebus.windows.net"
+FABRIC_BOOTSTRAP_SERVERS_CASES: str = f"{FABRIC_NAMESPACE_FQDN_CASES}:9093"
+FABRIC_TOPIC_CASES: str = os.getenv(
+    "FABRIC_TOPIC_CASES", "es_775350b6-9151-4241-a1a1-32bf06736043"
+)
+
+# ── Complaints ───────────────────────────────────────────────────────────────
+FABRIC_EH_NAMESPACE_COMPLAINTS: str = os.getenv("FABRIC_EH_NAMESPACE_COMPLAINTS", "esehblfbqd47cqpxwx30y4")
+FABRIC_NAMESPACE_FQDN_COMPLAINTS: str = f"{FABRIC_EH_NAMESPACE_COMPLAINTS}.servicebus.windows.net"
+FABRIC_BOOTSTRAP_SERVERS_COMPLAINTS: str = f"{FABRIC_NAMESPACE_FQDN_COMPLAINTS}:9093"
+FABRIC_TOPIC_COMPLAINTS: str = os.getenv(
+    "FABRIC_TOPIC_COMPLAINTS", "es_454400f2-20c0-42d2-ab2c-dbefa8cd7cdf"
+)
+
 
 def oauth_cb(cred, namespace_fqdn: str, config: str) -> Tuple[str, float]:
     """

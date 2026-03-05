@@ -1,4 +1,0 @@
-{
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/publishInfo/1.0.0/schema.json",
-  "description": "## Fabric IQ Ontology Agent\n\nAn ontology agent built on Fabric IQ sits on top of the four KQL tables and exposes\nthe complaint graph for natural-language queries and GQL traversal.| Question | What it tests |\n|---|---|\n| Which passengers have more than one case? | Multi-hop relationship traversal |\n| Show all Platinum passengers with unresolved complaints | Tier + status filter |\n| What happened on flight ZA1818? | Flight-scoped complaint cluster |\n| Which complaint category appears most often? | Aggregation |\n| Has Chen Wei had any complaints resolved? | Named entity + status filter |\n| Which routes have the most Critical complaints? | Route + severity join |"
-}

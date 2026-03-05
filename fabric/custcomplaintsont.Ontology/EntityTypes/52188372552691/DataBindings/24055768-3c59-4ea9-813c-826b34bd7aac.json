@@ -1,0 +1,60 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/ontology/dataBinding/1.0.0/schema.json",
+  "id": "24055768-3c59-4ea9-813c-826b34bd7aac",
+  "dataBindingConfiguration": {
+    "dataBindingType": "NonTimeSeries",
+    "propertyBindings": [
+      {
+        "sourceColumnName": "flight_id",
+        "targetPropertyId": "5680327395810779893"
+      },
+      {
+        "sourceColumnName": "flight_number",
+        "targetPropertyId": "5680327396494325666"
+      },
+      {
+        "sourceColumnName": "origin_code",
+        "targetPropertyId": "5680327393760286152"
+      },
+      {
+        "sourceColumnName": "origin_city",
+        "targetPropertyId": "5680327395099779272"
+      },
+      {
+        "sourceColumnName": "destination_code",
+        "targetPropertyId": "5680327395238191567"
+      },
+      {
+        "sourceColumnName": "destination_city",
+        "targetPropertyId": "5680327394213765355"
+      },
+      {
+        "sourceColumnName": "aircraft_type",
+        "targetPropertyId": "5680327396813521559"
+      },
+      {
+        "sourceColumnName": "flight_status",
+        "targetPropertyId": "5680327396863913760"
+      },
+      {
+        "sourceColumnName": "delay_minutes",
+        "targetPropertyId": "5680327393950703726"
+      },
+      {
+        "sourceColumnName": "event_id",
+        "targetPropertyId": "5680327395955008157"
+      },
+      {
+        "sourceColumnName": "schema_version",
+        "targetPropertyId": "5680327396905117847"
+      }
+    ],
+    "sourceTableProperties": {
+      "sourceType": "LakehouseTable",
+      "workspaceId": "00000000-0000-0000-0000-000000000000",
+      "itemId": "d663ca8d-44a3-be15-407c-8c6e08bf1610",
+      "sourceTableName": "flights_ont",
+      "sourceSchema": "dbo"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Eventstream",
+    "displayName": "ccpassengereventstream"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c06126ab-03ed-ab30-49a8-c21e105f83f1"
+  }
+}

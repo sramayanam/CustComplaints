@@ -1,0 +1,132 @@
+table cases_ont
+	lineageTag: 51168e39-889c-4815-b3f8-61a21cffdcc2
+	sourceLineageTag: [dbo].[cases_ont]
+
+	column case_id
+		dataType: int64
+		formatString: 0
+		lineageTag: deba2a44-2d2d-4ea7-86f7-a4273bb3ceb7
+		sourceLineageTag: case_id
+		summarizeBy: none
+		sourceColumn: case_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column passenger_id
+		dataType: int64
+		formatString: 0
+		lineageTag: f0ea32d4-4f2e-408e-bcec-119c8f0299b8
+		sourceLineageTag: passenger_id
+		summarizeBy: none
+		sourceColumn: passenger_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column flight_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9598d46f-5269-4912-8ca2-d4600ecf2bb6
+		sourceLineageTag: flight_id
+		summarizeBy: none
+		sourceColumn: flight_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column flight_number
+		dataType: string
+		lineageTag: 8fea0f3e-3ab2-4e79-9710-143d14a129e7
+		sourceLineageTag: flight_number
+		summarizeBy: none
+		sourceColumn: flight_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column pnr
+		dataType: string
+		lineageTag: 0b7bd8b3-118a-4821-bd82-485404016687
+		sourceLineageTag: pnr
+		summarizeBy: none
+		sourceColumn: pnr
+
+		annotation SummarizationSetBy = Automatic
+
+	column case_status
+		dataType: string
+		lineageTag: 9fccf9d6-deaa-4370-b01a-5208b85276ca
+		sourceLineageTag: case_status
+		summarizeBy: none
+		sourceColumn: case_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column opened_at
+		dataType: string
+		lineageTag: 36bae68b-9eb9-4d3e-97d6-be88d12a1e89
+		sourceLineageTag: opened_at
+		summarizeBy: none
+		sourceColumn: opened_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_updated_at
+		dataType: string
+		lineageTag: 147fa536-155b-4df3-a2e2-3e2a13fb6715
+		sourceLineageTag: last_updated_at
+		summarizeBy: none
+		sourceColumn: last_updated_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column closed_at
+		dataType: string
+		lineageTag: 08036b38-1b18-4b93-b11f-27f76af2da0f
+		sourceLineageTag: closed_at
+		summarizeBy: none
+		sourceColumn: closed_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column current_time
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a99f513f-ab56-43ba-bb4c-51419a9daa43
+		sourceLineageTag: current_time
+		summarizeBy: none
+		sourceColumn: current_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column event_id
+		dataType: string
+		lineageTag: 627c4a68-8388-4073-a63d-962c8a59a00b
+		sourceLineageTag: event_id
+		summarizeBy: none
+		sourceColumn: event_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column schema_version
+		dataType: string
+		lineageTag: b91296b3-e30a-427a-8f32-8e410d3f5180
+		sourceLineageTag: schema_version
+		summarizeBy: none
+		sourceColumn: schema_version
+
+		annotation SummarizationSetBy = Automatic
+
+	column produced_at
+		dataType: string
+		lineageTag: 36432ec5-7c88-4eca-b2e6-368950134845
+		sourceLineageTag: produced_at
+		summarizeBy: none
+		sourceColumn: produced_at
+
+		annotation SummarizationSetBy = Automatic
+
+	partition cases_ont = entity
+		mode: directLake
+		source
+			entityName: cases_ont
+			schemaName: dbo
+			expressionSource: 'DirectLake - airlinesLH'
+

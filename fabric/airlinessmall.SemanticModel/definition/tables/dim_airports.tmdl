@@ -1,0 +1,146 @@
+table dim_airports
+	lineageTag: d33c6f1c-d887-4a01-9705-32e6a10afe13
+	sourceLineageTag: [dbo].[dim_airports]
+
+	column airport_id
+		dataType: int64
+		formatString: 0
+		lineageTag: f8cd37bf-4384-4653-bb88-dd79cae738cd
+		sourceLineageTag: airport_id
+		summarizeBy: none
+		sourceColumn: airport_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column airport_code
+		dataType: string
+		lineageTag: 3a3397e5-1ec9-43d7-8bd8-2d40d23db910
+		sourceLineageTag: airport_code
+		summarizeBy: none
+		sourceColumn: airport_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column airport_name
+		dataType: string
+		lineageTag: 32e95a0b-385d-497e-b5ff-15b5dd1875ac
+		sourceLineageTag: airport_name
+		summarizeBy: none
+		sourceColumn: airport_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: e91d2aaf-8952-4576-b644-177fd91b95e7
+		sourceLineageTag: city
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: string
+		lineageTag: 90b9aef2-75bb-48e9-be06-3c3677658137
+		sourceLineageTag: state
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	column country
+		dataType: string
+		lineageTag: adc176f8-4a6b-48cc-9cf1-42425b1b0d16
+		sourceLineageTag: country
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	column latitude
+		dataType: double
+		lineageTag: 3031818d-c117-4d32-8077-e43b01bcafd7
+		sourceLineageTag: latitude
+		summarizeBy: none
+		sourceColumn: latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column longitude
+		dataType: double
+		lineageTag: 953cfc09-b1cd-4a53-a678-77ec10a875e2
+		sourceLineageTag: longitude
+		summarizeBy: none
+		sourceColumn: longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column elevation_ft
+		dataType: int64
+		formatString: 0
+		lineageTag: 3382c099-7042-4568-bdc0-af90ee60f03e
+		sourceLineageTag: elevation_ft
+		summarizeBy: none
+		sourceColumn: elevation_ft
+
+		annotation SummarizationSetBy = Automatic
+
+	column timezone
+		dataType: string
+		lineageTag: 0c1255fe-1a57-4641-9d12-cd6a3d5ba64e
+		sourceLineageTag: timezone
+		summarizeBy: none
+		sourceColumn: timezone
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_major_hub
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 6107120d-72c0-4fed-a9d1-9d559696c008
+		sourceLineageTag: is_major_hub
+		summarizeBy: none
+		sourceColumn: is_major_hub
+
+		annotation SummarizationSetBy = Automatic
+
+	column passenger_volume_category
+		dataType: string
+		lineageTag: b11ab066-58c3-43a7-9eb3-9def1149dd39
+		sourceLineageTag: passenger_volume_category
+		summarizeBy: none
+		sourceColumn: passenger_volume_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column created_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 620b0f3e-4573-4534-976e-6d58b65316d7
+		sourceLineageTag: created_date
+		summarizeBy: none
+		sourceColumn: created_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column updated_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6a59a3ff-74cc-469c-8dd4-88032bb0fd5c
+		sourceLineageTag: updated_date
+		summarizeBy: none
+		sourceColumn: updated_date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_airports = entity
+		mode: directLake
+		source
+			entityName: dim_airports
+			schemaName: dbo
+			expressionSource: 'DirectLake - airlinesLH'
+

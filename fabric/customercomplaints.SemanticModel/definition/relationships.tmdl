@@ -1,0 +1,22 @@
+relationship a795ea8a-6734-be5f-05e6-01a4df15f8f4
+	fromColumn: complaints_ont.case_id
+	toColumn: cases_ont.case_id
+
+relationship 24e06006-8464-0d70-15da-6c4058a44766
+	isActive: false
+	fromColumn: complaints_ont.flight_id
+	toColumn: cases_ont.flight_id
+
+relationship 14597cc3-3f44-a96f-6879-76ca4d7628e3
+	isActive: false
+	fromColumn: complaints_ont.passenger_id
+	toColumn: cases_ont.passenger_id
+
+relationship dc00e7f5-90a5-5eb1-9218-027219ac450c
+	fromColumn: cases_ont.flight_id
+	toColumn: flights_ont.flight_id
+
+relationship e0448de9-cea3-75af-5b68-472d82d0a39f
+	fromColumn: cases_ont.passenger_id
+	toColumn: passengers_ont.passenger_id
+

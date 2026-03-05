@@ -1,0 +1,60 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/ontology/dataBinding/1.0.0/schema.json",
+  "id": "6f080126-9906-46e6-b68a-ea80e77e8a97",
+  "dataBindingConfiguration": {
+    "dataBindingType": "NonTimeSeries",
+    "propertyBindings": [
+      {
+        "sourceColumnName": "country",
+        "targetPropertyId": "5705285978467860509"
+      },
+      {
+        "sourceColumnName": "email",
+        "targetPropertyId": "5705285977794059978"
+      },
+      {
+        "sourceColumnName": "event_id",
+        "targetPropertyId": "5705285976869012326"
+      },
+      {
+        "sourceColumnName": "first_name",
+        "targetPropertyId": "5705285976286684713"
+      },
+      {
+        "sourceColumnName": "frequent_flyer_tier",
+        "targetPropertyId": "5705285977328883992"
+      },
+      {
+        "sourceColumnName": "last_name",
+        "targetPropertyId": "5705285976862746839"
+      },
+      {
+        "sourceColumnName": "member_since",
+        "targetPropertyId": "5705285977720397844"
+      },
+      {
+        "sourceColumnName": "passenger_id",
+        "targetPropertyId": "5705285976633609184"
+      },
+      {
+        "sourceColumnName": "phone",
+        "targetPropertyId": "5705285980123312530"
+      },
+      {
+        "sourceColumnName": "schema_version",
+        "targetPropertyId": "5705285978562675863"
+      },
+      {
+        "sourceColumnName": "total_flights",
+        "targetPropertyId": "5705285980001377631"
+      }
+    ],
+    "sourceTableProperties": {
+      "sourceType": "LakehouseTable",
+      "workspaceId": "00000000-0000-0000-0000-000000000000",
+      "itemId": "d663ca8d-44a3-be15-407c-8c6e08bf1610",
+      "sourceTableName": "passengers_ont",
+      "sourceSchema": "dbo"
+    }
+  }
+}

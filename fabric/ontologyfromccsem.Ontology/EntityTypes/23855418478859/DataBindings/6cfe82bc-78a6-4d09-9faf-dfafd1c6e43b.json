@@ -1,0 +1,68 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/ontology/dataBinding/1.0.0/schema.json",
+  "id": "6cfe82bc-78a6-4d09-9faf-dfafd1c6e43b",
+  "dataBindingConfiguration": {
+    "dataBindingType": "NonTimeSeries",
+    "propertyBindings": [
+      {
+        "sourceColumnName": "passenger_id",
+        "targetPropertyId": "5332363482385847613"
+      },
+      {
+        "sourceColumnName": "first_name",
+        "targetPropertyId": "5332363454942669827"
+      },
+      {
+        "sourceColumnName": "last_name",
+        "targetPropertyId": "5332363432190961457"
+      },
+      {
+        "sourceColumnName": "email",
+        "targetPropertyId": "5332363408303082947"
+      },
+      {
+        "sourceColumnName": "phone",
+        "targetPropertyId": "5332363387893736528"
+      },
+      {
+        "sourceColumnName": "country",
+        "targetPropertyId": "5332363366910288524"
+      },
+      {
+        "sourceColumnName": "frequent_flyer_tier",
+        "targetPropertyId": "5332363337763789577"
+      },
+      {
+        "sourceColumnName": "total_flights",
+        "targetPropertyId": "5332363318980633930"
+      },
+      {
+        "sourceColumnName": "member_since",
+        "targetPropertyId": "5332363295041249785"
+      },
+      {
+        "sourceColumnName": "current_time",
+        "targetPropertyId": "5332363271790447659"
+      },
+      {
+        "sourceColumnName": "event_id",
+        "targetPropertyId": "5332363249453394122"
+      },
+      {
+        "sourceColumnName": "schema_version",
+        "targetPropertyId": "5332363226267513117"
+      },
+      {
+        "sourceColumnName": "produced_at",
+        "targetPropertyId": "5332363205634373250"
+      }
+    ],
+    "sourceTableProperties": {
+      "sourceType": "LakehouseTable",
+      "workspaceId": "12204d44-688c-40db-9593-4d23c9ad3e51",
+      "itemId": "08bf1610-8c6e-407c-be15-44a3d663ca8d",
+      "sourceTableName": "passengers_ont",
+      "sourceSchema": "dbo"
+    }
+  }
+}

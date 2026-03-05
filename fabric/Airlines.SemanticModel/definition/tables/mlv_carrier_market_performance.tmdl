@@ -1,0 +1,193 @@
+table mlv_carrier_market_performance
+	lineageTag: 44072f99-309c-4d6c-a2c8-7c78f2a5a4aa
+	sourceLineageTag: [dbo].[mlv_carrier_market_performance]
+
+	column performance_year
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: d2396994-e99e-4517-b7a6-4899fce1c2cd
+		sourceLineageTag: performance_year
+		summarizeBy: sum
+		sourceColumn: performance_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column performance_quarter
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: e653e145-701e-4fe1-b82b-af9bed77372f
+		sourceLineageTag: performance_quarter
+		summarizeBy: sum
+		sourceColumn: performance_quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column airline_carrier_code
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 5858a5b7-166c-42cd-97c1-1132dcb52755
+		sourceLineageTag: airline_carrier_code
+		summarizeBy: none
+		sourceColumn: airline_carrier_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column airline_business_category
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: cac5941e-1187-4112-a74e-ddb34992e07a
+		sourceLineageTag: airline_business_category
+		summarizeBy: none
+		sourceColumn: airline_business_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column route_origin_airport
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 44fdfdd6-e92a-48ab-b2f7-1d3df32daffa
+		sourceLineageTag: route_origin_airport
+		summarizeBy: none
+		sourceColumn: route_origin_airport
+
+		annotation SummarizationSetBy = Automatic
+
+	column route_destination_airport
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 91056d94-28a2-422e-99fe-92e4c4d97265
+		sourceLineageTag: route_destination_airport
+		summarizeBy: none
+		sourceColumn: route_destination_airport
+
+		annotation SummarizationSetBy = Automatic
+
+	column route_flight_record_count
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 6e71fc5a-ac74-432a-b656-75bbd6d37bb4
+		sourceLineageTag: route_flight_record_count
+		summarizeBy: sum
+		sourceColumn: route_flight_record_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column route_passenger_volume
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 797042c4-bb91-450c-adfe-696f12746431
+		sourceLineageTag: route_passenger_volume
+		summarizeBy: sum
+		sourceColumn: route_passenger_volume
+
+		annotation SummarizationSetBy = Automatic
+
+	column route_average_price_usd
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		sourceProviderType: decimal(10, 2)
+		lineageTag: de34dc88-6c0d-4c1c-b96a-c2a76e753cc2
+		sourceLineageTag: route_average_price_usd
+		summarizeBy: sum
+		sourceColumn: route_average_price_usd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column route_total_revenue_usd
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		sourceProviderType: decimal(15, 2)
+		lineageTag: 9994c507-ee9b-4643-afec-6e28798bbabf
+		sourceLineageTag: route_total_revenue_usd
+		summarizeBy: sum
+		sourceColumn: route_total_revenue_usd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column route_distance_miles
+		dataType: int64
+		formatString: 0
+		sourceProviderType: decimal(8, 0)
+		lineageTag: d62118c2-ed40-4ddd-b178-f77d9d8ec4ba
+		sourceLineageTag: route_distance_miles
+		summarizeBy: sum
+		sourceColumn: route_distance_miles
+
+		annotation SummarizationSetBy = Automatic
+
+	column route_efficiency_ratio
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		sourceProviderType: decimal(6, 3)
+		lineageTag: 756b5be1-2481-4fee-a4af-fba06ce35cf9
+		sourceLineageTag: route_efficiency_ratio
+		summarizeBy: sum
+		sourceColumn: route_efficiency_ratio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column route_market_share_percentage
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		sourceProviderType: decimal(8, 2)
+		lineageTag: d8695329-d14a-4f82-ab50-df634918da1e
+		sourceLineageTag: route_market_share_percentage
+		summarizeBy: sum
+		sourceColumn: route_market_share_percentage
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column direct_service_passenger_count
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: a0862c9b-e135-4f3e-a597-87e3a8554042
+		sourceLineageTag: direct_service_passenger_count
+		summarizeBy: sum
+		sourceColumn: direct_service_passenger_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column connecting_service_passenger_count
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 53610d9f-31c5-4206-bee9-ef5e8aad387e
+		sourceLineageTag: connecting_service_passenger_count
+		summarizeBy: sum
+		sourceColumn: connecting_service_passenger_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column operates_from_major_hub_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: 0732b013-6bf2-411c-a1fd-5dbb4abad593
+		sourceLineageTag: operates_from_major_hub_flag
+		summarizeBy: none
+		sourceColumn: operates_from_major_hub_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	partition mlv_carrier_market_performance = entity
+		mode: directLake
+		source
+			entityName: mlv_carrier_market_performance
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

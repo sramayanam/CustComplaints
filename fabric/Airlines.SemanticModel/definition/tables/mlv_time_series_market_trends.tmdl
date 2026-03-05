@@ -1,0 +1,235 @@
+table mlv_time_series_market_trends
+	lineageTag: 5eccb3f4-f004-493b-a41f-2b0c1bc68797
+	sourceLineageTag: [dbo].[mlv_time_series_market_trends]
+
+	column trend_analysis_year
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: ca86663d-71db-44b4-9624-8d69e3e5ed34
+		sourceLineageTag: trend_analysis_year
+		summarizeBy: sum
+		sourceColumn: trend_analysis_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column trend_analysis_quarter
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: a18fdacd-1336-4147-8409-0fbbf3de51f8
+		sourceLineageTag: trend_analysis_quarter
+		summarizeBy: sum
+		sourceColumn: trend_analysis_quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column industry_flight_record_count
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 39a54377-0b22-446c-926a-6c7a3187d9b4
+		sourceLineageTag: industry_flight_record_count
+		summarizeBy: sum
+		sourceColumn: industry_flight_record_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column industry_total_passengers
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: e16ca136-508a-4902-9dad-ffb8df9a19d4
+		sourceLineageTag: industry_total_passengers
+		summarizeBy: sum
+		sourceColumn: industry_total_passengers
+
+		annotation SummarizationSetBy = Automatic
+
+	column industry_average_price_usd
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		sourceProviderType: decimal(10, 2)
+		lineageTag: a57f39e6-8cfa-4889-9e3a-63622861bd34
+		sourceLineageTag: industry_average_price_usd
+		summarizeBy: sum
+		sourceColumn: industry_average_price_usd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column industry_total_revenue_usd
+		dataType: double
+		sourceProviderType: decimal(18, 2)
+		lineageTag: 0c181558-09fc-4845-8000-5e0fa7df95e5
+		sourceLineageTag: industry_total_revenue_usd
+		summarizeBy: sum
+		sourceColumn: industry_total_revenue_usd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column active_origin_airport_count
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 7c531bc6-7088-4260-89a3-1fbc7d125fd9
+		sourceLineageTag: active_origin_airport_count
+		summarizeBy: sum
+		sourceColumn: active_origin_airport_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column active_carrier_count
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 02b7d075-06b2-419e-b7ba-13b0a97e48a4
+		sourceLineageTag: active_carrier_count
+		summarizeBy: sum
+		sourceColumn: active_carrier_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column direct_route_count
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 7fe86a72-eae4-4217-ad63-9487906e0519
+		sourceLineageTag: direct_route_count
+		summarizeBy: sum
+		sourceColumn: direct_route_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column connecting_route_count
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: bbdb839f-e909-472e-9aad-c9c3cad5ee3e
+		sourceLineageTag: connecting_route_count
+		summarizeBy: sum
+		sourceColumn: connecting_route_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column industry_average_distance_miles
+		dataType: int64
+		formatString: 0
+		sourceProviderType: decimal(8, 0)
+		lineageTag: f8ce584a-e9c8-4af4-b657-f8afce168657
+		sourceLineageTag: industry_average_distance_miles
+		summarizeBy: sum
+		sourceColumn: industry_average_distance_miles
+
+		annotation SummarizationSetBy = Automatic
+
+	column industry_routing_efficiency
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		sourceProviderType: decimal(6, 3)
+		lineageTag: 2944af83-f10d-4b6c-82ca-a11fd4112c5d
+		sourceLineageTag: industry_routing_efficiency
+		summarizeBy: sum
+		sourceColumn: industry_routing_efficiency
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column major_carrier_passenger_volume
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: de50d3a6-9a9e-414c-abec-d642b6206064
+		sourceLineageTag: major_carrier_passenger_volume
+		summarizeBy: sum
+		sourceColumn: major_carrier_passenger_volume
+
+		annotation SummarizationSetBy = Automatic
+
+	column regional_carrier_passenger_volume
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 8364644c-af8a-49ae-b093-e590e1473a87
+		sourceLineageTag: regional_carrier_passenger_volume
+		summarizeBy: sum
+		sourceColumn: regional_carrier_passenger_volume
+
+		annotation SummarizationSetBy = Automatic
+
+	column major_hub_passenger_volume
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: a97d9b87-5141-44a2-9067-92b3b7b350a2
+		sourceLineageTag: major_hub_passenger_volume
+		summarizeBy: sum
+		sourceColumn: major_hub_passenger_volume
+
+		annotation SummarizationSetBy = Automatic
+
+	column price_25th_percentile_usd
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		sourceProviderType: decimal(10, 2)
+		lineageTag: aac93fc0-4b27-4a0e-b489-0539532d62f5
+		sourceLineageTag: price_25th_percentile_usd
+		summarizeBy: sum
+		sourceColumn: price_25th_percentile_usd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column price_median_usd
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		sourceProviderType: decimal(10, 2)
+		lineageTag: 4a7de3b0-4844-4875-80ef-f966587c1e31
+		sourceLineageTag: price_median_usd
+		summarizeBy: sum
+		sourceColumn: price_median_usd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column price_75th_percentile_usd
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		sourceProviderType: decimal(10, 2)
+		lineageTag: 044b978d-c5db-4669-bcae-618dc21730ec
+		sourceLineageTag: price_75th_percentile_usd
+		summarizeBy: sum
+		sourceColumn: price_75th_percentile_usd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column price_90th_percentile_usd
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		sourceProviderType: decimal(10, 2)
+		lineageTag: 2dda312c-04d0-41e3-b25f-e715c32f5771
+		sourceLineageTag: price_90th_percentile_usd
+		summarizeBy: sum
+		sourceColumn: price_90th_percentile_usd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	partition mlv_time_series_market_trends = entity
+		mode: directLake
+		source
+			entityName: mlv_time_series_market_trends
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

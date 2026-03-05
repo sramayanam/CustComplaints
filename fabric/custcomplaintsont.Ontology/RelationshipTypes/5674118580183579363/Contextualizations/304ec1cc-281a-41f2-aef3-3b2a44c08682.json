@@ -1,0 +1,23 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/ontology/contextualization/1.0.0/schema.json",
+  "id": "304ec1cc-281a-41f2-aef3-3b2a44c08682",
+  "dataBindingTable": {
+    "workspaceId": "00000000-0000-0000-0000-000000000000",
+    "itemId": "d663ca8d-44a3-be15-407c-8c6e08bf1610",
+    "sourceTableName": "cases_ont",
+    "sourceSchema": "dbo",
+    "sourceType": "LakehouseTable"
+  },
+  "sourceKeyRefBindings": [
+    {
+      "sourceColumnName": "passenger_id",
+      "targetPropertyId": "5705285976633609184"
+    }
+  ],
+  "targetKeyRefBindings": [
+    {
+      "sourceColumnName": "flight_id",
+      "targetPropertyId": "5680327395810779893"
+    }
+  ]
+}

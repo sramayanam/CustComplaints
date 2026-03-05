@@ -1,0 +1,2055 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/dataSource/1.0.0/schema.json",
+  "artifactId": "d663ca8d-44a3-be15-407c-8c6e08bf1610",
+  "workspaceId": "00000000-0000-0000-0000-000000000000",
+  "dataSourceInstructions": null,
+  "displayName": "airlinesLH",
+  "type": "lakehouse_tables",
+  "userDescription": null,
+  "metadata": {},
+  "elements": [
+    {
+      "id": "109efdf0-4908-496a-8389-aab7fd2d9f17",
+      "is_selected": false,
+      "display_name": "dbo",
+      "type": "lakehouse_tables.schema",
+      "description": null,
+      "children": [
+        {
+          "id": "a4a1c778-7c1a-40eb-9e74-4a04e35a8778",
+          "is_selected": false,
+          "display_name": "dim_date",
+          "type": "lakehouse_tables.table",
+          "description": null,
+          "children": [
+            {
+              "id": "8048941a-39b9-46be-8c79-a6e6c54ba22f",
+              "is_selected": true,
+              "display_name": "date_id",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "e1879d9c-3cfd-4952-8fc0-7546b5852360",
+              "is_selected": true,
+              "display_name": "date_value",
+              "type": "lakehouse_tables.column",
+              "data_type": "datetime2",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "62877f6e-05da-423c-85ca-ba03ba4f54d6",
+              "is_selected": true,
+              "display_name": "year",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "2eb7af32-99b8-47f7-a98d-8f5cc6e47ad4",
+              "is_selected": true,
+              "display_name": "quarter",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "4a3cd6c0-13d2-4254-94de-19c920a56819",
+              "is_selected": true,
+              "display_name": "month",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "fad87d72-f2f0-4cfe-a159-5c8faeb26016",
+              "is_selected": true,
+              "display_name": "month_name",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "820e2ee9-fbd4-40dd-bfe1-1e27425b5637",
+              "is_selected": true,
+              "display_name": "week_of_year",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "9a253a57-3c1f-4c17-ba6b-edb817b85ce6",
+              "is_selected": true,
+              "display_name": "day_of_month",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "01c6e09c-200f-4c63-b819-08081311024b",
+              "is_selected": true,
+              "display_name": "day_of_week",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "d3df4e0d-d157-4d57-8a7d-e9b526a0b2d4",
+              "is_selected": true,
+              "display_name": "day_name",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "1411cde3-9aed-403d-b894-2634deb3cb77",
+              "is_selected": true,
+              "display_name": "is_weekend",
+              "type": "lakehouse_tables.column",
+              "data_type": "bit",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "b655b7cf-03a4-4d79-9c7d-0d3f3383320e",
+              "is_selected": true,
+              "display_name": "is_holiday",
+              "type": "lakehouse_tables.column",
+              "data_type": "bit",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "e64798f6-e52c-4fbd-ac4f-29eab4780ff7",
+              "is_selected": true,
+              "display_name": "quarter_name",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "246d7207-65eb-49f0-9996-c15900879ee4",
+              "is_selected": true,
+              "display_name": "decade",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "f068e908-a13f-49a3-81ab-be994464ab25",
+              "is_selected": true,
+              "display_name": "fiscal_year",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "380f4907-ef13-422b-92c4-b11508b3541d",
+              "is_selected": true,
+              "display_name": "fiscal_quarter",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "e19769a0-4916-4416-ae9c-d86f4a4454b8",
+              "is_selected": true,
+              "display_name": "created_date",
+              "type": "lakehouse_tables.column",
+              "data_type": "datetime2",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "28882900-563d-45f4-844e-400ec735aec6",
+          "is_selected": false,
+          "display_name": "dim_airlines",
+          "type": "lakehouse_tables.table",
+          "description": null,
+          "children": [
+            {
+              "id": "b5bc9abd-2371-49ff-a6cb-d7dac5a5d5f7",
+              "is_selected": true,
+              "display_name": "airline_id",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "cdfdcf52-4ba6-47ab-ba1d-f91f1e1aa4f5",
+              "is_selected": true,
+              "display_name": "carrier_code",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "16270880-0ccf-4eba-8ee5-db23f8992a94",
+              "is_selected": true,
+              "display_name": "airline_name",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "1c75bd97-a8cc-44fb-8afe-9b80443d71fa",
+              "is_selected": true,
+              "display_name": "airline_name_full",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "be7f5b51-3732-4c2d-b7e7-f7afeb3abc8f",
+              "is_selected": true,
+              "display_name": "country",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "cf26f26d-fdc0-4d2f-8a84-7b783976d51f",
+              "is_selected": true,
+              "display_name": "carrier_type",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "f8867c19-ee15-476e-b396-5ad8ec7f7b75",
+              "is_selected": true,
+              "display_name": "is_active",
+              "type": "lakehouse_tables.column",
+              "data_type": "bit",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "0dac80b9-cc0a-45f0-a632-420a10d14d4a",
+              "is_selected": true,
+              "display_name": "founded_year",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "42878665-b93b-434f-9d1f-78ce0e90ffb0",
+              "is_selected": true,
+              "display_name": "fleet_size",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "5fec7632-0c06-46e5-83dc-fd9c730b3240",
+              "is_selected": true,
+              "display_name": "headquarters_city",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "53419f1f-0e3b-46cf-98f2-90a899a41344",
+              "is_selected": true,
+              "display_name": "headquarters_state",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "48fe890e-6d3a-4608-bb40-d5b2641479cc",
+              "is_selected": true,
+              "display_name": "iata_code",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "86c66a7d-efc4-42f0-91ca-155490e4fcdb",
+              "is_selected": true,
+              "display_name": "icao_code",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "3dc8d373-5466-42df-93a5-702fe046ed47",
+              "is_selected": true,
+              "display_name": "created_date",
+              "type": "lakehouse_tables.column",
+              "data_type": "datetime2",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "590c96c3-08b9-4c1d-8b9f-92de84bbe0a2",
+              "is_selected": true,
+              "display_name": "updated_date",
+              "type": "lakehouse_tables.column",
+              "data_type": "datetime2",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "d1975f7d-910f-4027-be8f-9b84fffc2f18",
+          "is_selected": false,
+          "display_name": "airline_market_data",
+          "type": "lakehouse_tables.table",
+          "description": null,
+          "children": [
+            {
+              "id": "6419afdc-80a4-4d04-ba20-192b8e33a818",
+              "is_selected": true,
+              "display_name": "id",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "a1276b8f-eb3e-494b-a309-cfd7010fbafe",
+              "is_selected": true,
+              "display_name": "cr1",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "90a823b6-f9f4-4e96-ae37-5f319e8c3e72",
+              "is_selected": true,
+              "display_name": "cr2",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "100d9565-2ec9-4596-9266-0741e805e22b",
+              "is_selected": true,
+              "display_name": "yr",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "f2be00a5-20c0-4b53-8deb-2e034f28ef22",
+              "is_selected": true,
+              "display_name": "qtr",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "03a82fd4-a8b8-4b0a-adb5-e9df37d50382",
+              "is_selected": true,
+              "display_name": "cop",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "51abd634-60eb-46dc-b445-03ffb2d6273c",
+              "is_selected": true,
+              "display_name": "ap1",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "6ee004ff-f5fb-4d83-b1d4-a24fec72a499",
+              "is_selected": true,
+              "display_name": "ap2",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "17b5dd2a-9bb8-49da-b99d-907298af28ff",
+              "is_selected": true,
+              "display_name": "pax",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "1b95d2fb-7af6-47b1-b157-d28ba48b7dfc",
+              "is_selected": true,
+              "display_name": "nsdst",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "7e614a84-881a-485f-9291-a8c1dab0c5fe",
+              "is_selected": true,
+              "display_name": "avprc",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "4d5efe3c-6616-4da4-b961-21100c116d65",
+              "is_selected": true,
+              "display_name": "avdst",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "bc5ae488-1591-44cd-8298-0f59e86bc257",
+              "is_selected": true,
+              "display_name": "ticket_type",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "c9138a49-3f44-4722-820e-eed22a90a12f",
+              "is_selected": true,
+              "display_name": "is_connecting",
+              "type": "lakehouse_tables.column",
+              "data_type": "bit",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "cea5c065-01d2-48f4-959f-17717292de40",
+              "is_selected": true,
+              "display_name": "date",
+              "type": "lakehouse_tables.column",
+              "data_type": "datetime2",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "af74e0c8-42fd-4b15-a76a-20f54f3ab111",
+              "is_selected": true,
+              "display_name": "route",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "d35fca4a-2327-4026-82e4-5a167df0a85e",
+              "is_selected": true,
+              "display_name": "price_per_mile",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "84748f0e-8c49-49cf-aebe-d6b2d6a9b83a",
+              "is_selected": true,
+              "display_name": "routing_efficiency",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "8c56834b-5ba4-4593-8444-7fc8121efbcd",
+              "is_selected": true,
+              "display_name": "decade",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "0fbf1ed5-2274-4319-8019-88b7eac67cb5",
+              "is_selected": true,
+              "display_name": "from_major_hub",
+              "type": "lakehouse_tables.column",
+              "data_type": "bit",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "c17d7b22-5adc-41ea-9800-ce42e883f0d5",
+              "is_selected": true,
+              "display_name": "carrier_type",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "3b3dcf80-367b-422b-ae30-6110c1fe425f",
+          "is_selected": false,
+          "display_name": "dim_airports",
+          "type": "lakehouse_tables.table",
+          "description": null,
+          "children": [
+            {
+              "id": "25429d22-52af-421f-848e-8ec3eba3467c",
+              "is_selected": true,
+              "display_name": "airport_id",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "f70e50b9-c883-4ecd-a013-add60b010bc4",
+              "is_selected": true,
+              "display_name": "airport_code",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "a5639800-2807-4573-b2d2-b83fafbc7706",
+              "is_selected": true,
+              "display_name": "airport_name",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "cdbc1cbc-6b34-4557-bdbf-6f9211472d95",
+              "is_selected": true,
+              "display_name": "city",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "f159affd-dbb3-4640-b09f-058a240f469f",
+              "is_selected": true,
+              "display_name": "state",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "d1f6d5d1-c587-4cb4-b60b-57b77cac1b1b",
+              "is_selected": true,
+              "display_name": "country",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "4188c900-c70d-4630-8fa5-df24df7d17f0",
+              "is_selected": true,
+              "display_name": "latitude",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "acb245a2-712b-4f70-81f6-95e6438fce3c",
+              "is_selected": true,
+              "display_name": "longitude",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "976eb512-7dd0-46c3-9a3a-42e9f97502b9",
+              "is_selected": true,
+              "display_name": "elevation_ft",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "488b669b-2f2b-4bd3-bc8e-3294cfc4cad4",
+              "is_selected": true,
+              "display_name": "timezone",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "6ce6045f-1334-4850-ac3a-0ac6ceec5dfd",
+              "is_selected": true,
+              "display_name": "is_major_hub",
+              "type": "lakehouse_tables.column",
+              "data_type": "bit",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "1d934404-baeb-4b71-92a0-741360ac45e3",
+              "is_selected": true,
+              "display_name": "passenger_volume_category",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "1efe9a9a-aaed-43cd-8e5b-548f17e2a426",
+              "is_selected": true,
+              "display_name": "created_date",
+              "type": "lakehouse_tables.column",
+              "data_type": "datetime2",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "a77929c2-5cb4-47bc-94b6-1a3a116ff671",
+              "is_selected": true,
+              "display_name": "updated_date",
+              "type": "lakehouse_tables.column",
+              "data_type": "datetime2",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "c63179ae-70bd-49b7-b132-140e38c16ff2",
+          "is_selected": false,
+          "display_name": "dim_ticket_types",
+          "type": "lakehouse_tables.table",
+          "description": null,
+          "children": [
+            {
+              "id": "a845de8b-198c-4ceb-9e5f-42643394e8c7",
+              "is_selected": true,
+              "display_name": "ticket_type_id",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "baaf1170-d796-4f75-bf73-2de4a7a4fa1a",
+              "is_selected": true,
+              "display_name": "ticket_code",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "350180cb-378e-4d31-9719-48ee2277284c",
+              "is_selected": true,
+              "display_name": "ticket_name",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "da2a58f1-687e-4b2d-90f7-f40eaad285a7",
+              "is_selected": true,
+              "display_name": "ticket_description",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "adfd7f94-78af-43b6-9ce7-36172a7e4c08",
+              "is_selected": true,
+              "display_name": "is_round_trip",
+              "type": "lakehouse_tables.column",
+              "data_type": "bit",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "adc25352-fab5-4160-992a-545a5e721bc4",
+              "is_selected": true,
+              "display_name": "is_interline",
+              "type": "lakehouse_tables.column",
+              "data_type": "bit",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "a9578a27-f2e3-49df-bfbb-9b816b4031b1",
+              "is_selected": true,
+              "display_name": "is_open_jaw",
+              "type": "lakehouse_tables.column",
+              "data_type": "bit",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "e215a585-341a-434a-b015-d4bc3509aec2",
+              "is_selected": true,
+              "display_name": "coupon_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "e74901bc-75a2-4e79-a124-1474c07bae71",
+              "is_selected": true,
+              "display_name": "created_date",
+              "type": "lakehouse_tables.column",
+              "data_type": "datetime2",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "c3c1f462-ab7f-4772-bed0-c24678b8c8aa",
+          "is_selected": false,
+          "display_name": "dim_routes",
+          "type": "lakehouse_tables.table",
+          "description": null,
+          "children": [
+            {
+              "id": "5533b989-a2e2-4525-b647-13ab005a9413",
+              "is_selected": true,
+              "display_name": "route_id",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "ee3c15a9-d39c-43dd-8e59-bb7111225c00",
+              "is_selected": true,
+              "display_name": "origin_airport_code",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "0176fce4-1313-4211-8032-cc167bcc8030",
+              "is_selected": true,
+              "display_name": "destination_airport_code",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "f46023a5-6f5f-4e64-b2e3-8c65ca0dcd48",
+              "is_selected": true,
+              "display_name": "route_string",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "952680a1-36c3-43f7-9f93-d6fdba399d82",
+              "is_selected": true,
+              "display_name": "route_type",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "2f25489d-2a35-4af3-ab7b-18084c0a0742",
+              "is_selected": true,
+              "display_name": "is_domestic",
+              "type": "lakehouse_tables.column",
+              "data_type": "bit",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "48fe6395-456d-4627-963e-69a2a6c4fedd",
+              "is_selected": true,
+              "display_name": "is_transcontinental",
+              "type": "lakehouse_tables.column",
+              "data_type": "bit",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "0f454daa-0f19-4e81-8620-cbe948430502",
+              "is_selected": true,
+              "display_name": "distance_miles",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "abbdcc24-eebc-4e1f-9818-6c3642df2321",
+              "is_selected": true,
+              "display_name": "typical_flight_time_minutes",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "ec702bda-5614-4d88-9f29-20dbc043a5c4",
+              "is_selected": true,
+              "display_name": "route_popularity",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "80f7a2bd-9d17-4821-9d0c-4a53b5d18ca2",
+              "is_selected": true,
+              "display_name": "created_date",
+              "type": "lakehouse_tables.column",
+              "data_type": "datetime2",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "758a38e9-772c-4c9a-92ed-b1d8d3c958fa",
+              "is_selected": true,
+              "display_name": "updated_date",
+              "type": "lakehouse_tables.column",
+              "data_type": "datetime2",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "5ca228ae-be73-4cb2-81ce-8da045a9e1ef",
+          "is_selected": false,
+          "display_name": "sys_dq_metrics",
+          "type": "lakehouse_tables.table",
+          "description": null,
+          "children": [
+            {
+              "id": "91264715-8684-4b7b-abb2-1356ebaeaa8f",
+              "is_selected": true,
+              "display_name": "Namespace",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "f4153fe6-4f86-4a4d-ba3a-db059498a5b5",
+              "is_selected": true,
+              "display_name": "MLVName",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "90ffacb4-f61e-4135-8e3a-1afbc6da9eb2",
+              "is_selected": true,
+              "display_name": "MLVID",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "bf7d71d5-a92a-439b-8c3c-13ef6c52b725",
+              "is_selected": true,
+              "display_name": "RefreshPolicy",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "01a9c4ed-edf2-4968-a768-cc46ceee2483",
+              "is_selected": true,
+              "display_name": "RefreshDate",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "6728a3d7-006f-4dc5-b826-591d8ba88500",
+              "is_selected": true,
+              "display_name": "RefreshTimestamp",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "8d1b4110-f91b-4db7-9f16-6769982ef51b",
+              "is_selected": true,
+              "display_name": "Message",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "983942c5-89c2-4ce5-b943-faa641b7aaf7",
+              "is_selected": true,
+              "display_name": "TotalRowsProcessed",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "829641b4-1ce0-4389-8d58-6eb3b9d67a94",
+              "is_selected": true,
+              "display_name": "TotalRowsDropped",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "c9f841d1-9256-4a7a-85ab-d690aa208fdb",
+              "is_selected": true,
+              "display_name": "TotalViolations",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "e7640363-39cf-4697-a663-6b5244ada1e4",
+              "is_selected": true,
+              "display_name": "ViolationsPerConstraint",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "37aba800-c68d-4d72-822b-b03c656727d3",
+          "is_selected": false,
+          "display_name": "mlv_annual_airport_performance",
+          "type": "lakehouse_tables.table",
+          "description": null,
+          "children": [
+            {
+              "id": "cce95f19-3bd1-4486-ab15-ff4b856aaa42",
+              "is_selected": true,
+              "display_name": "reporting_year",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "1d7dd9c3-746b-41a7-ad63-f9f8cfaea679",
+              "is_selected": true,
+              "display_name": "airport_iata_code",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "f7914cfd-37ee-45a8-af26-d753f93238a5",
+              "is_selected": true,
+              "display_name": "annual_flight_record_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "d7cb4fb7-182f-4074-9220-2478f16e264c",
+              "is_selected": true,
+              "display_name": "annual_passenger_volume",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "9c6326f0-818e-4301-8508-bb1048a40279",
+              "is_selected": true,
+              "display_name": "serving_carrier_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "df3f0a9c-71ba-44e7-b1c7-d84591da3092",
+              "is_selected": true,
+              "display_name": "destination_airport_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "09b884b2-b9de-4fce-9256-cdb965513cee",
+              "is_selected": true,
+              "display_name": "direct_flight_passengers",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "9fe9d8e3-13a0-4dea-b5d2-201e983f454f",
+              "is_selected": true,
+              "display_name": "connecting_flight_passengers",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "a9e22bc1-25be-43b4-b8ad-4eef5f57469f",
+              "is_selected": true,
+              "display_name": "average_departure_price_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "690f0bd5-8a02-4dc3-a4eb-39c59ec7b09f",
+              "is_selected": true,
+              "display_name": "total_departure_revenue_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "180364f7-6545-4fa9-aa69-7bbd863d99b6",
+              "is_selected": true,
+              "display_name": "average_flight_distance_miles",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "99dda718-b7b8-4d7f-ae2e-7f97e86d6941",
+              "is_selected": true,
+              "display_name": "average_price_per_mile_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "8b42f4da-b5a4-4373-bb7d-d4c17eb2e5a8",
+              "is_selected": true,
+              "display_name": "previous_year_passenger_volume",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "51b1d6fe-1523-45b2-ad99-5a36ccebe58c",
+              "is_selected": true,
+              "display_name": "is_classified_major_hub",
+              "type": "lakehouse_tables.column",
+              "data_type": "bit",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "f7ea3f0a-32ce-4160-b723-3d0f7278f374",
+              "is_selected": true,
+              "display_name": "serves_major_carriers_flag",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "d7e555e3-a111-4244-854f-55c17b6d284e",
+              "is_selected": true,
+              "display_name": "serves_regional_carriers_flag",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "7d922092-c948-410c-8e8b-dc7775e01000",
+          "is_selected": false,
+          "display_name": "mlv_quarterly_summary",
+          "type": "lakehouse_tables.table",
+          "description": null,
+          "children": [
+            {
+              "id": "fb85f846-108a-4f7d-afae-62f5e7abb070",
+              "is_selected": true,
+              "display_name": "business_year",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "5ead4859-3908-4b86-9d7d-43118fc31230",
+              "is_selected": true,
+              "display_name": "business_quarter",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "74d4fdc8-af19-4a11-8ec4-dea4f80a3c04",
+              "is_selected": true,
+              "display_name": "origin_airport_code",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "7c0dc01a-bd42-4946-8846-0659adb0dcde",
+              "is_selected": true,
+              "display_name": "destination_airport_code",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "25c4e17a-97eb-4afc-8756-606d8d15d472",
+              "is_selected": true,
+              "display_name": "primary_carrier_code",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "09a7e4eb-1b42-4715-89a5-b7fe021013aa",
+              "is_selected": true,
+              "display_name": "secondary_carrier_code",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "c77c0f0a-39c2-4e22-ad76-b263b178d78a",
+              "is_selected": true,
+              "display_name": "service_type",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "d4a67d45-3179-44f2-8561-647cad15b4d8",
+              "is_selected": true,
+              "display_name": "total_flight_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "3e13ba67-fcf3-41ff-b43d-4b068d048a3a",
+              "is_selected": true,
+              "display_name": "total_passenger_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "36f11559-d5e1-43b6-8ef3-5a0bb7ca7ee2",
+              "is_selected": true,
+              "display_name": "average_passengers_per_flight",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "7b6ae704-ac24-4de9-a0f3-ade2466fac46",
+              "is_selected": true,
+              "display_name": "average_ticket_price_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "a3f907ef-dd66-474d-ab20-77ee1c6ed9fd",
+              "is_selected": true,
+              "display_name": "total_revenue_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "78492964-7da6-41b8-8d31-454b0a184417",
+              "is_selected": true,
+              "display_name": "average_nonstop_distance_miles",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "7827a80a-911c-4181-bb4c-75e9ac84bc60",
+              "is_selected": true,
+              "display_name": "average_routing_distance_miles",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "58b945b7-a54f-4f1e-b200-36575e7eb4cb",
+              "is_selected": true,
+              "display_name": "average_routing_efficiency_ratio",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "f8b28fce-3c49-4e76-bf31-7c9937b50bbb",
+              "is_selected": true,
+              "display_name": "unique_carrier_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "2c385fcb-6533-48c9-8d31-c01ffc185fb9",
+              "is_selected": true,
+              "display_name": "carrier_category",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "0a90bdd3-7e41-47cd-bec8-a9e7421aeefd",
+              "is_selected": true,
+              "display_name": "is_major_hub_origin",
+              "type": "lakehouse_tables.column",
+              "data_type": "bit",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "6ac2ec70-6247-4beb-bbc9-4bc836961046",
+          "is_selected": false,
+          "display_name": "mlv_route_performance_summary",
+          "type": "lakehouse_tables.table",
+          "description": null,
+          "children": [
+            {
+              "id": "14a47311-3d72-4cb5-b87f-6fa8d1549244",
+              "is_selected": true,
+              "display_name": "origin_airport_code",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "16d0da03-9bd9-41b1-813b-d913d6321381",
+              "is_selected": true,
+              "display_name": "destination_airport_code",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "14edb958-a467-4f72-ac5a-0e87b8dde306",
+              "is_selected": true,
+              "display_name": "first_service_year",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "174e6def-639c-4290-aee6-1cdca44f94e9",
+              "is_selected": true,
+              "display_name": "last_service_year",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "2d0c4bab-d4bd-49f7-9cde-bea67d2846ee",
+              "is_selected": true,
+              "display_name": "years_of_service",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "e3d93f6b-fea2-47e8-83b0-41752e2e9c1c",
+              "is_selected": true,
+              "display_name": "total_flight_record_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "f58405a1-7305-4ed6-be64-b74ab1ba5031",
+              "is_selected": true,
+              "display_name": "total_passenger_volume",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "4c769ece-8c60-48ee-ab81-61eb815435e2",
+              "is_selected": true,
+              "display_name": "average_passengers_per_flight",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "3b421494-9645-4598-84db-15d7f6499398",
+              "is_selected": true,
+              "display_name": "competing_carrier_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "aec022d5-a7f3-4ac8-a9bc-a3161b822239",
+              "is_selected": true,
+              "display_name": "major_carrier_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "cf90ba4a-8358-491d-aa93-e5822d9edff0",
+              "is_selected": true,
+              "display_name": "regional_carrier_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "497514a5-7d2a-4891-89ec-78ab4f8bd87e",
+              "is_selected": true,
+              "display_name": "direct_service_passengers",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "64f584f4-c668-44d0-9a23-c454f980147a",
+              "is_selected": true,
+              "display_name": "connecting_service_passengers",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "af78842e-a48c-4a8c-b539-1d6f5f107a65",
+              "is_selected": true,
+              "display_name": "average_direct_price_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "b8c2a7da-02b6-41c7-98fa-1e98458be1b4",
+              "is_selected": true,
+              "display_name": "average_connecting_price_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "32179064-2ef6-4aa0-a9fb-bed1467ea022",
+              "is_selected": true,
+              "display_name": "average_nonstop_distance_miles",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "4b68ad9c-ea4d-4443-b3fe-f3d5c0e06a74",
+              "is_selected": true,
+              "display_name": "average_routing_distance_miles",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "7b0c6e4b-88c1-44b2-8c98-7d22650065a4",
+              "is_selected": true,
+              "display_name": "average_routing_efficiency_ratio",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "0b2aee87-41b8-4d85-870b-542f49629f5d",
+              "is_selected": true,
+              "display_name": "overall_average_price_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "4d26c874-4b43-4364-ab37-39393e536dd4",
+              "is_selected": true,
+              "display_name": "total_route_revenue_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "5c81e6cf-17d7-433b-a11f-621e76afdf8e",
+              "is_selected": true,
+              "display_name": "average_price_per_mile_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "359211f4-052e-4ed7-ab60-fa878423eeb7",
+              "is_selected": true,
+              "display_name": "involves_major_hub_airport",
+              "type": "lakehouse_tables.column",
+              "data_type": "bit",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "5195a903-590e-40fa-b5bb-1cc39725ff94",
+          "is_selected": false,
+          "display_name": "mlv_data_quality_metrics",
+          "type": "lakehouse_tables.table",
+          "description": null,
+          "children": [
+            {
+              "id": "32a575a5-d8a2-467e-bcb9-df586c3fafbb",
+              "is_selected": true,
+              "display_name": "quality_check_year",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "c45c5b58-07d5-407e-ade2-e44cfe9470de",
+              "is_selected": true,
+              "display_name": "quality_check_quarter",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "c44faefb-298d-45b5-b970-5f71457717a4",
+              "is_selected": true,
+              "display_name": "total_record_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "04e7c99f-4c5b-400f-95c7-222074f61b9f",
+              "is_selected": true,
+              "display_name": "missing_destination_airport_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "6166331e-4e32-4ed0-9ffc-901d312e3c7c",
+              "is_selected": true,
+              "display_name": "missing_secondary_carrier_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "6ae8c69e-eb1a-4ef3-9144-1c397b2ffee5",
+              "is_selected": true,
+              "display_name": "zero_passenger_record_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "3412d769-e4f9-44ff-bf37-33de792d6f27",
+              "is_selected": true,
+              "display_name": "invalid_price_record_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "da345574-694c-45c9-a641-ad2a654678fa",
+              "is_selected": true,
+              "display_name": "invalid_distance_record_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "e3c134b4-df66-4480-b08c-60ae1781791a",
+              "is_selected": true,
+              "display_name": "minimum_passenger_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "bd69eab7-471b-4e95-a86f-fbd623efab18",
+              "is_selected": true,
+              "display_name": "maximum_passenger_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "f496ae9c-ae1f-40f9-adeb-e4e9c23d0a92",
+              "is_selected": true,
+              "display_name": "minimum_price_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "559223a1-80fc-4695-b224-06d9fb8ff936",
+              "is_selected": true,
+              "display_name": "maximum_price_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "0853e2fc-87d4-434f-ba4b-e9b00fd030b8",
+              "is_selected": true,
+              "display_name": "minimum_distance_miles",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "c2447b72-adfa-4385-a5a6-64c8c4d50026",
+              "is_selected": true,
+              "display_name": "maximum_distance_miles",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "46b42828-d031-4d3c-992e-f4edb8a3667e",
+              "is_selected": true,
+              "display_name": "average_passenger_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "1c1334e0-95a9-4ba6-b015-ac026a6cfdda",
+              "is_selected": true,
+              "display_name": "average_price_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "170365d3-1a35-4250-ae70-d8e8178895eb",
+              "is_selected": true,
+              "display_name": "average_distance_miles",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "dfa818fd-54d6-4b62-95f2-c68f7344f988",
+              "is_selected": true,
+              "display_name": "unique_origin_airport_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "4bb5f7a9-ad64-4958-ad39-30753e8f2843",
+              "is_selected": true,
+              "display_name": "unique_destination_airport_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "f3da4601-4848-4684-93bf-a5e67f7c058e",
+              "is_selected": true,
+              "display_name": "unique_primary_carrier_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "617a31f0-ef91-46a6-a903-18276dcd23b2",
+              "is_selected": true,
+              "display_name": "unique_secondary_carrier_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "f525093d-0b21-4ced-a0f6-3e15a9c6ef6f",
+              "is_selected": true,
+              "display_name": "destination_completeness_percentage",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "e3393201-f62a-47c3-b499-91437847a154",
+              "is_selected": true,
+              "display_name": "secondary_carrier_completeness_percentage",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "2a73ec84-bf24-4893-9902-2e08aea1a71f",
+          "is_selected": false,
+          "display_name": "mlv_time_series_market_trends",
+          "type": "lakehouse_tables.table",
+          "description": null,
+          "children": [
+            {
+              "id": "1d6d92d9-0456-4e5f-a5d4-652c9916f2ee",
+              "is_selected": true,
+              "display_name": "trend_analysis_year",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "e76c6d0c-2570-4153-b759-617ab1d4840b",
+              "is_selected": true,
+              "display_name": "trend_analysis_quarter",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "9e10ee00-6fd5-407d-92a9-f4701feaaa6a",
+              "is_selected": true,
+              "display_name": "industry_flight_record_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "930f26dc-cafa-47f8-ae2a-7ee0f54d8d45",
+              "is_selected": true,
+              "display_name": "industry_total_passengers",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "202b7744-20db-42ff-bd34-9c84605e1389",
+              "is_selected": true,
+              "display_name": "industry_average_price_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "68ba11a0-fb2c-46e5-9e9e-d51dfa934ee9",
+              "is_selected": true,
+              "display_name": "industry_total_revenue_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "1b733df3-d599-485f-aaed-c933761394d1",
+              "is_selected": true,
+              "display_name": "active_origin_airport_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "5ff317f4-b6da-402e-87bd-8561d89fac3e",
+              "is_selected": true,
+              "display_name": "active_carrier_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "cb34bd08-ed4a-46bc-9be7-3a34fe81575d",
+              "is_selected": true,
+              "display_name": "direct_route_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "0bb10246-9da5-41d5-823d-c351774e9f4c",
+              "is_selected": true,
+              "display_name": "connecting_route_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "a5fa9831-9078-4c69-a5bf-651b9f8c35a7",
+              "is_selected": true,
+              "display_name": "industry_average_distance_miles",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "1c65c77e-2c75-4b66-942d-9bc5cbe01b7d",
+              "is_selected": true,
+              "display_name": "industry_routing_efficiency",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "b500ea8c-8ebb-47f0-a26a-e75f51e868ac",
+              "is_selected": true,
+              "display_name": "major_carrier_passenger_volume",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "8328720b-1a77-421f-bf8d-e512102f85b9",
+              "is_selected": true,
+              "display_name": "regional_carrier_passenger_volume",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "29a3720f-f00f-4924-9825-234a2bc440d4",
+              "is_selected": true,
+              "display_name": "major_hub_passenger_volume",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "a174409b-44b1-4334-bef1-91a63df748fd",
+              "is_selected": true,
+              "display_name": "price_25th_percentile_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "3676117f-651d-40e1-9dfe-53c764cf5561",
+              "is_selected": true,
+              "display_name": "price_median_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "12ca6b93-5204-4d82-9867-305f64ff5de3",
+              "is_selected": true,
+              "display_name": "price_75th_percentile_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "610787d8-a2be-4002-90ec-414c30d7e981",
+              "is_selected": true,
+              "display_name": "price_90th_percentile_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "a1001896-5830-486d-bed7-056fbf724caa",
+          "is_selected": false,
+          "display_name": "mlv_carrier_market_performance",
+          "type": "lakehouse_tables.table",
+          "description": null,
+          "children": [
+            {
+              "id": "437cbb5c-f450-4b84-aaa7-64ab443ae011",
+              "is_selected": true,
+              "display_name": "performance_year",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "b158e8c2-7913-4d17-8e01-1faa42e04da6",
+              "is_selected": true,
+              "display_name": "performance_quarter",
+              "type": "lakehouse_tables.column",
+              "data_type": "int",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "d6d7b6f6-e2f1-438a-9efe-af4975f3b8a3",
+              "is_selected": true,
+              "display_name": "airline_carrier_code",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "2cbd49eb-8fbd-46e4-a92e-80fc6e27ce17",
+              "is_selected": true,
+              "display_name": "airline_business_category",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "4e1775d6-8d5f-4117-aecd-37ab186b637a",
+              "is_selected": true,
+              "display_name": "route_origin_airport",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "32b4e6a7-4fd3-4d24-87ea-7df9862b1247",
+              "is_selected": true,
+              "display_name": "route_destination_airport",
+              "type": "lakehouse_tables.column",
+              "data_type": "varchar",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "a7e67c67-5011-4ec3-9029-37f111ac75cb",
+              "is_selected": true,
+              "display_name": "route_flight_record_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "4f4bdb1a-10c6-4ee4-946b-5c51f2a3050d",
+              "is_selected": true,
+              "display_name": "route_passenger_volume",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "0db102ec-53ea-4096-847d-d7f4ff0b0ddb",
+              "is_selected": true,
+              "display_name": "route_average_price_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "77eb0002-daf6-4e7d-bee7-5b9b61dbdbba",
+              "is_selected": true,
+              "display_name": "route_total_revenue_usd",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "a3cb1460-7e3e-413d-b775-214718276246",
+              "is_selected": true,
+              "display_name": "route_distance_miles",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "add92498-2de2-4df4-a8c1-a340d6347d61",
+              "is_selected": true,
+              "display_name": "route_efficiency_ratio",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "70bee81e-5bae-4361-8016-88896a72f7e4",
+              "is_selected": true,
+              "display_name": "route_market_share_percentage",
+              "type": "lakehouse_tables.column",
+              "data_type": "decimal",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "ab8684d9-7930-4977-a5c3-b6da6abd7b18",
+              "is_selected": true,
+              "display_name": "direct_service_passenger_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "7e53ac87-cd79-43be-8252-40d29bd37eff",
+              "is_selected": true,
+              "display_name": "connecting_service_passenger_count",
+              "type": "lakehouse_tables.column",
+              "data_type": "bigint",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "b98300d3-50e1-4864-aa21-2c7740c47da7",
+              "is_selected": true,
+              "display_name": "operates_from_major_hub_flag",
+              "type": "lakehouse_tables.column",
+              "data_type": "bit",
+              "description": null,
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

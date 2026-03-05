@@ -1,0 +1,77 @@
+table dim_gl_account_sample
+	lineageTag: 5f8f4c5c-dd39-4016-a353-3d3e9b054806
+	sourceLineageTag: [dbo].[dim_gl_account_sample]
+
+	column GLAccountNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 952119e4-3bfe-43d8-a6e9-60fd95bd4035
+		sourceLineageTag: GLAccountNumber
+		summarizeBy: none
+		sourceColumn: GLAccountNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column GLAccountName
+		dataType: string
+		lineageTag: a2fede1b-9af2-4270-879a-79a5dfd9369a
+		sourceLineageTag: GLAccountName
+		summarizeBy: none
+		sourceColumn: GLAccountName
+
+		annotation SummarizationSetBy = Automatic
+
+	column AccountCategory
+		dataType: string
+		lineageTag: 65cdf3d8-d3e8-4119-bbb3-0d37769b7a43
+		sourceLineageTag: AccountCategory
+		summarizeBy: none
+		sourceColumn: AccountCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column AccountSubCategory
+		dataType: string
+		lineageTag: 66cf3794-68bf-48a0-9760-7a5cf50b3b10
+		sourceLineageTag: AccountSubCategory
+		summarizeBy: none
+		sourceColumn: AccountSubCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column IFRSClassification
+		dataType: string
+		lineageTag: 5df10e4c-6f41-4dc2-8952-0d36524e64b1
+		sourceLineageTag: IFRSClassification
+		summarizeBy: none
+		sourceColumn: IFRSClassification
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsBalanceSheet
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: afc58378-d2df-458f-b7d1-a0a0b07fe826
+		sourceLineageTag: IsBalanceSheet
+		summarizeBy: none
+		sourceColumn: IsBalanceSheet
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsProfitLoss
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: f843c033-6f5a-4bce-b571-6ffcbc1e75e0
+		sourceLineageTag: IsProfitLoss
+		summarizeBy: none
+		sourceColumn: IsProfitLoss
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_gl_account_sample = entity
+		mode: directLake
+		source
+			entityName: dim_gl_account_sample
+			schemaName: dbo
+			expressionSource: 'DirectLake - lhfinance'
+

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Ontology",
+    "displayName": "custcomplaintsont"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "efa963a1-3128-b1b6-4297-10f2c62967b0"
+  }
+}

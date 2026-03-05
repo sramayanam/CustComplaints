@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/ontology/relationshipType/1.0.0/schema.json",
+  "namespace": "usertypes",
+  "id": "8771595482471592984",
+  "name": "dfw_quarterly_mktg_has_dim_airlines",
+  "namespaceType": "Imported",
+  "source": {
+    "entityTypeId": "80549593680595"
+  },
+  "target": {
+    "entityTypeId": "41148801929480"
+  }
+}

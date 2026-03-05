@@ -1,0 +1,58 @@
+{
+  "queryset": {
+    "version": "1.0.0",
+    "dataSources": [
+      {
+        "id": "2613afc1-b205-41b3-9ab2-bf51a7db0b64",
+        "clusterUri": "https://trd-ayww7p3t1qz6ckmwas.z3.kusto.fabric.microsoft.com",
+        "type": "Fabric",
+        "databaseItemId": "27d8d2fc-b1ff-4c08-a632-9918b0ddcf93",
+        "databaseItemName": "airlinesEH"
+      }
+    ],
+    "tabs": [
+      {
+        "id": "e56e7532-d4eb-4222-bfce-4e4630664762",
+        "content": "//***********************************************************************************************************\n// Here are two articles to help you get started with KQL:\n// KQL reference guide - https://aka.ms/KQLguide\n// SQL - KQL conversions - https://aka.ms/sqlcheatsheet\n//***********************************************************************************************************\n\n// Use \"take\" to view a sample number of records in the table and check the data.\nYOUR_TABLE_HERE\n| take 100\n\n// See how many records are in the table.\nYOUR_TABLE_HERE\n| count\n\n// This query returns the number of ingestions per hour in the given table.\nYOUR_TABLE_HERE\n| summarize IngestionCount = count() by bin(ingestion_time(), 1h)\n\n",
+        "title": "Tab",
+        "dataSourceId": "2613afc1-b205-41b3-9ab2-bf51a7db0b64"
+      },
+      {
+        "id": "74108478-bdad-4000-9b00-6a541eba8160",
+        "content": "// Use 'take' to view a sample number of records in the table and check the data.\npassengers\n| take 100\n",
+        "title": "",
+        "dataSourceId": "2613afc1-b205-41b3-9ab2-bf51a7db0b64"
+      },
+      {
+        "id": "82583c2a-37c7-42d7-b5f0-5d17a4f797d1",
+        "content": "// Use 'take' to view a sample number of records in the table and check the data.\npassengers\n| take 100\n",
+        "title": "",
+        "dataSourceId": "2613afc1-b205-41b3-9ab2-bf51a7db0b64"
+      },
+      {
+        "id": "fd9d6b25-14ee-42ad-a617-811a4e22bc04",
+        "content": "// Use 'take' to view a sample number of records in the table and check the data.\npassengers\n| take 100\n",
+        "title": "",
+        "dataSourceId": "2613afc1-b205-41b3-9ab2-bf51a7db0b64"
+      },
+      {
+        "id": "99cf1c05-c797-4307-92eb-d1dd6ca568f8",
+        "content": "// View a representation of the schema as a table with column names, column type, and data type.\npassengers\n| getschema\n",
+        "title": "",
+        "dataSourceId": "2613afc1-b205-41b3-9ab2-bf51a7db0b64"
+      },
+      {
+        "id": "68a83f30-138e-4d41-8c12-96f276f72910",
+        "content": "passengers | summarize n=count() by passenger_id | where n > 1\n",
+        "title": "",
+        "dataSourceId": "2613afc1-b205-41b3-9ab2-bf51a7db0b64"
+      },
+      {
+        "id": "a5358000-5e88-4030-b746-ec791ac8ae69",
+        "content": "passengersnew\n| where passenger_id between (24 .. 27)\n| project passenger_id, first_name, last_name, frequent_flyer_tier, country\n",
+        "title": "",
+        "dataSourceId": "2613afc1-b205-41b3-9ab2-bf51a7db0b64"
+      }
+    ]
+  }
+}

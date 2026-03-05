@@ -1,0 +1,238 @@
+{
+  "schema_version": 68,
+  "autoRefresh": {
+    "enabled": true
+  },
+  "tiles": [
+    {
+      "id": "f1ada908-bd21-4eeb-afa7-cb87f158dd5b",
+      "title": "Passengers with Multiple Open Cases",
+      "visualType": "table",
+      "pageId": "6768c91b-4bac-4e42-9f7d-28ab02eb5cad",
+      "layout": {
+        "x": 0,
+        "y": 7,
+        "width": 10,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "084143dd-215d-4034-97c3-20c56a05530e"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": true,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": []
+      }
+    },
+    {
+      "id": "928e012a-b849-4a04-8d55-5702c3fbf54f",
+      "title": "Complaints by Category and Severity",
+      "description": "shows which categories are hottest and how severe.",
+      "visualType": "bar",
+      "pageId": "6768c91b-4bac-4e42-9f7d-28ab02eb5cad",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 10,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "71e27a30-ed72-4a25-ac82-fa0d16b08d40"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "seriesColors": {
+          "severity:Critical:count_": "color--(25)",
+          "severity:High:count_": "color--(24)",
+          "severity:Low:count_": "color--(20)",
+          "severity:Medium:count_": "color--(22)"
+        },
+        "hideLegend": false,
+        "legendLocation": "right",
+        "xColumnTitle": "",
+        "xColumn": "category",
+        "yColumns": [
+          "count_"
+        ],
+        "seriesColumns": [
+          "severity"
+        ],
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "forceAxisTicks": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        }
+      }
+    },
+    {
+      "id": "e3fd5055-7b90-4a11-830c-2fc9c7f159d6",
+      "title": "Complaint Funnel by Status",
+      "description": "Donut/Pie — shows resolution health at a glance.\n\n\n",
+      "visualType": "funnel",
+      "pageId": "6768c91b-4bac-4e42-9f7d-28ab02eb5cad",
+      "layout": {
+        "x": 10,
+        "y": 0,
+        "width": 14,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "9bbbcec0-8603-4ca3-a899-2d03966708c3"
+      },
+      "visualOptions": {
+        "xColumn": null,
+        "yColumns": null,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "00ba0a85-9256-420a-a066-88971c9b8169",
+      "title": "Passenger Tier vs Avg Satisfaction",
+      "description": "Column chart — shows whether elite flyers get better resolution.",
+      "visualType": "column",
+      "pageId": "6768c91b-4bac-4e42-9f7d-28ab02eb5cad",
+      "layout": {
+        "x": 10,
+        "y": 7,
+        "width": 14,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "77b789ac-c380-469e-a4eb-e48c6440f2e6"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "seriesColors": {},
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "forceAxisTicks": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    }
+  ],
+  "baseQueries": [],
+  "parameters": [
+    {
+      "kind": "duration",
+      "id": "9b6163a7-b2a5-4b60-907d-f5534d97bdc6",
+      "displayName": "Time range",
+      "description": "",
+      "beginVariableName": "_startTime",
+      "endVariableName": "_endTime",
+      "defaultValue": {
+        "kind": "dynamic",
+        "count": 1,
+        "unit": "hours"
+      },
+      "showOnPages": {
+        "kind": "all"
+      }
+    }
+  ],
+  "dataSources": [
+    {
+      "kind": "kusto-trident",
+      "id": "9f9ecc39-7e11-4128-beaf-d1a24293afff",
+      "name": "airlinesEH",
+      "clusterUri": "",
+      "database": "b0ddcf93-9918-a632-4c08-b1ff27d8d2fc",
+      "workspace": "00000000-0000-0000-0000-000000000000",
+      "scopeId": "kusto-trident"
+    }
+  ],
+  "pages": [
+    {
+      "name": "Page 1",
+      "id": "6768c91b-4bac-4e42-9f7d-28ab02eb5cad"
+    }
+  ],
+  "queries": [
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "9f9ecc39-7e11-4128-beaf-d1a24293afff"
+      },
+      "text": "casesnew\n| where case_status !in (\"Resolved\", \"Closed\")\n| summarize open_cases=count() by passenger_id\n| where open_cases > 1\n| join kind=inner (passengersnew | project passenger_id, first_name, last_name, frequent_flyer_tier) on passenger_id\n| project first_name, last_name, frequent_flyer_tier, open_cases\n| order by open_cases desc\n",
+      "id": "084143dd-215d-4034-97c3-20c56a05530e",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "9f9ecc39-7e11-4128-beaf-d1a24293afff"
+      },
+      "text": "complaintsnew\n| summarize count() by category, severity\n| order by count_ desc",
+      "id": "71e27a30-ed72-4a25-ac82-fa0d16b08d40",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "9f9ecc39-7e11-4128-beaf-d1a24293afff"
+      },
+      "text": "complaintsnew\n| summarize count() by status\n| order by count_ desc",
+      "id": "9bbbcec0-8603-4ca3-a899-2d03966708c3",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "9f9ecc39-7e11-4128-beaf-d1a24293afff"
+      },
+      "text": "complaintsnew\n| where satisfaction_score != \"\"\n| extend score = todouble(satisfaction_score)\n| join kind=inner (passengersnew | project passenger_id, frequent_flyer_tier) on passenger_id\n| summarize avg_score=round(avg(score), 2), complaints=count() by frequent_flyer_tier\n| order by avg_score asc\n",
+      "id": "77b789ac-c380-469e-a4eb-e48c6440f2e6",
+      "usedVariables": []
+    }
+  ]
+}

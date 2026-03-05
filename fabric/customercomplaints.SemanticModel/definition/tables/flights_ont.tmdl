@@ -1,0 +1,167 @@
+table flights_ont
+	lineageTag: 78fe71af-367e-444d-b692-0efee2c50600
+	sourceLineageTag: [dbo].[flights_ont]
+
+	column flight_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 3b44d1bf-762c-4057-98e2-8743539748aa
+		sourceLineageTag: flight_id
+		summarizeBy: none
+		sourceColumn: flight_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column flight_number
+		dataType: string
+		lineageTag: e8f78a93-b9fc-4d98-849b-f6ed8f66f2af
+		sourceLineageTag: flight_number
+		summarizeBy: none
+		sourceColumn: flight_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column origin_code
+		dataType: string
+		lineageTag: 8dd516da-7686-4b67-8bae-9d6c1303d250
+		sourceLineageTag: origin_code
+		summarizeBy: none
+		sourceColumn: origin_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column origin_city
+		dataType: string
+		lineageTag: 2dba8e1a-cacf-4cfc-8de4-8122d24955a1
+		sourceLineageTag: origin_city
+		summarizeBy: none
+		sourceColumn: origin_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column destination_code
+		dataType: string
+		lineageTag: adfa762b-d109-481f-844b-c0731ca621ac
+		sourceLineageTag: destination_code
+		summarizeBy: none
+		sourceColumn: destination_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column destination_city
+		dataType: string
+		lineageTag: 93b0d87a-e697-4271-8a25-c9a5497bf29d
+		sourceLineageTag: destination_city
+		summarizeBy: none
+		sourceColumn: destination_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column scheduled_departure
+		dataType: string
+		lineageTag: 6fd03595-a548-4fd6-8422-d82676b69ecb
+		sourceLineageTag: scheduled_departure
+		summarizeBy: none
+		sourceColumn: scheduled_departure
+
+		annotation SummarizationSetBy = Automatic
+
+	column actual_departure
+		dataType: string
+		lineageTag: 11d35391-5f9f-4881-a6d3-069d59f32fa7
+		sourceLineageTag: actual_departure
+		summarizeBy: none
+		sourceColumn: actual_departure
+
+		annotation SummarizationSetBy = Automatic
+
+	column scheduled_arrival
+		dataType: string
+		lineageTag: b6bbb2dc-a61c-4d0b-8dbc-59cbd1b2312c
+		sourceLineageTag: scheduled_arrival
+		summarizeBy: none
+		sourceColumn: scheduled_arrival
+
+		annotation SummarizationSetBy = Automatic
+
+	column actual_arrival
+		dataType: string
+		lineageTag: bf85178c-b65e-431f-acc6-6f6b71cc5bd5
+		sourceLineageTag: actual_arrival
+		summarizeBy: none
+		sourceColumn: actual_arrival
+
+		annotation SummarizationSetBy = Automatic
+
+	column aircraft_type
+		dataType: string
+		lineageTag: b7b83331-3e76-4301-b891-4a5c24fa4a04
+		sourceLineageTag: aircraft_type
+		summarizeBy: none
+		sourceColumn: aircraft_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column flight_status
+		dataType: string
+		lineageTag: 6c3cdc94-4fd8-4aa3-85f1-d36e4559cb6c
+		sourceLineageTag: flight_status
+		summarizeBy: none
+		sourceColumn: flight_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column delay_minutes
+		dataType: int64
+		formatString: 0
+		lineageTag: f8baa37b-c76d-4a48-889e-3479c81e83be
+		sourceLineageTag: delay_minutes
+		summarizeBy: none
+		sourceColumn: delay_minutes
+
+		annotation SummarizationSetBy = Automatic
+
+	column event_id
+		dataType: string
+		lineageTag: 817bdfea-f9a2-4538-a709-cd75d62f0c46
+		sourceLineageTag: event_id
+		summarizeBy: none
+		sourceColumn: event_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column schema_version
+		dataType: string
+		lineageTag: 54c33d61-4fef-4f4d-8ba3-bf861ce49f77
+		sourceLineageTag: schema_version
+		summarizeBy: none
+		sourceColumn: schema_version
+
+		annotation SummarizationSetBy = Automatic
+
+	column produced_at
+		dataType: string
+		lineageTag: 58d331a2-d64d-4c05-b7e2-7f8562450a07
+		sourceLineageTag: produced_at
+		summarizeBy: none
+		sourceColumn: produced_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column current_time
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d2d59b0c-d3b3-4691-be8b-9baa687d610b
+		sourceLineageTag: current_time
+		summarizeBy: none
+		sourceColumn: current_time
+
+		annotation SummarizationSetBy = Automatic
+
+	partition flights_ont = entity
+		mode: directLake
+		source
+			entityName: flights_ont
+			schemaName: dbo
+			expressionSource: 'DirectLake - airlinesLH'
+

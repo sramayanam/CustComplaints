@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "KQLDashboard",
+    "displayName": "AirlinesDasboard",
+    "description": "AirlinesDasboard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c30b40ce-7cea-8d28-47b4-7bce68100e68"
+  }
+}

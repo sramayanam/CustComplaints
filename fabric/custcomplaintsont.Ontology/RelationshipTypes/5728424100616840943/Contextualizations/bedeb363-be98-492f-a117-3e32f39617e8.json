@@ -1,0 +1,23 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/ontology/contextualization/1.0.0/schema.json",
+  "id": "bedeb363-be98-492f-a117-3e32f39617e8",
+  "dataBindingTable": {
+    "workspaceId": "00000000-0000-0000-0000-000000000000",
+    "itemId": "d663ca8d-44a3-be15-407c-8c6e08bf1610",
+    "sourceTableName": "complaints_ont",
+    "sourceSchema": "dbo",
+    "sourceType": "LakehouseTable"
+  },
+  "sourceKeyRefBindings": [
+    {
+      "sourceColumnName": "case_id",
+      "targetPropertyId": "5733413941814939038"
+    }
+  ],
+  "targetKeyRefBindings": [
+    {
+      "sourceColumnName": "complaint_id",
+      "targetPropertyId": "5759313541650009296"
+    }
+  ]
+}

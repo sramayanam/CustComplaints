@@ -1,0 +1,8 @@
+// KQL script
+// Use management commands in this script to configure your database items, such as tables, functions, materialized views, and more.
+
+
+.create-merge table casesnew (case_id:long, passenger_id:long, flight_id:long, flight_number:string, pnr:string, case_status:string, opened_at:string, last_updated_at:string, closed_at:string, current_time:datetime, event_id:string, schema_version:string, produced_at:string) 
+.create-merge table complaintsnew (complaint_id:long, case_id:long, passenger_id:long, flight_id:long, flight_number:string, pnr:string, complaint_date:string, category:string, subcategory:string, description:string, severity:string, status:string, assigned_agent:string, resolution_notes:string, resolution_date:string, satisfaction_score:string, current_time:datetime, event_id:string, schema_version:string, produced_at:string) 
+.create-merge table flightsn (flight_id:long, flight_number:string, origin_code:string, origin_city:string, destination_code:string, destination_city:string, scheduled_departure:string, actual_departure:string, scheduled_arrival:string, actual_arrival:string, aircraft_type:string, flight_status:string, delay_minutes:long, event_id:string, schema_version:string, produced_at:string, current_time:datetime) 
+.create-merge table passengersnew (passenger_id:long, first_name:string, last_name:string, email:string, phone:string, country:string, frequent_flyer_tier:string, total_flights:long, member_since:string, current_time:datetime, event_id:string, schema_version:string, produced_at:string) 

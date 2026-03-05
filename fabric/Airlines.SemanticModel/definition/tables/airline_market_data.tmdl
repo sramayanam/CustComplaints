@@ -1,0 +1,243 @@
+table airline_market_data
+	lineageTag: 9cf6ddab-f5cb-497c-9a4f-a3e4b1ca1ac3
+	sourceLineageTag: [dbo].[airline_market_data]
+
+	column id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: e1d0b6e8-89aa-4609-ae8e-d208dabfc1da
+		sourceLineageTag: id
+		summarizeBy: sum
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column cr1
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 4f58d7b1-81c9-44c0-99b8-b0a8a2156675
+		sourceLineageTag: cr1
+		summarizeBy: none
+		sourceColumn: cr1
+
+		annotation SummarizationSetBy = Automatic
+
+	column cr2
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 2d1e3688-9ed4-4a78-8414-c69c6391f341
+		sourceLineageTag: cr2
+		summarizeBy: none
+		sourceColumn: cr2
+
+		annotation SummarizationSetBy = Automatic
+
+	column yr
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 120fdffe-3cbf-4bc5-8b42-5c8eb842428f
+		sourceLineageTag: yr
+		summarizeBy: sum
+		sourceColumn: yr
+
+		annotation SummarizationSetBy = Automatic
+
+	column qtr
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 672f6a25-2451-45f7-a22c-a5bd585f8121
+		sourceLineageTag: qtr
+		summarizeBy: sum
+		sourceColumn: qtr
+
+		annotation SummarizationSetBy = Automatic
+
+	column cop
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 460570db-3730-4823-b36a-486413ea54c1
+		sourceLineageTag: cop
+		summarizeBy: sum
+		sourceColumn: cop
+
+		annotation SummarizationSetBy = Automatic
+
+	column ap1
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 52a490d9-e5f2-4af3-a360-bec7290ffebc
+		sourceLineageTag: ap1
+		summarizeBy: none
+		sourceColumn: ap1
+
+		annotation SummarizationSetBy = Automatic
+
+	column ap2
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 229b5dd4-a24d-47c8-93d3-283bbbda7e97
+		sourceLineageTag: ap2
+		summarizeBy: none
+		sourceColumn: ap2
+
+		annotation SummarizationSetBy = Automatic
+
+	column pax
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: fc391283-6ea0-40c7-9bef-67fe67c52a0c
+		sourceLineageTag: pax
+		summarizeBy: sum
+		sourceColumn: pax
+
+		annotation SummarizationSetBy = Automatic
+
+	column nsdst
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: aa4720c7-269b-470b-b2b2-d7417732cd56
+		sourceLineageTag: nsdst
+		summarizeBy: sum
+		sourceColumn: nsdst
+
+		annotation SummarizationSetBy = Automatic
+
+	column avprc
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		sourceProviderType: decimal(10, 2)
+		lineageTag: b19b8834-fb31-40b8-8a9a-657b5b756df4
+		sourceLineageTag: avprc
+		summarizeBy: sum
+		sourceColumn: avprc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column avdst
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		sourceProviderType: decimal(10, 2)
+		lineageTag: 452f90e0-3de0-4109-8b35-0ce48170bc23
+		sourceLineageTag: avdst
+		summarizeBy: sum
+		sourceColumn: avdst
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column ticket_type
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 86bcb586-950a-4566-b2d8-1abf16175137
+		sourceLineageTag: ticket_type
+		summarizeBy: none
+		sourceColumn: ticket_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_connecting
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: adeb5e46-e306-4e75-ae1b-c5198207eaf8
+		sourceLineageTag: is_connecting
+		summarizeBy: none
+		sourceColumn: is_connecting
+
+		annotation SummarizationSetBy = Automatic
+
+	column date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 1b652cc3-2679-4acf-ab92-29d35aafada4
+		sourceLineageTag: date
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+	column route
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 8f87abd8-2f7f-4d36-b73b-cbf6ac7560e5
+		sourceLineageTag: route
+		summarizeBy: none
+		sourceColumn: route
+
+		annotation SummarizationSetBy = Automatic
+
+	column price_per_mile
+		dataType: double
+		sourceProviderType: decimal(10, 6)
+		lineageTag: bbe1c00b-c5e1-46a9-b8bf-a6e0f6d412af
+		sourceLineageTag: price_per_mile
+		summarizeBy: sum
+		sourceColumn: price_per_mile
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column routing_efficiency
+		dataType: double
+		sourceProviderType: decimal(10, 6)
+		lineageTag: d264dbde-5001-4b49-8fa8-47085e7773ef
+		sourceLineageTag: routing_efficiency
+		summarizeBy: sum
+		sourceColumn: routing_efficiency
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column decade
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 78afc517-5188-4e12-9045-94b72aa61440
+		sourceLineageTag: decade
+		summarizeBy: sum
+		sourceColumn: decade
+
+		annotation SummarizationSetBy = Automatic
+
+	column from_major_hub
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: 3e456087-5796-4b9b-8ec8-a7c8b3e38a91
+		sourceLineageTag: from_major_hub
+		summarizeBy: none
+		sourceColumn: from_major_hub
+
+		annotation SummarizationSetBy = Automatic
+
+	column carrier_type
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 7deb8981-400b-442e-9df2-2a333dc44bb7
+		sourceLineageTag: carrier_type
+		summarizeBy: none
+		sourceColumn: carrier_type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition airline_market_data = entity
+		mode: directLake
+		source
+			entityName: airline_market_data
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

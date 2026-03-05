@@ -1,0 +1,44 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/dataSource/1.0.0/schema.json",
+  "artifactId": "efa963a1-3128-b1b6-4297-10f2c62967b0",
+  "workspaceId": "00000000-0000-0000-0000-000000000000",
+  "dataSourceInstructions": null,
+  "displayName": "custcomplaintsont",
+  "type": "ontology",
+  "userDescription": null,
+  "metadata": {},
+  "elements": [
+    {
+      "id": "Complaint",
+      "is_selected": true,
+      "display_name": "Complaint",
+      "type": "ontology.entity",
+      "description": "complaint_id,complaint_date,case_id,current_time,passenger_id,produced_at,flight_id,resolution_date,flight_number,pnr,category,subcategory,description,severity,status,assigned_agent,resolution_notes,satisfaction_score,event_id,schema_version",
+      "children": []
+    },
+    {
+      "id": "Case",
+      "is_selected": true,
+      "display_name": "Case",
+      "type": "ontology.entity",
+      "description": "case_id,passenger_id,flight_id,flight_number,pnr,case_status,event_id,schema_version",
+      "children": []
+    },
+    {
+      "id": "passenger",
+      "is_selected": true,
+      "display_name": "passenger",
+      "type": "ontology.entity",
+      "description": "country,current_time,email,produced_at,event_id,first_name,frequent_flyer_tier,last_name,member_since,passenger_id,phone,schema_version,total_flights",
+      "children": []
+    },
+    {
+      "id": "Flight",
+      "is_selected": true,
+      "display_name": "Flight",
+      "type": "ontology.entity",
+      "description": "flight_id,flight_number,origin_code,origin_city,destination_code,destination_city,aircraft_type,flight_status,delay_minutes,event_id,schema_version",
+      "children": []
+    }
+  ]
+}

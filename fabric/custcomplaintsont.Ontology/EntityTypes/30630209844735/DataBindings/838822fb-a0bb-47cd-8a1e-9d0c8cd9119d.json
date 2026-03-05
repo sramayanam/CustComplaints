@@ -1,0 +1,98 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/ontology/dataBinding/1.0.0/schema.json",
+  "id": "838822fb-a0bb-47cd-8a1e-9d0c8cd9119d",
+  "dataBindingConfiguration": {
+    "dataBindingType": "TimeSeries",
+    "timestampColumnName": "current_time",
+    "propertyBindings": [
+      {
+        "sourceColumnName": "complaint_date",
+        "targetPropertyId": "5760979953486101193"
+      },
+      {
+        "sourceColumnName": "current_time",
+        "targetPropertyId": "5760979954468318227"
+      },
+      {
+        "sourceColumnName": "produced_at",
+        "targetPropertyId": "5760979950969201670"
+      },
+      {
+        "sourceColumnName": "resolution_date",
+        "targetPropertyId": "5760979953309694905"
+      },
+      {
+        "sourceColumnName": "complaint_id",
+        "targetPropertyId": "5759313541650009296"
+      },
+      {
+        "sourceColumnName": "case_id",
+        "targetPropertyId": "5759313539524259841"
+      },
+      {
+        "sourceColumnName": "passenger_id",
+        "targetPropertyId": "5759313540609043615"
+      },
+      {
+        "sourceColumnName": "flight_id",
+        "targetPropertyId": "5759313539443826680"
+      },
+      {
+        "sourceColumnName": "flight_number",
+        "targetPropertyId": "5759313540858586522"
+      },
+      {
+        "sourceColumnName": "pnr",
+        "targetPropertyId": "5759313539718612581"
+      },
+      {
+        "sourceColumnName": "category",
+        "targetPropertyId": "5759313539592006479"
+      },
+      {
+        "sourceColumnName": "subcategory",
+        "targetPropertyId": "5759313540859489939"
+      },
+      {
+        "sourceColumnName": "description",
+        "targetPropertyId": "5759313537973528805"
+      },
+      {
+        "sourceColumnName": "severity",
+        "targetPropertyId": "5759313540256117942"
+      },
+      {
+        "sourceColumnName": "status",
+        "targetPropertyId": "5759313540245460715"
+      },
+      {
+        "sourceColumnName": "assigned_agent",
+        "targetPropertyId": "5759313539613093578"
+      },
+      {
+        "sourceColumnName": "resolution_notes",
+        "targetPropertyId": "5759313539508589078"
+      },
+      {
+        "sourceColumnName": "satisfaction_score",
+        "targetPropertyId": "5759313539765329504"
+      },
+      {
+        "sourceColumnName": "event_id",
+        "targetPropertyId": "5759313538801600122"
+      },
+      {
+        "sourceColumnName": "schema_version",
+        "targetPropertyId": "5759313538738094466"
+      }
+    ],
+    "sourceTableProperties": {
+      "sourceType": "KustoTable",
+      "workspaceId": "12204d44-688c-40db-9593-4d23c9ad3e51",
+      "itemId": "a6d2a320-35d7-4e5e-ba5e-9caa2577449d",
+      "clusterUri": "https://trd-ayww7p3t1qz6ckmwas.z3.kusto.fabric.microsoft.com",
+      "databaseName": "airlinesEH",
+      "sourceTableName": "complaintsnew"
+    }
+  }
+}

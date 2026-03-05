@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataAgent",
+    "displayName": "AirlinesDataAgent"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "a1354e7d-00ed-a2af-483c-463d1896efd3"
+  }
+}

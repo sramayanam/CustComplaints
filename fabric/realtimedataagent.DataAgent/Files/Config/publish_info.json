@@ -1,0 +1,4 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/publishInfo/1.0.0/schema.json",
+  "description": "Zava Air customer experience analyst — answers questions about complaints, support cases, flight disruptions, and passenger profiles using real-time data from Eventhouse.\nSurfaces critical and escalated issues first, joins across complaints, cases, flights, and passengers, and provides counts, trends, and resolution metrics."
+}

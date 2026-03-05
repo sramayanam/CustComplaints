@@ -1,0 +1,152 @@
+table dim_airlines
+	lineageTag: 36e7bd97-afda-42b1-8b86-9d836edc15ca
+	sourceLineageTag: [dbo].[dim_airlines]
+
+	column airline_id
+		dataType: int64
+		formatString: 0
+		lineageTag: dd85fd9f-8825-4580-8381-c9095ce9fe76
+		sourceLineageTag: airline_id
+		summarizeBy: none
+		sourceColumn: airline_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column carrier_code
+		dataType: string
+		lineageTag: 6baeba2d-684d-4c2b-8b51-a72d29de2762
+		sourceLineageTag: carrier_code
+		summarizeBy: none
+		sourceColumn: carrier_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column airline_name
+		dataType: string
+		lineageTag: 8800132e-9c0b-42cf-9493-63c5e3699a5a
+		sourceLineageTag: airline_name
+		summarizeBy: none
+		sourceColumn: airline_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column airline_name_full
+		dataType: string
+		lineageTag: 598de656-34a7-44e0-a81c-8202f02d08ff
+		sourceLineageTag: airline_name_full
+		summarizeBy: none
+		sourceColumn: airline_name_full
+
+		annotation SummarizationSetBy = Automatic
+
+	column country
+		dataType: string
+		lineageTag: 3c728d8b-4c19-4ac2-b971-84e216377085
+		sourceLineageTag: country
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	column carrier_type
+		dataType: string
+		lineageTag: bccda7b7-34ff-4262-ba7b-9295323cbe49
+		sourceLineageTag: carrier_type
+		summarizeBy: none
+		sourceColumn: carrier_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_active
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 8e9cb8ce-7c7e-4b38-92b7-91510538c755
+		sourceLineageTag: is_active
+		summarizeBy: none
+		sourceColumn: is_active
+
+		annotation SummarizationSetBy = Automatic
+
+	column founded_year
+		dataType: int64
+		formatString: 0
+		lineageTag: f41c0a50-5d7b-479f-8c95-c7466eda7e9e
+		sourceLineageTag: founded_year
+		summarizeBy: none
+		sourceColumn: founded_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column fleet_size
+		dataType: int64
+		formatString: 0
+		lineageTag: 5a19c2fc-728a-4949-a6d2-ec1aa31c3680
+		sourceLineageTag: fleet_size
+		summarizeBy: none
+		sourceColumn: fleet_size
+
+		annotation SummarizationSetBy = Automatic
+
+	column headquarters_city
+		dataType: string
+		lineageTag: d85352d5-2430-41ca-bd61-3ff60d3bccb9
+		sourceLineageTag: headquarters_city
+		summarizeBy: none
+		sourceColumn: headquarters_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column headquarters_state
+		dataType: string
+		lineageTag: 97e3d61f-a220-4b4d-9cb8-7ebc7aebdcf0
+		sourceLineageTag: headquarters_state
+		summarizeBy: none
+		sourceColumn: headquarters_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column iata_code
+		dataType: string
+		lineageTag: 90119e30-3cff-473b-b881-2725dc90b5de
+		sourceLineageTag: iata_code
+		summarizeBy: none
+		sourceColumn: iata_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column icao_code
+		dataType: string
+		lineageTag: 881b97fc-9667-4495-90f7-0e95574c224d
+		sourceLineageTag: icao_code
+		summarizeBy: none
+		sourceColumn: icao_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column created_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c71260b2-d8bb-46ef-a0d9-0a70449084fd
+		sourceLineageTag: created_date
+		summarizeBy: none
+		sourceColumn: created_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column updated_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d48e699a-108d-452d-9d45-cbec1088dbea
+		sourceLineageTag: updated_date
+		summarizeBy: none
+		sourceColumn: updated_date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_airlines = entity
+		mode: directLake
+		source
+			entityName: dim_airlines
+			schemaName: dbo
+			expressionSource: 'DirectLake - airlinesLH'
+

@@ -1,0 +1,196 @@
+table complaints_ont
+	lineageTag: e0aebc06-0f33-4461-83b6-647226646e23
+	sourceLineageTag: [dbo].[complaints_ont]
+
+	column complaint_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 5d7561b9-7282-4d53-990a-bb233a13f10c
+		sourceLineageTag: complaint_id
+		summarizeBy: sum
+		sourceColumn: complaint_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column case_id
+		dataType: int64
+		formatString: 0
+		lineageTag: ad87e67c-7964-4eae-ba3c-0b88036638d9
+		sourceLineageTag: case_id
+		summarizeBy: none
+		sourceColumn: case_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column passenger_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 5a951e41-d3d5-4202-ad42-8ea8970cbbc8
+		sourceLineageTag: passenger_id
+		summarizeBy: sum
+		sourceColumn: passenger_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column flight_id
+		dataType: int64
+		formatString: 0
+		lineageTag: bf8cfad4-2055-4848-b385-aae5eff0d050
+		sourceLineageTag: flight_id
+		summarizeBy: sum
+		sourceColumn: flight_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column flight_number
+		dataType: string
+		lineageTag: 53dad297-86c5-4e8e-9e61-5d49057b85d8
+		sourceLineageTag: flight_number
+		summarizeBy: none
+		sourceColumn: flight_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column pnr
+		dataType: string
+		lineageTag: 97224fe1-880c-4194-8898-f09dfe319e4c
+		sourceLineageTag: pnr
+		summarizeBy: none
+		sourceColumn: pnr
+
+		annotation SummarizationSetBy = Automatic
+
+	column complaint_date
+		dataType: string
+		lineageTag: 59380b8b-10bc-40fd-9f3a-303839b334ab
+		sourceLineageTag: complaint_date
+		summarizeBy: none
+		sourceColumn: complaint_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: 6f489e95-7a4d-4333-b16e-3c56bda767f5
+		sourceLineageTag: category
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column subcategory
+		dataType: string
+		lineageTag: 2376eca2-85e6-4e41-b18b-d3608feebaee
+		sourceLineageTag: subcategory
+		summarizeBy: none
+		sourceColumn: subcategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column description
+		dataType: string
+		lineageTag: a2513263-b4f8-4af2-a67f-1cc297e3478d
+		sourceLineageTag: description
+		summarizeBy: none
+		sourceColumn: description
+
+		annotation SummarizationSetBy = Automatic
+
+	column severity
+		dataType: string
+		lineageTag: efa42e5f-ec53-4ae8-bf5f-adf32b18fd8d
+		sourceLineageTag: severity
+		summarizeBy: none
+		sourceColumn: severity
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: c6970440-d3b1-4817-b5ba-adee2887285f
+		sourceLineageTag: status
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column assigned_agent
+		dataType: string
+		lineageTag: b780fb00-8317-44b2-919a-61751c1c4842
+		sourceLineageTag: assigned_agent
+		summarizeBy: none
+		sourceColumn: assigned_agent
+
+		annotation SummarizationSetBy = Automatic
+
+	column resolution_notes
+		dataType: string
+		lineageTag: b4211852-48a6-42b0-bb0b-bbdd47c4200f
+		sourceLineageTag: resolution_notes
+		summarizeBy: none
+		sourceColumn: resolution_notes
+
+		annotation SummarizationSetBy = Automatic
+
+	column resolution_date
+		dataType: string
+		lineageTag: 77d48a29-391d-4d9e-8c87-f83e81031235
+		sourceLineageTag: resolution_date
+		summarizeBy: none
+		sourceColumn: resolution_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column satisfaction_score
+		dataType: string
+		lineageTag: d3205f10-5750-44ad-939a-70ea807ee952
+		sourceLineageTag: satisfaction_score
+		summarizeBy: none
+		sourceColumn: satisfaction_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column current_time
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: fa3f2917-2775-47a2-b189-e7c3229e9c84
+		sourceLineageTag: current_time
+		summarizeBy: none
+		sourceColumn: current_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column event_id
+		dataType: string
+		lineageTag: 69fd7b50-1851-44c5-a86a-cabed6131fc6
+		sourceLineageTag: event_id
+		summarizeBy: none
+		sourceColumn: event_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column schema_version
+		dataType: string
+		lineageTag: b29085ad-142f-42f5-a638-f11fde57abb0
+		sourceLineageTag: schema_version
+		summarizeBy: none
+		sourceColumn: schema_version
+
+		annotation SummarizationSetBy = Automatic
+
+	column produced_at
+		dataType: string
+		lineageTag: da2a47d8-6b62-4401-933e-e3b852c0926d
+		sourceLineageTag: produced_at
+		summarizeBy: none
+		sourceColumn: produced_at
+
+		annotation SummarizationSetBy = Automatic
+
+	partition complaints_ont = entity
+		mode: directLake
+		source
+			entityName: complaints_ont
+			schemaName: dbo
+			expressionSource: 'DirectLake - airlinesLH'
+

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/ontology/dataBinding/1.0.0/schema.json",
+  "id": "49c9b13a-9a0e-405f-a032-1e2ea17375bc",
+  "dataBindingConfiguration": {
+    "dataBindingType": "TimeSeries",
+    "timestampColumnName": "current_time",
+    "propertyBindings": [
+      {
+        "sourceColumnName": "passenger_id",
+        "targetPropertyId": "5705285976633609184"
+      },
+      {
+        "sourceColumnName": "first_name",
+        "targetPropertyId": "5705285976286684713"
+      },
+      {
+        "sourceColumnName": "last_name",
+        "targetPropertyId": "5705285976862746839"
+      },
+      {
+        "sourceColumnName": "email",
+        "targetPropertyId": "5705285977794059978"
+      },
+      {
+        "sourceColumnName": "phone",
+        "targetPropertyId": "5705285980123312530"
+      },
+      {
+        "sourceColumnName": "country",
+        "targetPropertyId": "5705285978467860509"
+      },
+      {
+        "sourceColumnName": "frequent_flyer_tier",
+        "targetPropertyId": "5705285977328883992"
+      },
+      {
+        "sourceColumnName": "total_flights",
+        "targetPropertyId": "5705285980001377631"
+      },
+      {
+        "sourceColumnName": "member_since",
+        "targetPropertyId": "5705285977720397844"
+      },
+      {
+        "sourceColumnName": "event_id",
+        "targetPropertyId": "5705285976869012326"
+      },
+      {
+        "sourceColumnName": "schema_version",
+        "targetPropertyId": "5705285978562675863"
+      },
+      {
+        "sourceColumnName": "current_time",
+        "targetPropertyId": "5705285976593544133"
+      },
+      {
+        "sourceColumnName": "produced_at",
+        "targetPropertyId": "5705285978031107683"
+      }
+    ],
+    "sourceTableProperties": {
+      "sourceType": "KustoTable",
+      "workspaceId": "12204d44-688c-40db-9593-4d23c9ad3e51",
+      "itemId": "a6d2a320-35d7-4e5e-ba5e-9caa2577449d",
+      "clusterUri": "https://trd-ayww7p3t1qz6ckmwas.z3.kusto.fabric.microsoft.com",
+      "databaseName": "airlinesEH",
+      "sourceTableName": "passengersnew"
+    }
+  }
+}

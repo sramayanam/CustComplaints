@@ -1,0 +1,162 @@
+table dim_airports
+	lineageTag: 932ab99a-7df0-4c12-8092-dac12e691704
+	sourceLineageTag: [dbo].[dim_airports]
+
+	column airport_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 37bc0cbb-a266-4a1b-bdc7-210bed51771e
+		sourceLineageTag: airport_id
+		summarizeBy: sum
+		sourceColumn: airport_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column airport_code
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: fa47002e-9a5b-4efe-b292-b3645d00976c
+		sourceLineageTag: airport_code
+		summarizeBy: none
+		sourceColumn: airport_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column airport_name
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: e5ab354c-7993-4b3b-aaac-bd78fb46b3da
+		sourceLineageTag: airport_name
+		summarizeBy: none
+		sourceColumn: airport_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: f40f6722-6bea-46dd-abb9-e1a912d6fd43
+		sourceLineageTag: city
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 9f844f40-1248-4fdd-9451-205ca3da193e
+		sourceLineageTag: state
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	column country
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: fdfa32ad-cf66-4710-8f39-6e67b0aa40f1
+		sourceLineageTag: country
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	column latitude
+		dataType: double
+		sourceProviderType: decimal(10, 6)
+		lineageTag: eec891e2-63bd-47c3-aea0-905b0f66e9a8
+		sourceLineageTag: latitude
+		summarizeBy: sum
+		sourceColumn: latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column longitude
+		dataType: double
+		sourceProviderType: decimal(11, 6)
+		lineageTag: 2c2e4cc4-7f21-40b9-bd9b-f19e2ed4c8b8
+		sourceLineageTag: longitude
+		summarizeBy: sum
+		sourceColumn: longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column elevation_ft
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: dc7ca804-83ed-42fc-b606-e63f9976a7e1
+		sourceLineageTag: elevation_ft
+		summarizeBy: sum
+		sourceColumn: elevation_ft
+
+		annotation SummarizationSetBy = Automatic
+
+	column timezone
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: d0c6bd06-a960-4d28-bf58-5a64ac6fec0b
+		sourceLineageTag: timezone
+		summarizeBy: none
+		sourceColumn: timezone
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_major_hub
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: a3919d48-fb4d-4776-92f9-5f89c96fbe95
+		sourceLineageTag: is_major_hub
+		summarizeBy: none
+		sourceColumn: is_major_hub
+
+		annotation SummarizationSetBy = Automatic
+
+	column passenger_volume_category
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: c8054e5a-2a1e-4b96-9b1d-3b5de0e30112
+		sourceLineageTag: passenger_volume_category
+		summarizeBy: none
+		sourceColumn: passenger_volume_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column created_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: f4bc5da8-dae9-485a-9f57-084b0c59caa6
+		sourceLineageTag: created_date
+		summarizeBy: none
+		sourceColumn: created_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column updated_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 9afe38af-ee7f-4234-b605-e861d2fd01f4
+		sourceLineageTag: updated_date
+		summarizeBy: none
+		sourceColumn: updated_date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_airports = entity
+		mode: directLake
+		source
+			entityName: dim_airports
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

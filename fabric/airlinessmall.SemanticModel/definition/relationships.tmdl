@@ -1,0 +1,18 @@
+relationship 5e0dbf98-c789-c2ba-bc6f-714c97dcc95d
+	fromColumn: dfw_quarterly_mktg.primary_carrier_code
+	toColumn: dim_airlines.carrier_code
+
+relationship 6d8b766a-3aac-d758-3173-46a7d87a1448
+	isActive: false
+	fromColumn: dfw_quarterly_mktg.secondary_carrier_code
+	toColumn: dim_airlines.carrier_code
+
+relationship 8216b588-8ead-54e1-485e-95a1ec27033c
+	fromColumn: dfw_quarterly_mktg.origin_airport_code
+	toColumn: dim_airports.airport_code
+
+relationship f354ba9e-840b-b49d-36ec-f42c646f30f9
+	isActive: false
+	fromColumn: dfw_quarterly_mktg.destination_airport_code
+	toColumn: dim_airports.airport_code
+

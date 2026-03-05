@@ -1,0 +1,140 @@
+table fact_finance_actuals_sample
+	lineageTag: fd829b38-b3cf-42a0-b9ab-a9393ec6848b
+	sourceLineageTag: [dbo].[fact_finance_actuals_sample]
+
+	column Month
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8152a498-897a-437c-850c-7cbe59ace25d
+		sourceLineageTag: Month
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column CompanyCode
+		dataType: string
+		lineageTag: aab9d55f-9f8c-437a-8aed-8c0713c3d2e3
+		sourceLineageTag: CompanyCode
+		summarizeBy: none
+		sourceColumn: CompanyCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column CostCenter
+		dataType: int64
+		formatString: 0
+		lineageTag: b028a932-a96d-4fe8-bc13-67845902e654
+		sourceLineageTag: CostCenter
+		summarizeBy: none
+		sourceColumn: CostCenter
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductLine
+		dataType: string
+		lineageTag: 4ae3f1b5-087e-4146-9b5c-e8fb2c382584
+		sourceLineageTag: ProductLine
+		summarizeBy: none
+		sourceColumn: ProductLine
+
+		annotation SummarizationSetBy = Automatic
+
+	column AccountCategory
+		dataType: string
+		lineageTag: 02ffe370-c9d7-47f7-b610-e068e651361b
+		sourceLineageTag: AccountCategory
+		summarizeBy: none
+		sourceColumn: AccountCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActualRevenueUSD
+		dataType: int64
+		formatString: 0
+		lineageTag: bcc88e65-9827-41e1-a580-acb75fc809f0
+		sourceLineageTag: ActualRevenueUSD
+		summarizeBy: sum
+		sourceColumn: ActualRevenueUSD
+
+		annotation SummarizationSetBy = Automatic
+
+	column MLTrainFlag
+		dataType: int64
+		formatString: 0
+		lineageTag: 31800f17-b9cf-4355-858f-e8a2f5741632
+		sourceLineageTag: MLTrainFlag
+		summarizeBy: sum
+		sourceColumn: MLTrainFlag
+
+		annotation SummarizationSetBy = Automatic
+
+	column BudgetRevenueUSD
+		dataType: int64
+		formatString: 0
+		lineageTag: 323dc804-8063-46d5-9649-28973686b5f3
+		sourceLineageTag: BudgetRevenueUSD
+		summarizeBy: sum
+		sourceColumn: BudgetRevenueUSD
+
+		annotation SummarizationSetBy = Automatic
+
+	column BaselineForecastUSD
+		dataType: int64
+		formatString: 0
+		lineageTag: 0c414cf9-fd9f-4df7-a2cd-f59e93208e27
+		sourceLineageTag: BaselineForecastUSD
+		summarizeBy: sum
+		sourceColumn: BaselineForecastUSD
+
+		annotation SummarizationSetBy = Automatic
+
+	column EconomicIndex
+		dataType: double
+		lineageTag: 43a6ed0b-b20e-4f77-9087-b7200e73ffaf
+		sourceLineageTag: EconomicIndex
+		summarizeBy: sum
+		sourceColumn: EconomicIndex
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MarketingSpendUSD
+		dataType: int64
+		formatString: 0
+		lineageTag: 361f351e-04b0-4fb3-93cf-545856cd8647
+		sourceLineageTag: MarketingSpendUSD
+		summarizeBy: sum
+		sourceColumn: MarketingSpendUSD
+
+		annotation SummarizationSetBy = Automatic
+
+	column Seasonality
+		dataType: double
+		lineageTag: 40c579d3-9b68-4554-afa7-bb247550d4c6
+		sourceLineageTag: Seasonality
+		summarizeBy: sum
+		sourceColumn: Seasonality
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EventFlag
+		dataType: int64
+		formatString: 0
+		lineageTag: 3c4c6b26-1837-41c6-8cf1-54b5cdbe6248
+		sourceLineageTag: EventFlag
+		summarizeBy: sum
+		sourceColumn: EventFlag
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_finance_actuals_sample = entity
+		mode: directLake
+		source
+			entityName: fact_finance_actuals_sample
+			schemaName: dbo
+			expressionSource: 'DirectLake - lhfinance'
+

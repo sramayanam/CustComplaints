@@ -1,0 +1,20 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/fewShots/1.0.0/schema.json",
+  "fewShots": [
+    {
+      "id": "54e4dc4c-67e1-4137-ae19-699a9ca294fa",
+      "question": "Complaint intensity by route",
+      "query": "complaintsnew\n| join kind=inner (flightsn | project flight_id, origin_code, destination_code) on flight_id\n| extend route = strcat(origin_code, \" → \", destination_code)\n| summarize complaints=count(), critical=countif(severity==\"Critical\") by route\n| order by complaints desc"
+    },
+    {
+      "id": "56e72993-5378-4cd5-91c4-50aee79ba4ee",
+      "question": "Tier-based satisfaction gap",
+      "query": "complaintsnew\n| where isnotempty(satisfaction_score)\n| extend score = todouble(satisfaction_score)\n| join kind=inner (passengersnew | project passenger_id, frequent_flyer_tier) on passenger_id\n| summarize avg_score=round(avg(score),2), n=count() by frequent_flyer_tier\n| order by avg_score asc"
+    },
+    {
+      "id": "7d8cc71c-3559-4346-9d4b-ada03c4c026a",
+      "question": "Escalated cases with passenger context",
+      "query": "casesnew\n| where case_status == \"Escalated\"\n| join kind=inner passengersnew on passenger_id\n| join kind=inner flightsn      on flight_id\n| project case_id, first_name, last_name, frequent_flyer_tier,\n          flight_number, flight_status, opened_at, last_updated_at\n| order by todatetime(opened_at) desc"
+    }
+  ]
+}

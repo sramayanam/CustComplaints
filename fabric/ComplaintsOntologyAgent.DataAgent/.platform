@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataAgent",
+    "displayName": "ComplaintsOntologyAgent"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2cb91f38-90bf-9d22-4919-bd0f7e61b07f"
+  }
+}

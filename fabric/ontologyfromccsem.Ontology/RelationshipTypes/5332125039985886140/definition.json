@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/ontology/relationshipType/1.0.0/schema.json",
+  "namespace": "usertypes",
+  "id": "5332125039985886140",
+  "name": "cases_ont_has_passengers_ont",
+  "namespaceType": "Imported",
+  "source": {
+    "entityTypeId": "273668638521889"
+  },
+  "target": {
+    "entityTypeId": "23855418478859"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/ontology/dataBinding/1.0.0/schema.json",
+  "id": "43ad8bf3-47d0-455a-a88f-525d0c6f5b1b",
+  "dataBindingConfiguration": {
+    "dataBindingType": "NonTimeSeries",
+    "propertyBindings": [
+      {
+        "sourceColumnName": "case_id",
+        "targetPropertyId": "5733413941814939038"
+      },
+      {
+        "sourceColumnName": "passenger_id",
+        "targetPropertyId": "5733413941768122510"
+      },
+      {
+        "sourceColumnName": "flight_id",
+        "targetPropertyId": "5733413940816936738"
+      },
+      {
+        "sourceColumnName": "flight_number",
+        "targetPropertyId": "5733413944254417492"
+      },
+      {
+        "sourceColumnName": "pnr",
+        "targetPropertyId": "5733413941465512407"
+      },
+      {
+        "sourceColumnName": "case_status",
+        "targetPropertyId": "5733413941697258911"
+      },
+      {
+        "sourceColumnName": "event_id",
+        "targetPropertyId": "5733413943521810094"
+      },
+      {
+        "sourceColumnName": "schema_version",
+        "targetPropertyId": "5733413942632501953"
+      }
+    ],
+    "sourceTableProperties": {
+      "sourceType": "LakehouseTable",
+      "workspaceId": "00000000-0000-0000-0000-000000000000",
+      "itemId": "d663ca8d-44a3-be15-407c-8c6e08bf1610",
+      "sourceTableName": "cases_ont",
+      "sourceSchema": "dbo"
+    }
+  }
+}

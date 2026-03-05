@@ -349,6 +349,115 @@ TEST_COMPLAINTS: list[dict] = [
 ]
 
 
+# ── Test batch 2 (passengers 24-27, flights 16-18, cases 25-30, complaints 34-43) ─────
+# Scenario highlights:
+#   - Passenger 24 (Kwame, Platinum)  → cancelled ZA1818 LHR→SYD → Platinum not prioritised
+#   - Passenger 25 (Sofia, no tier)   → delayed ZA1717 CDG→JFK → first-time flyer, confused
+#   - Passenger 26 (Ravi, Gold)       → delayed ZA1717 + on-time ZA1616 (multi-flight, multi-case)
+#   - Passenger 27 (Emma, Silver)     → cancelled ZA1818 → hotel/rebooking failures
+#   - Kwame reappears on ZA1818 (second case on cancelled flight, Platinum tier escalation)
+
+TEST2_PASSENGERS: list[dict] = [
+    {"passenger_id": 24, "first_name": "Kwame",  "last_name": "Asante",   "email": "kwame.asante@example.com",   "phone": "+233-30-550-0124", "country": "Ghana",   "frequent_flyer_tier": "Platinum", "total_flights": 156, "member_since": "2015-07-22T00:00:00+00:00"},
+    {"passenger_id": 25, "first_name": "Sofia",  "last_name": "Andersen", "email": "sofia.andersen@example.com", "phone": "+45-32-550-0125",  "country": "Denmark", "frequent_flyer_tier": "None",     "total_flights": 3,   "member_since": "2025-11-01T00:00:00+00:00"},
+    {"passenger_id": 26, "first_name": "Ravi",   "last_name": "Nair",     "email": "ravi.nair@example.com",      "phone": "+91-22-5550-0126", "country": "India",   "frequent_flyer_tier": "Gold",     "total_flights": 72,  "member_since": "2018-03-14T00:00:00+00:00"},
+    {"passenger_id": 27, "first_name": "Emma",   "last_name": "Johansson","email": "emma.johansson@example.com", "phone": "+46-8-5550-0127",  "country": "Sweden",  "frequent_flyer_tier": "Silver",   "total_flights": 34,  "member_since": "2021-06-30T00:00:00+00:00"},
+]
+
+TEST2_FLIGHTS: list[dict] = [
+    {"flight_id": 16, "flight_number": "ZA1616", "origin_code": "DXB", "origin_city": "Dubai",  "destination_code": "BOM", "destination_city": "Mumbai",       "scheduled_departure": "2026-03-13T06:00:00+00:00", "actual_departure": "2026-03-13T06:00:00+00:00", "scheduled_arrival": "2026-03-13T09:30:00+00:00", "actual_arrival": "2026-03-13T09:30:00+00:00", "aircraft_type": "Boeing 737-800",  "flight_status": "On Time",  "delay_minutes": 0},
+    {"flight_id": 17, "flight_number": "ZA1717", "origin_code": "CDG", "origin_city": "Paris",  "destination_code": "JFK", "destination_city": "New York",     "scheduled_departure": "2026-03-14T11:00:00+00:00", "actual_departure": "2026-03-14T13:00:00+00:00", "scheduled_arrival": "2026-03-14T14:30:00+00:00", "actual_arrival": "2026-03-14T16:30:00+00:00", "aircraft_type": "Crescent 787-9", "flight_status": "Delayed",  "delay_minutes": 120},
+    {"flight_id": 18, "flight_number": "ZA1818", "origin_code": "LHR", "origin_city": "London", "destination_code": "SYD", "destination_city": "Sydney",       "scheduled_departure": "2026-03-15T21:00:00+00:00", "actual_departure": None,                        "scheduled_arrival": "2026-03-17T06:00:00+00:00", "actual_arrival": None,                        "aircraft_type": "Moonbeam A350",  "flight_status": "Cancelled","delay_minutes": 0},
+]
+
+TEST2_CASES: list[dict] = [
+    {"case_id": 25, "passenger_id": 24, "flight_id": 16, "flight_number": "ZA1616", "pnr": "PNR2401", "case_status": "Resolved",     "opened_at": "2026-03-13T10:00:00+00:00", "last_updated_at": "2026-03-14T09:00:00+00:00", "closed_at": "2026-03-14T09:00:00+00:00"},
+    {"case_id": 26, "passenger_id": 25, "flight_id": 17, "flight_number": "ZA1717", "pnr": "PNR2501", "case_status": "Open",         "opened_at": "2026-03-14T13:10:00+00:00", "last_updated_at": "2026-03-14T13:10:00+00:00", "closed_at": None},
+    {"case_id": 27, "passenger_id": 26, "flight_id": 17, "flight_number": "ZA1717", "pnr": "PNR2601", "case_status": "Escalated",    "opened_at": "2026-03-14T13:30:00+00:00", "last_updated_at": "2026-03-15T08:00:00+00:00", "closed_at": None},
+    {"case_id": 28, "passenger_id": 27, "flight_id": 18, "flight_number": "ZA1818", "pnr": "PNR2701", "case_status": "Escalated",    "opened_at": "2026-03-15T19:00:00+00:00", "last_updated_at": "2026-03-16T10:00:00+00:00", "closed_at": None},
+    {"case_id": 29, "passenger_id": 24, "flight_id": 18, "flight_number": "ZA1818", "pnr": "PNR2402", "case_status": "Escalated",    "opened_at": "2026-03-15T19:30:00+00:00", "last_updated_at": "2026-03-16T11:00:00+00:00", "closed_at": None},
+    {"case_id": 30, "passenger_id": 26, "flight_id": 16, "flight_number": "ZA1616", "pnr": "PNR2602", "case_status": "Under Review", "opened_at": "2026-03-13T10:30:00+00:00", "last_updated_at": "2026-03-13T15:00:00+00:00", "closed_at": None},
+]
+
+TEST2_COMPLAINTS: list[dict] = [
+    # case 25 — Kwame / ZA1616 DXB→BOM — resolved upgrade issue
+    {"complaint_id": 34, "case_id": 25, "passenger_id": 24, "flight_id": 16, "flight_number": "ZA1616", "pnr": "PNR2401", "complaint_date": "2026-03-13T10:05:00+00:00", "category": "Seating",            "subcategory": "Upgrade Not Applied",  "description": "Platinum status upgrade to business class confirmed at online check-in but seat was reallocated at the gate to another passenger with no explanation.", "severity": "Medium",   "status": "Resolved",     "assigned_agent": "Cosmo Lee",    "resolution_notes": "ZavaAir confirmed seat reallocation error and issued a business class upgrade voucher valid 12 months.", "resolution_date": "2026-03-14T09:00:00+00:00", "satisfaction_score": 3.5},
+    # case 26 — Sofia / ZA1717 CDG→JFK — first-time flyer, 120-min delay
+    {"complaint_id": 35, "case_id": 26, "passenger_id": 25, "flight_id": 17, "flight_number": "ZA1717", "pnr": "PNR2501", "complaint_date": "2026-03-14T13:15:00+00:00", "category": "Flight Operations",  "subcategory": "Excessive Delay",      "description": "ZA1717 CDG-JFK departed 2 hours late. No gate announcement made. As a first-time international traveller I had no idea if my connection in JFK was at risk.", "severity": "Medium",   "status": "Open",         "assigned_agent": "Selene Park",  "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    {"complaint_id": 36, "case_id": 26, "passenger_id": 25, "flight_id": 17, "flight_number": "ZA1717", "pnr": "PNR2501", "complaint_date": "2026-03-14T13:45:00+00:00", "category": "Customer Service",   "subcategory": "No Communication",     "description": "Gate staff at CDG gave no delay updates for over 90 minutes. When asked, they said 'check the board'. No ZavaAir rep was present at the gate.",        "severity": "High",     "status": "Open",         "assigned_agent": "Selene Park",  "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    # case 27 — Ravi / ZA1717 CDG→JFK — baggage + staff escalation
+    {"complaint_id": 37, "case_id": 27, "passenger_id": 26, "flight_id": 17, "flight_number": "ZA1717", "pnr": "PNR2601", "complaint_date": "2026-03-14T13:35:00+00:00", "category": "Baggage",            "subcategory": "Delayed Baggage",      "description": "Checked bag did not arrive at JFK after the already-delayed ZA1717. Baggage desk confirmed bag was still in CDG and estimated 48-hour delivery.",          "severity": "High",     "status": "Escalated",    "assigned_agent": "Orion Bailey", "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    {"complaint_id": 38, "case_id": 27, "passenger_id": 26, "flight_id": 17, "flight_number": "ZA1717", "pnr": "PNR2601", "complaint_date": "2026-03-14T17:00:00+00:00", "category": "Customer Service",   "subcategory": "Staff Attitude",       "description": "When escalating the baggage issue the JFK ZavaAir supervisor raised their voice and told me I should have checked in earlier. Deeply unprofessional.",     "severity": "Critical", "status": "Escalated",    "assigned_agent": "Orion Bailey", "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    # case 28 — Emma / ZA1818 LHR→SYD — cancelled flight, hotel/rebooking failures
+    {"complaint_id": 39, "case_id": 28, "passenger_id": 27, "flight_id": 18, "flight_number": "ZA1818", "pnr": "PNR2701", "complaint_date": "2026-03-15T19:05:00+00:00", "category": "Flight Operations",  "subcategory": "Flight Cancellation",  "description": "ZA1818 LHR-SYD cancelled with less than 2 hours notice. No alternative flight offered within 24 hours. Stranded at LHR with no onward travel options.",  "severity": "Critical", "status": "Escalated",    "assigned_agent": "Cosmo Lee",    "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    {"complaint_id": 40, "case_id": 28, "passenger_id": 27, "flight_id": 18, "flight_number": "ZA1818", "pnr": "PNR2701", "complaint_date": "2026-03-15T20:00:00+00:00", "category": "Customer Service",   "subcategory": "No Hotel Voucher",     "description": "ZavaAir staff at LHR refused to issue hotel accommodation voucher citing 'extraordinary circumstances' despite cancellation being due to crew shortage.", "severity": "High",     "status": "Escalated",    "assigned_agent": "Cosmo Lee",    "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    {"complaint_id": 41, "case_id": 28, "passenger_id": 27, "flight_id": 18, "flight_number": "ZA1818", "pnr": "PNR2701", "complaint_date": "2026-03-15T21:00:00+00:00", "category": "Booking",            "subcategory": "Rebooking Refused",    "description": "ZavaAir app showed no available flights for 4 days. Phone queue wait exceeded 2 hours. Eventually hung up without reaching an agent.",                    "severity": "High",     "status": "Escalated",    "assigned_agent": "Cosmo Lee",    "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    # case 29 — Kwame (Platinum) / ZA1818 — Platinum tier not prioritised during cancellation
+    {"complaint_id": 42, "case_id": 29, "passenger_id": 24, "flight_id": 18, "flight_number": "ZA1818", "pnr": "PNR2402", "complaint_date": "2026-03-15T19:35:00+00:00", "category": "Customer Service",   "subcategory": "Tier Benefits Ignored","description": "As a Platinum member I was queued with all passengers during ZA1818 cancellation. No priority rebooking lane or dedicated agent. Platinum benefits were completely disregarded.", "severity": "Critical", "status": "Escalated",    "assigned_agent": "Orion Bailey", "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    # case 30 — Ravi / ZA1616 DXB→BOM — IFE failure on a different flight
+    {"complaint_id": 43, "case_id": 30, "passenger_id": 26, "flight_id": 16, "flight_number": "ZA1616", "pnr": "PNR2602", "complaint_date": "2026-03-13T10:35:00+00:00", "category": "In-Flight Service",  "subcategory": "Entertainment System", "description": "Seatback screen on ZA1616 DXB-BOM was frozen from boarding and never reset. Crew said the system was 'known to be faulty' but no compensation offered.",  "severity": "Low",      "status": "Under Review", "assigned_agent": "Selene Park",  "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+]
+
+# ── Test batch 3 (passengers 28-32, flights 19-22, cases 31-38, complaints 44-57) ─────
+# Scenario highlights:
+#   - Passenger 29 (Chen Wei, Platinum, 243 flights) → long-haul NRT→LAX broken flat bed + lounge denied
+#   - Passenger 29 again on diverted ZA2121 → Platinum not rebooked first (3rd case, repeat VIP)
+#   - Passenger 30 (Yusuf, no tier) → first-time long-haul, lost connection info
+#   - Passenger 31 (Priya, Silver) → ZA2121 diverted BOM→LHR re-routed via CDG, stranded, no transport
+#   - Passenger 32 (Marco, Bronze) → ZA2222 JFK→MIA cancelled (weather), refund refused
+#   - Passenger 28 (Amelia, Gold) → one resolved with 5.0 sat score (positive signal), one under review
+
+TEST3_PASSENGERS: list[dict] = [
+    {"passenger_id": 28, "first_name": "Amelia",  "last_name": "Walsh",         "email": "amelia.walsh@example.com",         "phone": "+353-1-550-0128",  "country": "Ireland",      "frequent_flyer_tier": "Gold",     "total_flights": 58,  "member_since": "2018-09-14T00:00:00+00:00"},
+    {"passenger_id": 29, "first_name": "Chen",    "last_name": "Wei",           "email": "chen.wei@example.com",             "phone": "+86-10-5550-0129", "country": "China",        "frequent_flyer_tier": "Platinum", "total_flights": 243, "member_since": "2011-03-07T00:00:00+00:00"},
+    {"passenger_id": 30, "first_name": "Yusuf",   "last_name": "Al-Rashidi",    "email": "yusuf.alrashidi@example.com",      "phone": "+971-4-550-0130",  "country": "UAE",          "frequent_flyer_tier": "None",     "total_flights": 5,   "member_since": "2025-08-20T00:00:00+00:00"},
+    {"passenger_id": 31, "first_name": "Priya",   "last_name": "Krishnamurthy", "email": "priya.krishnamurthy@example.com",  "phone": "+91-80-5550-0131", "country": "India",        "frequent_flyer_tier": "Silver",   "total_flights": 29,  "member_since": "2021-11-02T00:00:00+00:00"},
+    {"passenger_id": 32, "first_name": "Marco",   "last_name": "Rossi",         "email": "marco.rossi@example.com",          "phone": "+39-06-5550-0132", "country": "Italy",        "frequent_flyer_tier": "Bronze",   "total_flights": 11,  "member_since": "2023-05-19T00:00:00+00:00"},
+]
+
+TEST3_FLIGHTS: list[dict] = [
+    {"flight_id": 19, "flight_number": "ZA1919", "origin_code": "SYD", "origin_city": "Sydney",      "destination_code": "DXB", "destination_city": "Dubai",     "scheduled_departure": "2026-03-16T23:00:00+00:00", "actual_departure": "2026-03-16T23:00:00+00:00", "scheduled_arrival": "2026-03-17T05:30:00+00:00", "actual_arrival": "2026-03-17T05:30:00+00:00", "aircraft_type": "Moonbeam A350",    "flight_status": "On Time",  "delay_minutes": 0},
+    {"flight_id": 20, "flight_number": "ZA2020", "origin_code": "NRT", "origin_city": "Tokyo",       "destination_code": "LAX", "destination_city": "Los Angeles","scheduled_departure": "2026-03-17T11:00:00+00:00", "actual_departure": "2026-03-17T14:00:00+00:00", "scheduled_arrival": "2026-03-17T05:30:00+00:00", "actual_arrival": "2026-03-17T08:30:00+00:00", "aircraft_type": "Tycho 777X",       "flight_status": "Delayed",  "delay_minutes": 180},
+    {"flight_id": 21, "flight_number": "ZA2121", "origin_code": "BOM", "origin_city": "Mumbai",      "destination_code": "LHR", "destination_city": "London",    "scheduled_departure": "2026-03-18T02:00:00+00:00", "actual_departure": "2026-03-18T02:15:00+00:00", "scheduled_arrival": "2026-03-18T07:30:00+00:00", "actual_arrival": "2026-03-18T10:45:00+00:00", "aircraft_type": "Crescent 787-9",   "flight_status": "Diverted", "delay_minutes": 195},
+    {"flight_id": 22, "flight_number": "ZA2222", "origin_code": "JFK", "origin_city": "New York",    "destination_code": "MIA", "destination_city": "Miami",     "scheduled_departure": "2026-03-19T07:00:00+00:00", "actual_departure": None,                        "scheduled_arrival": "2026-03-19T10:15:00+00:00", "actual_arrival": None,                        "aircraft_type": "Selene A320",      "flight_status": "Cancelled","delay_minutes": 0},
+]
+
+TEST3_CASES: list[dict] = [
+    {"case_id": 31, "passenger_id": 29, "flight_id": 20, "flight_number": "ZA2020", "pnr": "PNR2901", "case_status": "Escalated",    "opened_at": "2026-03-17T09:00:00+00:00", "last_updated_at": "2026-03-18T10:00:00+00:00", "closed_at": None},
+    {"case_id": 32, "passenger_id": 28, "flight_id": 19, "flight_number": "ZA1919", "pnr": "PNR2801", "case_status": "Resolved",     "opened_at": "2026-03-17T06:00:00+00:00", "last_updated_at": "2026-03-18T14:00:00+00:00", "closed_at": "2026-03-18T14:00:00+00:00"},
+    {"case_id": 33, "passenger_id": 30, "flight_id": 19, "flight_number": "ZA1919", "pnr": "PNR3001", "case_status": "Open",         "opened_at": "2026-03-17T06:30:00+00:00", "last_updated_at": "2026-03-17T06:30:00+00:00", "closed_at": None},
+    {"case_id": 34, "passenger_id": 31, "flight_id": 21, "flight_number": "ZA2121", "pnr": "PNR3101", "case_status": "Escalated",    "opened_at": "2026-03-18T11:00:00+00:00", "last_updated_at": "2026-03-19T09:00:00+00:00", "closed_at": None},
+    {"case_id": 35, "passenger_id": 32, "flight_id": 22, "flight_number": "ZA2222", "pnr": "PNR3201", "case_status": "Escalated",    "opened_at": "2026-03-19T08:00:00+00:00", "last_updated_at": "2026-03-19T15:00:00+00:00", "closed_at": None},
+    {"case_id": 36, "passenger_id": 29, "flight_id": 21, "flight_number": "ZA2121", "pnr": "PNR2902", "case_status": "Escalated",    "opened_at": "2026-03-18T11:30:00+00:00", "last_updated_at": "2026-03-19T12:00:00+00:00", "closed_at": None},
+    {"case_id": 37, "passenger_id": 28, "flight_id": 22, "flight_number": "ZA2222", "pnr": "PNR2802", "case_status": "Under Review", "opened_at": "2026-03-19T08:30:00+00:00", "last_updated_at": "2026-03-19T14:00:00+00:00", "closed_at": None},
+    {"case_id": 38, "passenger_id": 31, "flight_id": 20, "flight_number": "ZA2020", "pnr": "PNR3102", "case_status": "Open",         "opened_at": "2026-03-17T09:30:00+00:00", "last_updated_at": "2026-03-17T09:30:00+00:00", "closed_at": None},
+]
+
+TEST3_COMPLAINTS: list[dict] = [
+    # case 31 — Chen Wei (Platinum) / ZA2020 NRT→LAX — 3-hour delay, broken flat bed, lounge denied
+    {"complaint_id": 44, "case_id": 31, "passenger_id": 29, "flight_id": 20, "flight_number": "ZA2020", "pnr": "PNR2901", "complaint_date": "2026-03-17T09:05:00+00:00", "category": "Customer Service",   "subcategory": "Lounge Access Denied",  "description": "Platinum tier lounge access denied at NRT T1 despite valid credential. Staff said system showed 'unverified tier' and refused manual override.",              "severity": "High",     "status": "Escalated",    "assigned_agent": "Orion Bailey", "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    {"complaint_id": 45, "case_id": 31, "passenger_id": 29, "flight_id": 20, "flight_number": "ZA2020", "pnr": "PNR2901", "complaint_date": "2026-03-17T14:20:00+00:00", "category": "In-Flight Service",  "subcategory": "Food Quality",          "description": "Business class meal on ZA2020 was visibly reheated economy food relabelled. No amuse-bouche, no choice of main. 11-hour flight with sub-standard catering.",  "severity": "Medium",   "status": "Escalated",    "assigned_agent": "Orion Bailey", "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    {"complaint_id": 46, "case_id": 31, "passenger_id": 29, "flight_id": 20, "flight_number": "ZA2020", "pnr": "PNR2901", "complaint_date": "2026-03-17T15:00:00+00:00", "category": "Seating",            "subcategory": "Seat Malfunction",      "description": "Business class fully-flat seat 1A on ZA2020 NRT-LAX collapsed to 45-degree angle 2 hours into an 11-hour flight. Crew could not fix. Slept upright entire night.", "severity": "Critical", "status": "Escalated",    "assigned_agent": "Orion Bailey", "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    # case 32 — Amelia (Gold) / ZA1919 SYD→DXB — resolved, high satisfaction
+    {"complaint_id": 47, "case_id": 32, "passenger_id": 28, "flight_id": 19, "flight_number": "ZA1919", "pnr": "PNR2801", "complaint_date": "2026-03-17T06:10:00+00:00", "category": "Baggage",            "subcategory": "Delayed Baggage",       "description": "Bag took 55 minutes at DXB carousel after ZA1919. Minor delay but wanted to flag given tight connection window to onward flight.",                             "severity": "Low",      "status": "Resolved",     "assigned_agent": "Cosmo Lee",    "resolution_notes": "ZavaAir confirmed bag was last off aircraft due to loading position. Issued a priority tag voucher for next 3 flights and apologised.", "resolution_date": "2026-03-18T14:00:00+00:00", "satisfaction_score": 5.0},
+    # case 33 — Yusuf (no tier) / ZA1919 SYD→DXB — first-timer, missed connection info
+    {"complaint_id": 48, "case_id": 33, "passenger_id": 30, "flight_id": 19, "flight_number": "ZA1919", "pnr": "PNR3001", "complaint_date": "2026-03-17T06:40:00+00:00", "category": "Customer Service",   "subcategory": "No Communication",      "description": "First long-haul flight. No one explained connection process at DXB. Missed onward connection and had to rebook at own expense. No ZavaAir desk was staffed at the gate.", "severity": "Medium",   "status": "Open",         "assigned_agent": "Selene Park",  "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    # case 34 — Priya (Silver) / ZA2121 BOM→LHR diverted to CDG — stranded cascade
+    {"complaint_id": 49, "case_id": 34, "passenger_id": 31, "flight_id": 21, "flight_number": "ZA2121", "pnr": "PNR3101", "complaint_date": "2026-03-18T11:05:00+00:00", "category": "Flight Operations",  "subcategory": "Diversion",             "description": "ZA2121 diverted to CDG from LHR with no PA announcement until 10 minutes before landing. Passengers had no time to prepare. Destination changed without consent.",  "severity": "Critical", "status": "Escalated",    "assigned_agent": "Cosmo Lee",    "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    {"complaint_id": 50, "case_id": 34, "passenger_id": 31, "flight_id": 21, "flight_number": "ZA2121", "pnr": "PNR3101", "complaint_date": "2026-03-18T11:45:00+00:00", "category": "Customer Service",   "subcategory": "No Ground Transport",   "description": "After diversion to CDG no buses, trains or taxis were arranged by ZavaAir. 200 passengers left in arrivals with no guidance for 3+ hours.",                        "severity": "High",     "status": "Escalated",    "assigned_agent": "Cosmo Lee",    "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    {"complaint_id": 51, "case_id": 34, "passenger_id": 31, "flight_id": 21, "flight_number": "ZA2121", "pnr": "PNR3101", "complaint_date": "2026-03-18T13:00:00+00:00", "category": "Booking",            "subcategory": "Missed Connection",     "description": "Missed pre-booked Eurostar from London St Pancras as a direct result of ZA2121 diversion. ZavaAir refused to reimburse the £180 non-refundable ticket.",        "severity": "High",     "status": "Escalated",    "assigned_agent": "Cosmo Lee",    "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    # case 35 — Marco (Bronze) / ZA2222 JFK→MIA cancelled — refund refused + staff rude
+    {"complaint_id": 52, "case_id": 35, "passenger_id": 32, "flight_id": 22, "flight_number": "ZA2222", "pnr": "PNR3201", "complaint_date": "2026-03-19T08:10:00+00:00", "category": "Flight Operations",  "subcategory": "Flight Cancellation",   "description": "ZA2222 JFK-MIA cancelled due to 'weather' despite clear skies and other airlines operating the same route. Full refund requested but denied at check-in counter.",  "severity": "Critical", "status": "Escalated",    "assigned_agent": "Selene Park",  "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    {"complaint_id": 53, "case_id": 35, "passenger_id": 32, "flight_id": 22, "flight_number": "ZA2222", "pnr": "PNR3201", "complaint_date": "2026-03-19T09:00:00+00:00", "category": "Customer Service",   "subcategory": "Staff Attitude",        "description": "Check-in supervisor at JFK was sarcastic and told passengers to 'Google the weather' when challenged on the cancellation reason. Behaviour was witnessed by 12+ passengers.", "severity": "High",     "status": "Escalated",    "assigned_agent": "Selene Park",  "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    # case 36 — Chen Wei (Platinum, 3rd case) / ZA2121 diverted — Platinum ignored again
+    {"complaint_id": 54, "case_id": 36, "passenger_id": 29, "flight_id": 21, "flight_number": "ZA2121", "pnr": "PNR2902", "complaint_date": "2026-03-18T11:35:00+00:00", "category": "Customer Service",   "subcategory": "Tier Benefits Ignored", "description": "Third incident this month where Platinum status was disregarded. During ZA2121 diversion chaos at CDG no priority queue or dedicated agent was available for tier members.", "severity": "Critical", "status": "Escalated",    "assigned_agent": "Orion Bailey", "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    {"complaint_id": 55, "case_id": 36, "passenger_id": 29, "flight_id": 21, "flight_number": "ZA2121", "pnr": "PNR2902", "complaint_date": "2026-03-18T14:00:00+00:00", "category": "Baggage",            "subcategory": "Lost Baggage",          "description": "Checked business class luggage not transferred during ZA2121 CDG diversion. Bag missing for 72+ hours. Contains medical equipment required daily.",                  "severity": "Critical", "status": "Escalated",    "assigned_agent": "Orion Bailey", "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    # case 37 — Amelia (Gold) / ZA2222 cancelled — compensation question under review
+    {"complaint_id": 56, "case_id": 37, "passenger_id": 28, "flight_id": 22, "flight_number": "ZA2222", "pnr": "PNR2802", "complaint_date": "2026-03-19T08:35:00+00:00", "category": "Booking",            "subcategory": "Compensation Unclear",  "description": "Weather cancellation on ZA2222. ZavaAir website states weather cancellations are non-compensable but EU261 may apply. Agent gave conflicting information twice.",     "severity": "Medium",   "status": "Under Review", "assigned_agent": "Cosmo Lee",    "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+    # case 38 — Priya (Silver) / ZA2020 NRT→LAX — IFE dead, second flight this batch
+    {"complaint_id": 57, "case_id": 38, "passenger_id": 31, "flight_id": 20, "flight_number": "ZA2020", "pnr": "PNR3102", "complaint_date": "2026-03-17T09:35:00+00:00", "category": "In-Flight Service",  "subcategory": "Entertainment System",  "description": "Seatback IFE on ZA2020 row 28 was completely dead for the 10-hour NRT-LAX flight. No movies, no music, no flight map. Crew acknowledged but offered no solution.", "severity": "Low",      "status": "Open",         "assigned_agent": "Selene Park",  "resolution_notes": None, "resolution_date": None, "satisfaction_score": None},
+]
+
 # ── CLI entry point ───────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
@@ -356,8 +465,8 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Produce ZavaAir complaint data to Event Hubs")
     parser.add_argument(
-        "--dataset", choices=["seed", "test", "all"], default="seed",
-        help="seed = original 20/13/20/28 records; test = new 3/2/4/5 records; all = both combined",
+        "--dataset", choices=["seed", "test", "test2", "test3", "all"], default="seed",
+        help="seed=original 20/13/20/28; test=batch1 3/2/4/5; test2=batch2 4/3/6/10; test3=batch3 5/4/8/14; all=everything",
     )
     args = parser.parse_args()
 
@@ -365,11 +474,15 @@ if __name__ == "__main__":
         p, f, c, co = SEED_PASSENGERS, SEED_FLIGHTS, SEED_CASES, SEED_COMPLAINTS
     elif args.dataset == "test":
         p, f, c, co = TEST_PASSENGERS, TEST_FLIGHTS, TEST_CASES, TEST_COMPLAINTS
+    elif args.dataset == "test2":
+        p, f, c, co = TEST2_PASSENGERS, TEST2_FLIGHTS, TEST2_CASES, TEST2_COMPLAINTS
+    elif args.dataset == "test3":
+        p, f, c, co = TEST3_PASSENGERS, TEST3_FLIGHTS, TEST3_CASES, TEST3_COMPLAINTS
     else:  # all
-        p  = SEED_PASSENGERS + TEST_PASSENGERS
-        f  = SEED_FLIGHTS    + TEST_FLIGHTS
-        c  = SEED_CASES      + TEST_CASES
-        co = SEED_COMPLAINTS + TEST_COMPLAINTS
+        p  = SEED_PASSENGERS + TEST_PASSENGERS  + TEST2_PASSENGERS + TEST3_PASSENGERS
+        f  = SEED_FLIGHTS    + TEST_FLIGHTS     + TEST2_FLIGHTS    + TEST3_FLIGHTS
+        c  = SEED_CASES      + TEST_CASES       + TEST2_CASES      + TEST3_CASES
+        co = SEED_COMPLAINTS + TEST_COMPLAINTS  + TEST2_COMPLAINTS + TEST3_COMPLAINTS
 
     logger.info("Dataset: %s | passengers=%d flights=%d cases=%d complaints=%d",
                 args.dataset, len(p), len(f), len(c), len(co))

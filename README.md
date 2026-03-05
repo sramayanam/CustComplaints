@@ -358,6 +358,81 @@ Both are supported on **Premium** and **Dedicated** tiers. The settings are remo
 
 ---
 
+## Fabric IQ Ontology Agent
+
+An ontology agent built on Fabric IQ sits on top of the four KQL tables and exposes
+the complaint graph for natural-language queries and GQL traversal.
+
+### Entity types and labels
+
+| Entity type | Label in GQL | Primary key |
+| --- | --- | --- |
+| Passenger | `` `passenger` `` (lowercase) | `passenger_id` |
+| Flight | `` `Flight` `` | `flight_id` |
+| Case | `` `Case` `` | `case_id` |
+| Complaint | `` `Complaint` `` | `complaint_id` |
+
+### Relationships
+
+| GQL relationship | From | To | Meaning |
+| --- | --- | --- | --- |
+| `` `creates` `` | `passenger` | `Case` | Passenger opened a case |
+| `` `generates` `` | `Case` | `Complaint` | Case produced a complaint item |
+| `` `takes` `` | `passenger` | `Flight` | Passenger flew on a flight associated with the case |
+
+### GQL syntax rules (confirmed working)
+
+- All labels and relationship types must be **backtick-quoted**
+- `passenger` label is **lowercase** — all others are Title Case
+- Multiple patterns in a single `MATCH` are **comma-separated**
+- `GROUP BY` accepts **aliases only** — not `node.property` directly
+- `FILTER` after `GROUP BY` is **not supported** — use `ORDER BY DESC` as a workaround
+- Use `TO_JSON_STRING(node)` to return full node or edge as JSON
+- **Relationship direction is strict** — never reverse these:
+  - `(passenger)-[:creates]->(Case)` ✓
+  - `(Case)-[:generates]->(Complaint)` ✓
+  - `(passenger)-[:takes]->(Flight)` ✓
+
+### GQL query skeleton
+
+```gql
+MATCH (node_Case:`Case`)-[edge1_generates:`generates`]->(node_Complaint:`Complaint`),
+      (node_passenger:`passenger`)-[edge2_creates:`creates`]->(node_Case:`Case`),
+      (node_passenger:`passenger`)-[edge3_takes:`takes`]->(node_Flight:`Flight`)
+RETURN TO_JSON_STRING(node_Case) AS `Case`,
+       TO_JSON_STRING(node_passenger) AS `passenger`,
+       TO_JSON_STRING(node_Complaint) AS `Complaint`,
+       TO_JSON_STRING(node_Flight) AS `Flight`
+LIMIT 1000
+```
+
+### Agent instructions (datasource guide)
+
+Point the agent at `datasource_guide.md` in the repo root. It contains:
+- Table-by-table column reference with types and nullability
+- Key join patterns and FK-safe query order
+- KQL cookbook for cross-table queries
+- Deduplication contract (`event_id` UUID v5)
+
+### Sample agent questions
+
+| Question | What it tests |
+|---|---|
+| Which passengers have more than one case? | Multi-hop relationship traversal |
+| Show all Platinum passengers with unresolved complaints | Tier + status filter |
+| What happened on flight ZA1818? | Flight-scoped complaint cluster |
+| Which complaint category appears most often? | Aggregation |
+| Has Chen Wei had any complaints resolved? | Named entity + status filter |
+| Which routes have the most Critical complaints? | Route + severity join |
+
+### Full GQL query library
+
+See `GQLQueries.md` in the repo root for all confirmed working queries with
+descriptions, covering: full traversal, top complainers, escalation analysis,
+cancelled/diverted flight clusters, severity breakdowns, and tier-based filtering.
+
+---
+
 ## Next Steps
 
 - **Consumer**: read `schema-id` header → `SchemaRegistryClient.get_schema(id)` → validate payload → upsert to PostgreSQL or Microsoft Fabric

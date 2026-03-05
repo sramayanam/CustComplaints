@@ -8,12 +8,12 @@
 # META   },
 # META   "dependencies": {
 # META     "lakehouse": {
-# META       "default_lakehouse": "08bf1610-8c6e-407c-be15-44a3d663ca8d",
+# META       "default_lakehouse": "",
 # META       "default_lakehouse_name": "airlinesLH",
-# META       "default_lakehouse_workspace_id": "12204d44-688c-40db-9593-4d23c9ad3e51",
+# META       "default_lakehouse_workspace_id": "",
 # META       "known_lakehouses": [
 # META         {
-# META           "id": "08bf1610-8c6e-407c-be15-44a3d663ca8d"
+# META           "id": ""
 # META         }
 # META       ]
 # META     }

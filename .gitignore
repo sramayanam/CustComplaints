@@ -36,3 +36,25 @@ Thumbs.db
 .vscode/
 *.swp
 *~
+
+# ── Fabric items (only specific items are tracked) ────────────────────────────
+fabric/Airlines.SemanticModel/
+fabric/AirlinesDataAgent.DataAgent/
+fabric/AirlinesMktgOntology.Ontology/
+fabric/Airlines_best practice analyzer_1479.Notebook/
+fabric/ComplaintsOntologyAgent.DataAgent/
+fabric/GraphDataAgent.DataAgent/
+fabric/MLNotebook.MLExperiment/
+fabric/MLNotebook.Notebook/
+fabric/MaterializedLakeViews.Notebook/
+fabric/RevenuePerformanceOverview.Report/
+fabric/aaagent1.DataAgent/
+fabric/airlines_eventstream.Eventstream/
+fabric/airlinessmall.SemanticModel/
+fabric/copypostgresql.CopyJob/
+fabric/lhairlinessemanticmodel.SemanticModel/
+fabric/lhfinance.Lakehouse/
+fabric/load airlines mkt data.Notebook/
+fabric/ontologyfromccsem.Ontology/
+fabric/readme.md
+fabric/realtimedataagent.DataAgent/

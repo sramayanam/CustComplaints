@@ -48,20 +48,16 @@ logger = logging.getLogger(__name__)
 
 # ── Identity ───────────────────────────────────────────────────────────────────
 
-UAMI_CLIENT_ID: str = os.getenv(
-    "UAMI_CLIENT_ID",
-    "7f12934d-08b8-402b-8c1d-8529efd4f8c1",   # aaaorguamgdidentity
-)
+UAMI_CLIENT_ID: str = os.getenv("UAMI_CLIENT_ID", "")
 
-AZURE_TENANT_ID: str = os.getenv(
-    "AZURE_TENANT_ID",
-    "8429325e-77e2-4bd9-9f1e-4be922d474df",   # All About Analytics
-)
+AZURE_TENANT_ID: str = os.getenv("AZURE_TENANT_ID", "")
 
 # DefaultAzureCredential:
 #   On Azure compute with UAMI attached  → ManagedIdentityCredential (UAMI)
 #   Locally after `az login`             → AzureCliCredential (fallback)
-_credential = DefaultAzureCredential(managed_identity_client_id=UAMI_CLIENT_ID)
+# Pass UAMI_CLIENT_ID only when explicitly configured; None falls back to
+# system-assigned identity or AzureCliCredential for local dev.
+_credential = DefaultAzureCredential(managed_identity_client_id=UAMI_CLIENT_ID or None)
 
 # ── Namespace / bootstrap ──────────────────────────────────────────────────
 

@@ -74,6 +74,7 @@ import fastavro
 from confluent_kafka import Consumer, KafkaError, KafkaException, Message, Producer
 from dotenv import load_dotenv
 import os
+from utils import mask_key as _mask_key
 
 load_dotenv()
 
@@ -171,6 +172,19 @@ signal.signal(signal.SIGTERM, _handle_signal)
 signal.signal(signal.SIGINT, _handle_signal)
 
 
+# ── Key masking ────────────────────────────────────────────────────────────────
+
+def _mask_key(key: Any) -> str:
+    """Return a masked representation of a Kafka message key for safe logging."""
+    if key is None:
+        return "<null>"
+    if isinstance(key, (bytes, bytearray)):
+        key = key.decode("utf-8", errors="replace")
+    s = str(key)
+    n = min(4, max(0, len(s) // 2))
+    return (s[:n] + "****") if n > 0 else "****"
+
+
 # ── Delivery callback ──────────────────────────────────────────────────────────
 
 _delivery_errors: list[str] = []
@@ -178,9 +192,11 @@ _delivery_errors: list[str] = []
 
 def _on_delivery(err: Any, msg: Any) -> None:
     if err:
-        _delivery_errors.append(f"topic={msg.topic()} key={msg.key()} error={err}")
+        _delivery_errors.append(
+            f"topic={msg.topic()} key={_mask_key(msg.key())} error={err}"
+        )
         logger.error("Fabric delivery FAILED | topic=%s key=%s error=%s",
-                     msg.topic(), msg.key(), err)
+                     msg.topic(), _mask_key(msg.key()), err)
     else:
         logger.debug("Fabric delivered | topic=%s partition=%d offset=%d",
                      msg.topic(), msg.partition(), msg.offset())

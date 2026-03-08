@@ -9,6 +9,10 @@
 > individuals, airlines, or events are represented. Any resemblance to real
 > people or organisations is purely coincidental.
 >
+> **This is a personal repository** and is **not** an official Microsoft
+> repository, product, or sample. It is not endorsed by or affiliated with
+> Microsoft in any way.
+>
 > This project is shared as a **learning reference**, provided *as-is* without
 > warranty of any kind. We encourage you to adapt and improve it for your own
 > use cases.

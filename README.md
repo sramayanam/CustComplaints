@@ -17,6 +17,11 @@
 > - Any resemblance to real people, organisations, or events is purely coincidental.
 > - This data **must not** be treated as, or used in place of, real customer data.
 >
+> **This is a personal repository** maintained by the individual author. It is
+> **not** an official Microsoft repository, product, or sample. It is not
+> endorsed by, affiliated with, or supported by Microsoft in any way. All
+> opinions and implementations are the author's own.
+>
 > This project is shared as a **learning reference and conversation starter**. 
 > While every effort has been made to illustrate good patterns, the code is
 > provided *as-is*, without warranty of any kind. We warmly encourage you to

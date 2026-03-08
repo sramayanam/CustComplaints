@@ -28,7 +28,7 @@
 > review, adapt, and improve it for your own use cases — and we'd love to hear
 > what you build with it! 🚀
 
-Kafka producer for the **Lunar Air / ZavaAir** customer complaints pipeline.
+Kafka producer for the **ZavaAir** customer complaints pipeline.
 Produces four entity types directly to a **Microsoft Fabric Eventstream** in
 FK-safe order, with every message stamped with CloudEvents 1.0 Kafka-binding
 headers. The Eventstream routes each event type to its own Eventhouse KQL table

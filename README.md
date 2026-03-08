@@ -1,45 +1,87 @@
-# CustComplaints – Event Hub Kafka Producer
+# CustComplaints – Fabric Eventstream Producer
 
 Kafka producer for the **Lunar Air / ZavaAir** customer complaints pipeline.
-Produces four related tables to Azure Event Hubs in FK-safe order, with every
-message stamped with a `schema-id` header resolved from the Event Hubs Schema
-Registry.
+Produces four entity types directly to a **Microsoft Fabric Eventstream** in
+FK-safe order, with every message stamped with CloudEvents 1.0 Kafka-binding
+headers. The Eventstream routes each event type to its own Eventhouse KQL table
+based on the `ce_type` header.
 
 ---
 
 ## Architecture
 
+### Path A – Direct JSON producer (simple, recommended for new deployments)
+
 ```
-┌─────────────────────────────────────────────────┐
-│  Local dev / Azure compute                       │
-│                                                  │
-│  python -m kafka.producer                        │
-│        │                                         │
-│        ├─ DefaultAzureCredential (UAMI / CLI)    │
-│        │         │                               │
-│        │   ┌─────▼──────────────────────────┐   │
-│        │   │  Event Hubs Schema Registry    │   │
-│        │   │  aaaorgehns.servicebus.windows │   │
-│        │   │  Group: custcomplaints (JSON)  │   │
-│        │   └───────────────┬────────────────┘   │
-│        │         schema-id │                     │
-│        ▼                   ▼                     │
-│  confluent-kafka Producer  +  schema-id header   │
-│        │                                         │
-└────────┼────────────────────────────────────────-┘
-         │ SASL OAUTHBEARER (JWT from UAMI)
+┌──────────────────────────────────────────────────────┐
+│  python -m fabricstreams.producer                     │
+│        JSON payload + CloudEvents 1.0 Kafka headers   │
+└────────┬─────────────────────────────────────────────┘
+         │ SASL PLAIN ($ConnectionString) port 9093
          ▼
-┌─────────────────────────────────────────────────────────┐
-│  Azure Event Hubs namespace: aaaorgehns (Standard tier) │
-│                                                          │
-│  custcomplaints.passengers   (partition key: passenger_id)
-│  custcomplaints.flights      (partition key: flight_id)  │
-│  custcomplaints.cases        (partition key: case_id)    │
-│  custcomplaints.complaints   (partition key: complaint_id)
-└─────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│  Fabric Eventstream Custom Endpoint                           │
+│  es_8b57ffda-4fb6-4094-b3b3-19a8f949aac7                     │
+│  Routed by entity_type header → EventSchemaSet schemas        │
+└──────────────────────┬───────────────────────────────────────┘
+                       │ Eventstream destinations
+                       ▼
+┌──────────────────────────────────────────────────────────────┐
+│  Eventhouse (KQL database)                                    │
+│  Raw tables       → complaints, Flights, Passenger, case      │
+│  Materialized views → mv_complaints, mv_flights,              │
+│                       mv_passengers, mv_cases  (dedup by PK)  │
+│  Enriched view    → ComplaintsEnriched()  (stored function)   │
+│  Update policy    → complaints_enriched  (persisted, joined)  │
+└──────────────────────────────────────────────────────────────┘
 ```
 
-**Produce order** (FK dependency): `passengers → flights → cases → complaints`
+### Path B – Avro→JSON bridge (for existing Avro pipelines)
+
+Fabric Eventstream Custom Endpoints only accept JSON — there is no UI option to
+disable the JSON deserializer, and the AEH-source "Dynamic schema via headers"
+feature also expects JSON in the message body.  Customers who already produce
+**Avro-encoded** data into Azure Event Hubs use this bridge:
+
+```
+┌─────────────────────────────────────┐
+│  python -m fabricstreams.avro_producer --connection 3  │
+│  Avro schemaless binary             │
+│  entity_type Kafka header           │
+└──────────────┬──────────────────────┘
+               │ SASL PLAIN (AEH_CONNECTION_STRING) port 9093
+               ▼
+┌─────────────────────────────────────────────────────────┐
+│  Azure Event Hub  dmtcehns / custcomplaints              │
+│  Single topic, all 4 entity types                        │
+│  entity_type header identifies schema per message        │
+└──────────────┬──────────────────────────────────────────┘
+               │ SASL PLAIN consumer (avro-bridge group)
+               ▼
+┌─────────────────────────────────────────────────────────┐
+│  python -m fabricstreams.avro_bridge                     │
+│  1. Read entity_type header → select local .avsc         │
+│  2. Strip Azure SR wire preamble if present (4+32 bytes) │
+│  3. fastavro.schemaless_reader → Python dict             │
+│  4. json.dumps → UTF-8 bytes                             │
+│  5. Forward with original headers intact                 │
+└──────────────┬──────────────────────────────────────────┘
+               │ SASL PLAIN (FABRIC_CONNECTION_STRING) port 9093
+               ▼
+┌──────────────────────────────────────────────────────────────┐
+│  Fabric Eventstream Custom Endpoint                           │
+│  es_8b57ffda-4fb6-4094-b3b3-19a8f949aac7                     │
+│  Receives JSON → routes via entity_type → Eventhouse          │
+└──────────────────────────────────────────────────────────────┘
+```
+
+**Why not connect AEH directly as an Eventstream source?**
+The "Azure EventHub Extended" source with "Dynamic schema via headers" also
+expects JSON in the message body.  The Avro schema in the Fabric EventSchemaSet
+describes field types for JSON validation — not for Avro binary decoding.
+The bridge is therefore required regardless of how the Eventstream source is configured.
+
+**Produce order** (FK dependency): `Passenger → Flights → case → complaints`
 
 ---
 
@@ -47,16 +89,21 @@ Registry.
 
 ```
 CustComplaints/
+├── fabricstreams/
+│   ├── __init__.py
+│   ├── config.py            # Shared config (schema registry base URL)
+│   ├── producer.py          # Direct Fabric Eventstream producer (all 4 types); CLI entry point
+│   └── register_schemas.py  # Avro schema upload to Fabric EventSchemaSet
 ├── kafka/
 │   ├── __init__.py
-│   ├── config.py            # Event Hubs connection config + auth
-│   ├── schemas.py           # Pydantic payload models + EventEnvelope
-│   ├── producer.py          # Seed data + produce_dataset(); CLI entry point
-│   └── register_schemas.py  # Schema Registry registration + lookup; CLI
+│   ├── config.py            # Legacy Event Hubs config
+│   ├── schemas.py           # Pydantic payload models (source of truth for field shapes)
+│   ├── producer.py          # Seed/test data constants imported by fabricstreams/producer.py
+│   └── register_schemas.py  # Legacy schema registry CLI
 ├── sql/
 │   ├── 01_schema.sql        # CREATE SCHEMA
 │   ├── 02_tables.sql        # CREATE TABLE (all four tables + FK constraints)
-│   └── 03_inserts.sql       # Reference seed data (mirrors producer seed)
+│   └── 03_inserts.sql       # Reference seed data
 ├── .env.example             # Template – copy to .env and fill values
 ├── requirements.txt
 └── README.md
@@ -69,18 +116,9 @@ CustComplaints/
 | Requirement | Version |
 |---|---|
 | Python | 3.11+ |
-| Azure CLI (`az`) | any recent |
-| Azure Event Hubs namespace | Standard tier or above |
-| UAMI with roles below | – |
-
-### Required IAM roles on the Event Hubs namespace
-
-| Role | Purpose |
-|---|---|
-| **Azure Event Hubs Data Sender** | Produce messages to all four topics |
-| **Schema Registry Contributor** | Register and read schemas |
-
-Assign to both your UAMI (for Azure compute) and your personal Entra ID principal (for local dev via `az login`).
+| confluent-kafka | installed via requirements.txt |
+| Fabric Eventstream | Custom endpoint enabled (SASL PLAIN) |
+| Fabric EventSchemaSet | 4 Avro schemas uploaded (complaints, Flights, Passenger, case) |
 
 ---
 
@@ -100,58 +138,35 @@ pip install -r requirements.txt
 
 ```bash
 cp .env.example .env
-# Edit .env — minimum required changes are described in the file
+# Edit .env
 ```
 
 Key variables:
 
 | Variable | Description |
 |---|---|
-| `EH_NAMESPACE` | Event Hubs namespace name (no `.servicebus.windows.net`) |
-| `AZURE_TENANT_ID` | Entra ID tenant ID – required so Event Hubs can validate the JWT issuer |
-| `UAMI_CLIENT_ID` | Client ID of the User-Assigned Managed Identity |
-| `USE_MANAGED_IDENTITY` | `false` for local dev (uses `az login`), `true` on Azure compute |
-| `SCHEMA_GROUP` | Schema Registry group name (default: `custcomplaints`) |
+| `FABRIC_CONNECTION_STRING` | Full SAS connection string from Fabric Eventstream custom endpoint |
+| `FABRIC_SCHEMA_SET_ID` | EventSchemaSet GUID (from schema registry URL) |
+| `FABRIC_SP_TENANT_ID` | Entra tenant ID (for Fabric REST API calls) |
+| `FABRIC_WORKSPACE_ID` | Fabric workspace GUID |
 
-### 3 – Create the four Event Hubs (topics)
+### 3 – Upload schemas to Fabric EventSchemaSet
 
-Create these Event Hubs in your namespace (Azure Portal or CLI):
+Schemas are under `fabricstreams/schemas/`. Upload each Avro schema via the
+Fabric EventSchemaSet UI (or use `fabricstreams/register_schemas.py` once the
+`updateDefinition` API supports `schemas[]` arrays):
 
-```
-custcomplaints.passengers
-custcomplaints.flights
-custcomplaints.cases
-custcomplaints.complaints
-```
+| Schema name | Entity |
+|---|---|
+| `complaints` | Complaint records |
+| `Flights` | Flight operations |
+| `Passenger` | Passenger master data |
+| `case` | Support cases |
 
-### 4 – Create the Schema Registry group
+### 4 – Associate schemas in the Eventstream
 
-The Azure CLI only supports Avro schema groups. Use the ARM REST API to create a JSON group:
-
-```bash
-SUBSCRIPTION=<your-subscription-id>
-RG=<resource-group>
-NS=<eh-namespace>
-GROUP=custcomplaints
-
-az rest --method put \
-  --url "https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${RG}/providers/Microsoft.EventHub/namespaces/${NS}/schemagroups/${GROUP}?api-version=2022-10-01-preview" \
-  --body '{"properties": {"schemaType": "Json"}}'
-```
-
-### 5 – Register the schemas
-
-```bash
-python -m kafka.register_schemas
-```
-
-Registers the JSON Schema derived from each Pydantic model. This is **idempotent** – safe to re-run; it returns existing IDs when schemas are already registered.
-
-To verify:
-
-```bash
-python -m kafka.register_schemas --list
-```
+In Fabric Eventstream → **Edit** → click the source node → **Schema settings**:
+- Associate each schema to its `ce_type` (must match exactly, case-sensitive)
 
 ---
 
@@ -160,22 +175,30 @@ python -m kafka.register_schemas --list
 ```bash
 source .venv/bin/activate
 
-python -m kafka.producer                   # seed data only (default)
-python -m kafka.producer --dataset seed    # 20 passengers / 13 flights / 20 cases / 28 complaints
-python -m kafka.producer --dataset test    # 3 / 2 / 4 / 5 new test records (passengers 21-23)
-python -m kafka.producer --dataset all     # seed + test combined (23 / 15 / 24 / 33)
+python -m fabricstreams.producer                        # seed – all 4 types (default)
+python -m fabricstreams.producer --dataset seed         # 20 passengers / 13 flights / 20 cases / 28 complaints
+python -m fabricstreams.producer --dataset test         # batch 1 (incremental)
+python -m fabricstreams.producer --dataset test2        # batch 2
+python -m fabricstreams.producer --dataset test3        # batch 3
+python -m fabricstreams.producer --dataset all          # all batches combined
+python -m fabricstreams.producer --types Passenger Flights   # specific types only
 ```
 
-Records are sent in FK-safe order (`passengers → flights → cases → complaints`) with a
-`flush()` after each table. Each message carries a `schema-id` Kafka header.
+Records are sent in FK-safe order (`Passenger → Flights → case → complaints`).
+Each message carries CloudEvents 1.0 Kafka-binding headers:
 
-**Note:** always run as a module (`python -m kafka.producer`), not directly
-(`python kafka/producer.py`) — the package uses relative imports.
+| Header | Value |
+|---|---|
+| `ce_specversion` | `1.0` |
+| `ce_type` | Entity type name (`complaints`, `Flights`, `Passenger`, `case`) |
+| `ce_source` | `fabricstreams/producer` |
+| `ce_datacontenttype` | `application/json` |
+| `ce_dataschema` | Full schema registry URL with `/versions/v1` |
 
 ### Test batch relationship map
 
 ```
-Passenger 21 (Zara Thompson, AU)   → Case 21 → ZA1414 SIN→SYD → Complaints 29, 30
+Passenger 21 (Zara Thompson, AU)    → Case 21 → ZA1414 SIN→SYD → Complaints 29, 30
 Passenger 22 (Hiroshi Yamamoto, JP) → Case 22 → ZA1414 SIN→SYD → Complaint 31
 Passenger 23 (Lucia Ferreira, PT)   → Case 23 → ZA1515 SYD→LAX → Complaint 32
 Passenger 21 (again)                → Case 24 → ZA1515 SYD→LAX → Complaint 33
@@ -183,131 +206,211 @@ Passenger 21 (again)                → Case 24 → ZA1515 SYD→LAX → Complai
 
 ---
 
-## Forwarding to Fabric (Event Hubs → Fabric Eventstream)
-
-Run one bridge process per topic. Use `--max-idle-secs 30` to exit automatically once
-the queue drains (useful after a one-off produce run):
-
-```bash
-source .venv/bin/activate
-
-python -m kafka.fabric_consumer --topic custcomplaints.passengers  --max-idle-secs 30 &
-python -m kafka.fabric_consumer --topic custcomplaints.flights     --max-idle-secs 30 &
-python -m kafka.fabric_consumer --topic custcomplaints.cases       --max-idle-secs 30 &
-python -m kafka.fabric_consumer --topic custcomplaints.complaints  --max-idle-secs 30 &
-wait
-```
-
-All four bridges run in parallel. Source offsets are committed **after** Fabric flush —
-at-least-once delivery, with `event_id` handling duplicates at the Fabric side.
-
----
-
 ## Fabric Eventhouse KQL Setup
 
-### 1 — Add `event_id` column to each table
+Data lands in the Eventhouse as raw append-only tables. Use the following
+patterns to get a clean, unified view.
+
+### 1 — Row counts (verify ingestion)
 
 ```kql
-.alter-merge table passengers (event_id: string)
-.alter-merge table flights    (event_id: string)
-.alter-merge table cases      (event_id: string)
-.alter-merge table complaints (event_id: string)
-```
-
-### 2 — Create ingestion mappings
-
-`event_id` is at the envelope root (`$.event_id`); all data columns are under `$.payload.*`.
-Example for `passengers` — repeat for the other three tables with their own column lists:
-
-```kql
-.create-or-alter table passengers ingestion json mapping "PassengersMapping"
-'[
-  {"column":"event_id",            "path":"$.event_id"},
-  {"column":"passenger_id",        "path":"$.payload.passenger_id"},
-  {"column":"first_name",          "path":"$.payload.first_name"},
-  {"column":"last_name",           "path":"$.payload.last_name"},
-  {"column":"email",               "path":"$.payload.email"},
-  {"column":"phone",               "path":"$.payload.phone"},
-  {"column":"country",             "path":"$.payload.country"},
-  {"column":"frequent_flyer_tier", "path":"$.payload.frequent_flyer_tier"},
-  {"column":"total_flights",       "path":"$.payload.total_flights"},
-  {"column":"member_since",        "path":"$.payload.member_since"}
-]'
-```
-
-Set the mapping name in the Fabric Eventstream destination config, then re-run the
-bridge with `--dataset all` to backfill `event_id` on rows ingested before this change.
-
-### 3 — Verification KQL queries
-
-**Row counts**
-```kql
-passengers | count
-flights    | count
-cases      | count
 complaints | count
+Flights    | count
+Passenger  | count
+case       | count
 ```
 
-**Duplicate check — should return 0 rows**
+### 2 — Materialized views (deduplication)
+
+At-least-once delivery means a re-run of the producer can insert duplicates.
+Materialized views with `take_any` give a deduplicated latest-state projection
+for each entity, maintained incrementally by the engine. Run these once:
+
 ```kql
-union
-  (passengers | summarize n=count() by event_id | where n > 1 | extend table="passengers"),
-  (flights    | summarize n=count() by event_id | where n > 1 | extend table="flights"),
-  (cases      | summarize n=count() by event_id | where n > 1 | extend table="cases"),
-  (complaints | summarize n=count() by event_id | where n > 1 | extend table="complaints")
-| project table, event_id, n
-```
-
-**Relationship integrity — complaints joined to passenger + flight (test batch)**
-```kql
-complaints
-| where complaint_id between (29 .. 33)
-| join kind=inner (cases      | project case_id, case_status, pnr) on case_id
-| join kind=inner (passengers | project passenger_id, first_name, last_name) on passenger_id
-| join kind=inner (flights    | project flight_id, flight_number, origin_code, destination_code) on flight_id
-| project complaint_id, first_name, last_name, flight_number, origin_code, destination_code,
-          category, subcategory, severity, case_status
-| order by complaint_id asc
-```
-
-**Multi-case passenger check (Passenger 21 — expects 3 complaints across 2 flights)**
-```kql
-complaints
-| where passenger_id == 21
-| join kind=inner (cases | project case_id, flight_id, pnr, case_status) on case_id
-| project complaint_id, case_id, flight_id, pnr, category, subcategory, severity, status
-| order by case_id asc, complaint_id asc
-```
-
----
-
-## Message Format
-
-Every Kafka message value is a JSON-encoded `EventEnvelope`:
-
-```json
+.create materialized-view with (backfill=true) mv_passengers on table Passenger
 {
-  "event_id":       "550e8400-e29b-41d4-a716-446655440000",
-  "table":          "custcomplaints.complaints",
-  "schema_version": "1.0",
-  "produced_at":    "2026-03-04T18:00:00+00:00",
-  "payload": {
-    "complaint_id": 7,
-    "case_id": 5,
-    ...
-  }
+    Passenger | summarize take_any(*) by passenger_id
+}
+
+.create materialized-view with (backfill=true) mv_flights on table Flights
+{
+    Flights | summarize take_any(*) by flight_id
+}
+
+.create materialized-view with (backfill=true) mv_cases on table ['case']
+{
+    ['case'] | summarize take_any(*) by case_id
+}
+
+.create materialized-view with (backfill=true) mv_complaints on table complaints
+{
+    complaints | summarize take_any(*) by complaint_id
 }
 ```
 
-`event_id` is a **UUID v5** derived deterministically from `"{table}:{pk}"` — the same
-record always produces the same `event_id` across re-runs, enabling idempotent upserts
-in Fabric Eventhouse without double-counting.
+After creation the views are queryable immediately and stay current automatically:
+
+```kql
+mv_passengers | count   // 20 (seed)
+mv_flights    | count   // 13
+mv_cases      | count   // 20
+mv_complaints | count   // 28
+```
+
+### 3 — Update policy (persisted enriched table)
+
+An update policy runs a transformation function on **every ingest** to the source
+table and appends the result to a target table — giving you a persisted, enriched
+table without a query-time join. Because we send in FK-safe order
+(Passenger → Flights → case → complaints), the referenced rows exist by the time
+complaints arrive.
+
+**Step 1 – Create the target table**
+
+```kql
+.create table complaints_enriched (
+    // complaint fields
+    complaint_id:       long,
+    case_id:            long,
+    passenger_id:       long,
+    flight_id:          long,
+    flight_number:      string,
+    pnr:                string,
+    complaint_date:     datetime,
+    category:           string,
+    subcategory:        string,
+    description:        string,
+    severity:           string,
+    status:             string,
+    assigned_agent:     string,
+    resolution_notes:   string,
+    resolution_date:    datetime,
+    satisfaction_score: real,
+    // from Passenger
+    first_name:         string,
+    last_name:          string,
+    email:              string,
+    country:            string,
+    frequent_flyer_tier: string,
+    // from Flights
+    origin_code:        string,
+    origin_city:        string,
+    destination_code:   string,
+    destination_city:   string,
+    scheduled_departure: datetime,
+    actual_departure:   datetime,
+    flight_status:      string,
+    delay_minutes:      long,
+    // from case
+    case_status:        string,
+    case_opened_at:     datetime,
+    case_last_updated_at: datetime
+)
+```
+
+**Step 2 – Create the transformation function**
+
+```kql
+.create-or-alter function ComplaintsEnrichFn() {
+    complaints
+    | join kind=leftouter (
+        ['case']
+        | project case_id, case_status, case_opened_at=opened_at, case_last_updated_at=last_updated_at
+      ) on case_id
+    | join kind=leftouter (
+        Passenger
+        | project passenger_id, first_name, last_name, email, country, frequent_flyer_tier
+      ) on passenger_id
+    | join kind=leftouter (
+        Flights
+        | project flight_id, origin_code, origin_city, destination_code, destination_city,
+                  scheduled_departure, actual_departure, flight_status, delay_minutes
+      ) on flight_id
+    | project complaint_id, case_id, passenger_id, flight_id, flight_number, pnr,
+              complaint_date, category, subcategory, description, severity, status,
+              assigned_agent, resolution_notes, resolution_date, satisfaction_score,
+              first_name, last_name, email, country, frequent_flyer_tier,
+              origin_code, origin_city, destination_code, destination_city,
+              scheduled_departure, actual_departure, flight_status, delay_minutes,
+              case_status, case_opened_at, case_last_updated_at
+}
+```
+
+**Step 3 – Attach the update policy to the complaints table**
+
+```kql
+.alter table complaints_enriched policy update
+@'[{
+    "IsEnabled": true,
+    "Source": "complaints",
+    "Query": "ComplaintsEnrichFn()",
+    "IsTransactional": false,
+    "PropagateIngestionProperties": true
+}]'
+```
+
+From this point forward, every new complaint ingested automatically triggers the
+join and appends an enriched row to `complaints_enriched`.
+
+**Backfill existing rows** (run once after enabling the policy):
+
+```kql
+.set-or-append complaints_enriched <| ComplaintsEnrichFn()
+```
+
+### 4 — Stored function for ad-hoc enriched queries
+
+If you don't need a persisted table, use a KQL stored function backed by the
+materialized views — always fresh, zero storage cost:
+
+```kql
+.create-or-alter function ComplaintsEnriched() {
+    mv_complaints
+    | join kind=leftouter (mv_cases      | project case_id, case_status, pnr, case_opened_at=opened_at) on case_id
+    | join kind=leftouter (mv_passengers | project passenger_id, first_name, last_name, country, frequent_flyer_tier) on passenger_id
+    | join kind=leftouter (mv_flights    | project flight_id, flight_number, origin_code, destination_code, flight_status, delay_minutes) on flight_id
+    | project complaint_id, complaint_date, category, severity, status,
+              first_name, last_name, country, frequent_flyer_tier,
+              flight_number, origin_code, destination_code, flight_status, delay_minutes,
+              case_status, pnr, case_opened_at
+}
+```
+
+Query it like a table:
+
+```kql
+ComplaintsEnriched()
+| where severity == "Critical"
+| order by complaint_date desc
+```
+
+### 5 — Verification queries
+
+**Duplicate check across all 4 tables — should return 0 rows**
+```kql
+union
+  (Passenger  | summarize n=count() by passenger_id  | where n > 1 | extend tbl="Passenger"),
+  (Flights    | summarize n=count() by flight_id      | where n > 1 | extend tbl="Flights"),
+  (['case']   | summarize n=count() by case_id        | where n > 1 | extend tbl="case"),
+  (complaints | summarize n=count() by complaint_id   | where n > 1 | extend tbl="complaints")
+| project tbl, id=coalesce(tostring(passenger_id), tostring(flight_id),
+                            tostring(case_id), tostring(complaint_id)), n
+```
+
+**Enriched spot-check (test batch Passenger 21)**
+```kql
+ComplaintsEnriched()
+| where passenger_id == 21
+| project complaint_id, first_name, last_name, flight_number, origin_code,
+          destination_code, category, severity, case_status
+| order by complaint_id asc
+```
 
 ---
 
 ## SQL Reference Schema
 
-The `sql/` directory contains the PostgreSQL DDL that mirrors the Kafka topics:
+The `sql/` directory contains the PostgreSQL DDL that mirrors the Eventhouse tables:
 
 | File | Contents |
 |---|---|
@@ -315,19 +418,6 @@ The `sql/` directory contains the PostgreSQL DDL that mirrors the Kafka topics:
 | `02_tables.sql` | All four tables with PK / FK constraints |
 | `03_inserts.sql` | Seed rows matching the producer seed data |
 
----
-
-## Authentication Detail
-
-Authentication uses **SASL OAUTHBEARER** — no connection strings or SAS keys.
-
-`DefaultAzureCredential` is used on both paths:
-
-- **Azure compute**: resolves to `ManagedIdentityCredential` when the UAMI is
-  assigned to the VM / Container App / Function
-- **Local dev**: resolves to `AzureCliCredential` after `az login`
-
-The OAuth token scope **must** be namespace-specific:
 
 ```
 https://<namespace>.servicebus.windows.net/.default

@@ -27,6 +27,7 @@ import uuid
 
 from confluent_kafka import KafkaException, Producer
 from dotenv import load_dotenv
+from utils import mask_key as _mask_key
 
 load_dotenv()
 
@@ -82,18 +83,31 @@ _PRODUCER_CONFIG: dict = {
 }
 
 
+# ── Key masking ────────────────────────────────────────────────────────────────
+
+def _mask_key(key) -> str:
+    """Return a masked representation of a Kafka message key for safe logging."""
+    if key is None:
+        return "<null>"
+    if isinstance(key, (bytes, bytearray)):
+        key = key.decode("utf-8", errors="replace")
+    s = str(key)
+    n = min(4, max(0, len(s) // 2))
+    return (s[:n] + "****") if n > 0 else "****"
+
+
 # ── Delivery callback ──────────────────────────────────────────────────────────
 
 def _on_delivery(err, msg) -> None:
     if err:
         logger.error(
             "Delivery FAILED | topic=%s partition=%s key=%s error=%s",
-            msg.topic(), msg.partition(), msg.key(), err,
+            msg.topic(), msg.partition(), _mask_key(msg.key()), err,
         )
     else:
         logger.debug(
             "Delivered | topic=%-60s partition=%d offset=%d key=%s",
-            msg.topic(), msg.partition(), msg.offset(), msg.key(),
+            msg.topic(), msg.partition(), msg.offset(), _mask_key(msg.key()),
         )
 
 

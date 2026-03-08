@@ -1,0 +1,59 @@
+{
+    "type": "record",
+    "name": "Passenger",
+    "namespace": "com.airline.custcomplaints",
+    "doc": "Passenger record – maps to custcomplaints.passengers. Frequent-flyer tier enum: None | Bronze | Silver | Gold | Platinum.",
+    "fields": [
+        {
+            "name": "passenger_id",
+            "type": "long",
+            "doc": "Primary key (PostgreSQL BIGINT PK)"
+        },
+        {
+            "name": "first_name",
+            "type": "string",
+            "doc": "First name (VARCHAR 100)"
+        },
+        {
+            "name": "last_name",
+            "type": "string",
+            "doc": "Last name (VARCHAR 100)"
+        },
+        {
+            "name": "email",
+            "type": ["null", "string"],
+            "default": null,
+            "doc": "Email address (VARCHAR 255, nullable)"
+        },
+        {
+            "name": "phone",
+            "type": ["null", "string"],
+            "default": null,
+            "doc": "Phone number (VARCHAR 50, nullable)"
+        },
+        {
+            "name": "country",
+            "type": ["null", "string"],
+            "default": null,
+            "doc": "Country name (VARCHAR 100, nullable)"
+        },
+        {
+            "name": "frequent_flyer_tier",
+            "type": "string",
+            "default": "None",
+            "doc": "Loyalty tier: None | Bronze | Silver | Gold | Platinum (VARCHAR 20)"
+        },
+        {
+            "name": "total_flights",
+            "type": "long",
+            "default": 0,
+            "doc": "Cumulative number of flights taken (BIGINT)"
+        },
+        {
+            "name": "member_since",
+            "type": ["null", "string"],
+            "default": null,
+            "doc": "Programme enrolment date as ISO-8601 UTC string, e.g. 2024-01-15T00:00:00+00:00 (TIMESTAMPTZ, nullable)"
+        }
+    ]
+}

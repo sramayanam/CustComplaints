@@ -1,0 +1,55 @@
+{
+    "type": "record",
+    "name": "Case",
+    "namespace": "com.airline.custcomplaints",
+    "doc": "Support case record – maps to custcomplaints.cases. Load order: passengers and flights must be loaded before cases. Status enum: Open | Under Review | Resolved | Closed | Escalated.",
+    "fields": [
+        {
+            "name": "case_id",
+            "type": "long",
+            "doc": "Primary key (PostgreSQL BIGINT PK)"
+        },
+        {
+            "name": "passenger_id",
+            "type": "long",
+            "doc": "FK → passengers.passenger_id (BIGINT)"
+        },
+        {
+            "name": "flight_id",
+            "type": "long",
+            "doc": "FK → flights.flight_id (BIGINT)"
+        },
+        {
+            "name": "flight_number",
+            "type": "string",
+            "doc": "Denormalised flight number for fast lookup (VARCHAR 10)"
+        },
+        {
+            "name": "pnr",
+            "type": "string",
+            "doc": "Passenger Name Record locator code (VARCHAR 20)"
+        },
+        {
+            "name": "case_status",
+            "type": "string",
+            "default": "Open",
+            "doc": "Case lifecycle status: Open | Under Review | Resolved | Closed | Escalated (VARCHAR 20)"
+        },
+        {
+            "name": "opened_at",
+            "type": "string",
+            "doc": "Case open timestamp as ISO-8601 UTC string (TIMESTAMPTZ)"
+        },
+        {
+            "name": "last_updated_at",
+            "type": "string",
+            "doc": "Last modification timestamp as ISO-8601 UTC string (TIMESTAMPTZ)"
+        },
+        {
+            "name": "closed_at",
+            "type": ["null", "string"],
+            "default": null,
+            "doc": "Case close timestamp as ISO-8601 UTC string (TIMESTAMPTZ, null while case is open)"
+        }
+    ]
+}

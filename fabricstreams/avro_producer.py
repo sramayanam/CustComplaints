@@ -58,10 +58,11 @@ def _parse_connection_string(conn_str: str) -> tuple[str, str]:
     return f"{host}:9093", parts["EntityPath"]
 
 
-_SCHEMA_SET_ID = os.environ.get("FABRIC_SCHEMA_SET_ID", "998f81b5-ceda-4f80-8b17-409388e5d508")
+_SCHEMA_REGISTRY_ENDPOINT = os.environ.get("FABRIC_SCHEMA_REGISTRY_ENDPOINT", "")
+_SCHEMA_SET_ID = os.environ.get("FABRIC_SCHEMA_SET_ID", "")
 _SCHEMA_REGISTRY_BASE = (
-    "https://rthprodbn73280331.eastus2.messagingcatalog.azure.net"
-    f"/schemagroups/{_SCHEMA_SET_ID}/schemas"
+    f"{_SCHEMA_REGISTRY_ENDPOINT}/schemagroups/{_SCHEMA_SET_ID}/schemas"
+    if _SCHEMA_REGISTRY_ENDPOINT and _SCHEMA_SET_ID else ""
 )
 
 # ce_type key → pk field, schema name in registry, local .avsc file

@@ -59,11 +59,8 @@ elif FABRIC_SP_TENANT_ID:
     from azure.identity import AzureCliCredential
     credential = AzureCliCredential(tenant_id=FABRIC_SP_TENANT_ID)
 else:
-    UAMI_CLIENT_ID: str = os.getenv(
-        "UAMI_CLIENT_ID",
-        "7f12934d-08b8-402b-8c1d-8529efd4f8c1",
-    )
-    credential = DefaultAzureCredential(managed_identity_client_id=UAMI_CLIENT_ID)
+    UAMI_CLIENT_ID: str = os.getenv("UAMI_CLIENT_ID", "")
+    credential = DefaultAzureCredential(managed_identity_client_id=UAMI_CLIENT_ID or None)
 
 # Scope for the Fabric REST API.
 FABRIC_API_SCOPE = "https://api.fabric.microsoft.com/.default"

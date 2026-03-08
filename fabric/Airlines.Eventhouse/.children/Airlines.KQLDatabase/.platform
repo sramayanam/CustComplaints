@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "KQLDatabase",
+    "displayName": "Airlines",
+    "description": "Airlines"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "14724f8a-1db9-9d2d-40c8-8d7f42539af7"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Eventhouse",
+    "displayName": "Airlines",
+    "description": "Airlines"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "26010916-c2ac-9e1f-4ea8-a3b098329c4c"
+  }
+}

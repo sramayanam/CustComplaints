@@ -1,0 +1,81 @@
+// KQL script
+// Use management commands in this script to configure your database items, such as tables, functions, materialized views, and more.
+
+
+.create-merge table complaints_v1 (___id:string, ___source:string, ___type:string, ___time:datetime, ___subject:string, complaint_id:long, case_id:long, passenger_id:long, flight_id:long, flight_number:string, pnr:string, complaint_date:string, category:string, subcategory:string, description:string, severity:string, status:string, assigned_agent:string, resolution_notes:string, resolution_date:string, satisfaction_score:real) 
+.create-merge table complaintsunified (___id:string, ___source:string, ___type:string, ___time:datetime, ___subject:string, data:dynamic) 
+.create-merge table Flights (flight_id:long, flight_number:string, origin_code:string, origin_city:string, destination_code:string, destination_city:string, scheduled_departure:datetime, actual_departure:datetime, scheduled_arrival:datetime, actual_arrival:datetime, aircraft_type:string, flight_status:string, delay_minutes:long) 
+.create-merge table Passengers (passenger_id:long, first_name:string, last_name:string, email:string, phone:string, country:string, frequent_flyer_tier:string, total_flights:long, member_since:datetime) 
+.create-merge table Cases (case_id:long, passenger_id:long, flight_id:long, flight_number:string, pnr:string, case_status:string, opened_at:datetime, last_updated_at:datetime, closed_at:datetime) 
+.create-merge table Complaints (complaint_id:long, case_id:long, passenger_id:long, flight_id:long, flight_number:string, pnr:string, complaint_date:datetime, category:string, subcategory:string, description:string, severity:string, status:string, assigned_agent:string, resolution_notes:string, resolution_date:datetime, satisfaction_score:real) 
+.create-or-alter function with (skipvalidation = "true") ExtractFlights() {
+    complaintsunified
+    | where ___type == "Flights"
+    | project
+        flight_id            = tolong(data.flight_id),
+        flight_number        = tostring(data.flight_number),
+        origin_code          = tostring(data.origin_code),
+        origin_city          = tostring(data.origin_city),
+        destination_code     = tostring(data.destination_code),
+        destination_city     = tostring(data.destination_city),
+        scheduled_departure  = todatetime(data.scheduled_departure),
+        actual_departure     = todatetime(data.actual_departure),
+        scheduled_arrival    = todatetime(data.scheduled_arrival),
+        actual_arrival       = todatetime(data.actual_arrival),
+        aircraft_type        = tostring(data.aircraft_type),
+        flight_status        = tostring(data.flight_status),
+        delay_minutes        = tolong(data.delay_minutes)
+}
+.create-or-alter function with (skipvalidation = "true") ExtractPassengers() {
+    complaintsunified
+    | where ___type == "Passenger"
+    | project
+        passenger_id         = tolong(data.passenger_id),
+        first_name           = tostring(data.first_name),
+        last_name            = tostring(data.last_name),
+        email                = tostring(data.email),
+        phone                = tostring(data.phone),
+        country              = tostring(data.country),
+        frequent_flyer_tier  = tostring(data.frequent_flyer_tier),
+        total_flights        = tolong(data.total_flights),
+        member_since         = todatetime(data.member_since)
+}
+.create-or-alter function with (skipvalidation = "true") ExtractCases() {
+    complaintsunified
+    | where ___type == "case"
+    | project
+        case_id          = tolong(data.case_id),
+        passenger_id     = tolong(data.passenger_id),
+        flight_id        = tolong(data.flight_id),
+        flight_number    = tostring(data.flight_number),
+        pnr              = tostring(data.pnr),
+        case_status      = tostring(data.case_status),
+        opened_at        = todatetime(data.opened_at),
+        last_updated_at  = todatetime(data.last_updated_at),
+        closed_at        = todatetime(data.closed_at)
+}
+.create-or-alter function with (skipvalidation = "true") ExtractComplaints() {
+    complaintsunified
+    | where ___type == "complaints"
+    | project
+        complaint_id       = tolong(data.complaint_id),
+        case_id            = tolong(data.case_id),
+        passenger_id       = tolong(data.passenger_id),
+        flight_id          = tolong(data.flight_id),
+        flight_number      = tostring(data.flight_number),
+        pnr                = tostring(data.pnr),
+        complaint_date     = todatetime(data.complaint_date),
+        category           = tostring(data.category),
+        subcategory        = tostring(data.subcategory),
+        description        = tostring(data.description),
+        severity           = tostring(data.severity),
+        status             = tostring(data.status),
+        assigned_agent     = tostring(data.assigned_agent),
+        resolution_notes   = tostring(data.resolution_notes),
+        resolution_date    = todatetime(data.resolution_date),
+        satisfaction_score = toreal(data.satisfaction_score)
+}
+.alter table Flights policy update "[{\"IsEnabled\":true,\"Source\":\"complaintsunified\",\"Query\":\"ExtractFlights\",\"IsTransactional\":false,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
+.alter table Passengers policy update "[{\"IsEnabled\":true,\"Source\":\"complaintsunified\",\"Query\":\"ExtractPassengers\",\"IsTransactional\":false,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
+.alter table Cases policy update "[{\"IsEnabled\":true,\"Source\":\"complaintsunified\",\"Query\":\"ExtractCases\",\"IsTransactional\":false,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
+.alter table Complaints policy update "[{\"IsEnabled\":true,\"Source\":\"complaintsunified\",\"Query\":\"ExtractComplaints\",\"IsTransactional\":false,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"

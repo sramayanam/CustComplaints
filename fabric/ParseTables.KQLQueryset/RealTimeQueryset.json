@@ -1,0 +1,22 @@
+{
+  "queryset": {
+    "version": "1.0.0",
+    "dataSources": [
+      {
+        "id": "bccca544-176d-4006-a2e6-116a08618952",
+        "clusterUri": "",
+        "type": "Fabric",
+        "databaseItemId": "14724f8a-1db9-9d2d-40c8-8d7f42539af7",
+        "databaseItemName": "Airlines"
+      }
+    ],
+    "tabs": [
+      {
+        "id": "125bc216-e306-4256-8675-e690c22e0c0c",
+        "content": ".create-or-alter table Flights (\n    flight_id: int, flight_number: string,\n    origin_code: string, origin_city: string,\n    destination_code: string, destination_city: string,\n    scheduled_departure: datetime, actual_departure: datetime,\n    scheduled_arrival: datetime, actual_arrival: datetime,\n    aircraft_type: string, flight_status: string, delay_minutes: int\n)\n",
+        "title": "Tab",
+        "dataSourceId": "bccca544-176d-4006-a2e6-116a08618952"
+      }
+    ]
+  }
+}

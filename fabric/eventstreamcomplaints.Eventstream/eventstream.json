@@ -1,0 +1,85 @@
+{
+  "sources": [
+    {
+      "id": "4f0430d6-0f77-43d2-a492-d45ef7979353",
+      "name": "casesendpoint",
+      "type": "CustomEndpoint",
+      "properties": {}
+    },
+    {
+      "id": "7de585ea-1007-4e8e-bee9-0bbb57dcfbc6",
+      "name": "complaintsendpoint",
+      "type": "CustomEndpoint",
+      "properties": {}
+    },
+    {
+      "id": "7e31194f-657d-447a-ad95-49180678dfb5",
+      "name": "passengersendpoint",
+      "type": "CustomEndpoint",
+      "properties": {}
+    },
+    {
+      "id": "a98a5fb6-52e0-4989-a4fd-56bbd308fb2a",
+      "name": "flightsendpoint",
+      "type": "CustomEndpoint",
+      "properties": {}
+    }
+  ],
+  "destinations": [
+    {
+      "id": "37a0e8aa-a5b1-412e-808c-57819968e3e1",
+      "name": "Eventhouse",
+      "type": "Eventhouse",
+      "properties": {
+        "dataIngestionMode": "ProcessedIngestion",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemId": "14724f8a-1db9-9d2d-40c8-8d7f42539af7",
+        "databaseName": "Airlines",
+        "tableName": "complaintsunified",
+        "inputSerialization": {
+          "type": "Json",
+          "properties": {
+            "encoding": "UTF8"
+          }
+        }
+      },
+      "inputNodes": [
+        {
+          "name": "eventstreamcomplaints-stream"
+        }
+      ],
+      "inputSchemas": [
+        {
+          "name": "eventstreamcomplaints-stream",
+          "schema": {
+            "columns": []
+          }
+        }
+      ]
+    }
+  ],
+  "streams": [
+    {
+      "id": "94675968-487f-46fa-a465-d90889f73bd9",
+      "name": "eventstreamcomplaints-stream",
+      "type": "DefaultStream",
+      "properties": {},
+      "inputNodes": [
+        {
+          "name": "casesendpoint"
+        },
+        {
+          "name": "complaintsendpoint"
+        },
+        {
+          "name": "flightsendpoint"
+        },
+        {
+          "name": "passengersendpoint"
+        }
+      ]
+    }
+  ],
+  "operators": [],
+  "compatibilityLevel": "1.1"
+}

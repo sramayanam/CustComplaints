@@ -1,0 +1,87 @@
+{
+ "fields": [
+  {
+   "name": "complaint_id",
+   "type": "long",
+   "doc": "Primary key (PostgreSQL BIGINT PK)"
+  },
+  {
+   "name": "case_id",
+   "type": "long",
+   "doc": "FK to cases.case_id (BIGINT)"
+  },
+  {
+   "name": "passenger_id",
+   "type": "long",
+   "doc": "FK to passengers.passenger_id (BIGINT)"
+  },
+  {
+   "name": "flight_id",
+   "type": "long",
+   "doc": "FK to flights.flight_id (BIGINT)"
+  },
+  {
+   "name": "flight_number",
+   "type": "string",
+   "doc": "Denormalised flight number for fast lookup (VARCHAR 10)"
+  },
+  {
+   "name": "pnr",
+   "type": "string",
+   "doc": "Passenger Name Record locator code (VARCHAR 20)"
+  },
+  {
+   "name": "complaint_date",
+   "type": "string",
+   "doc": "Complaint submission timestamp as ISO-8601 UTC string (TIMESTAMPTZ)"
+  },
+  {
+   "name": "category",
+   "type": "string",
+   "doc": "Top-level complaint category, e.g. Baggage, Flight Delay, Customer Service (VARCHAR 50)"
+  },
+  {
+   "name": "subcategory",
+   "type": "string",
+   "doc": "Detailed complaint sub-category (VARCHAR 100)"
+  },
+  {
+   "name": "description",
+   "type": "string",
+   "doc": "Full free-text complaint description (VARCHAR 4000)"
+  },
+  {
+   "name": "severity",
+   "type": "string",
+   "doc": "Complaint severity: Low | Medium | High | Critical (VARCHAR 20)"
+  },
+  {
+   "name": "status",
+   "type": "string",
+   "default": "Open",
+   "doc": "Resolution status: Open | Under Review | Resolved | Closed | Escalated (VARCHAR 20)"
+  },
+  {
+   "name": "assigned_agent",
+   "type": "string",
+   "doc": "Agent assigned to resolve the complaint (VARCHAR 100, nullable)"
+  },
+  {
+   "name": "resolution_notes",
+   "type": "string",
+   "doc": "Free-text resolution summary written by agent (VARCHAR 4000, nullable)"
+  },
+  {
+   "name": "resolution_date",
+   "type": "string",
+   "doc": "Resolution timestamp as ISO-8601 UTC string (TIMESTAMPTZ, nullable)"
+  },
+  {
+   "name": "satisfaction_score",
+   "type": "float",
+   "doc": "Post-resolution CSAT score in range 1.0-5.0 (DECIMAL(2,1), nullable)"
+  }
+ ],
+ "type": "record",
+ "name": "Complaint"
+}

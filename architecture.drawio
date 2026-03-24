@@ -1,0 +1,202 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.5.2 Chrome/142.0.7444.265 Electron/39.6.1 Safari/537.36" version="29.5.2">
+  <diagram name="Airline CustComplaints Architecture" id="arch-main">
+    <mxGraphModel dx="1002" dy="701" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" background="none" math="0" shadow="0" adaptiveColors="simple">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="grp-local" parent="1" style="swimlane;startSize=30;fontSize=13;fontStyle=1;rounded=1;arcSize=4;labelBackgroundColor=none;" value="Kafka Producer to Fabric" vertex="1">
+          <mxGeometry height="180" width="560" x="257" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="prod" parent="grp-local" style="rounded=1;html=1;whiteSpace=wrap;fontSize=11;labelBackgroundColor=none;" value="&lt;b&gt;kafka/producer.py&lt;/b&gt;&lt;br&gt;Data Producer" vertex="1">
+          <mxGeometry height="80" width="160" x="20" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="schemas" parent="grp-local" style="rounded=1;html=1;whiteSpace=wrap;fontSize=11;labelBackgroundColor=none;" value="&lt;b&gt;kafka/schemas.py&lt;/b&gt;&lt;br&gt;Event Envelope" vertex="1">
+          <mxGeometry height="80" width="160" x="200" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="consumer" parent="grp-local" style="rounded=1;html=1;whiteSpace=wrap;fontSize=11;labelBackgroundColor=none;" value="&lt;b&gt;kafka/fabric_consumer.py&lt;/b&gt;&lt;br&gt;EH Bridge" vertex="1">
+          <mxGeometry height="80" width="160" x="380" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="e-prod-schemas" edge="1" parent="grp-local" source="prod" style="edgeStyle=orthogonalEdgeStyle;rounded=1;labelBackgroundColor=none;fontColor=default;" target="schemas">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-schemas-consumer" edge="1" parent="grp-local" source="schemas" style="edgeStyle=orthogonalEdgeStyle;rounded=1;labelBackgroundColor=none;fontColor=default;" target="consumer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="grp-eh" parent="1" style="swimlane;startSize=30;fontSize=13;fontStyle=1;rounded=1;arcSize=4;labelBackgroundColor=none;" value="Azure Event Hubs" vertex="1">
+          <mxGeometry height="180" width="240" x="997" y="115" as="geometry">
+            <mxRectangle height="30" width="140" x="700" y="50" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t1" parent="grp-eh" style="rounded=1;html=1;whiteSpace=wrap;fontSize=10;labelBackgroundColor=none;" value="Passenger Topic" vertex="1">
+          <mxGeometry height="50" width="90" x="20" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t2" parent="grp-eh" style="rounded=1;html=1;whiteSpace=wrap;fontSize=10;labelBackgroundColor=none;" value="Flights Topic" vertex="1">
+          <mxGeometry height="50" width="90" x="130" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t3" parent="grp-eh" style="rounded=1;html=1;whiteSpace=wrap;fontSize=10;labelBackgroundColor=none;" value="Cases Topic" vertex="1">
+          <mxGeometry height="50" width="90" x="20" y="115" as="geometry" />
+        </mxCell>
+        <mxCell id="t4" parent="grp-eh" style="rounded=1;html=1;whiteSpace=wrap;fontSize=10;labelBackgroundColor=none;" value="Complaints Topic" vertex="1">
+          <mxGeometry height="50" width="90" x="129" y="115" as="geometry" />
+        </mxCell>
+        <mxCell id="e-consumer-eh" edge="1" parent="1" source="consumer" style="edgeStyle=orthogonalEdgeStyle;dashed=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;rounded=1;labelBackgroundColor=none;fontColor=default;" target="grp-eh" value="Kafka protocol">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="grp-fabric" parent="1" style="swimlane;startSize=30;fontSize=14;fontStyle=1;rounded=1;arcSize=2;labelBackgroundColor=none;" value="Microsoft Fabric Workspace" vertex="1">
+          <mxGeometry height="732" width="1128" x="253" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="grp-streams" parent="grp-fabric" style="swimlane;startSize=28;fontSize=11;fontStyle=1;rounded=1;arcSize=4;labelBackgroundColor=none;" value="Eventstreams  (Custom Endpoint → ManageFields transform → KQL)" vertex="1">
+          <mxGeometry height="160" width="700" x="20" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="es1" parent="grp-streams" style="rounded=1;html=1;whiteSpace=wrap;fontSize=10;labelBackgroundColor=none;" value="&lt;b&gt;ccpassengereventstream&lt;/b&gt;&lt;br&gt;Stream Ingest" vertex="1">
+          <mxGeometry height="90" width="150" x="20" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="es2" parent="grp-streams" style="rounded=1;html=1;whiteSpace=wrap;fontSize=10;labelBackgroundColor=none;" value="&lt;b&gt;ccflightseventstream&lt;/b&gt;&lt;br&gt;Stream Ingest" vertex="1">
+          <mxGeometry height="90" width="150" x="185" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="es3" parent="grp-streams" style="rounded=1;html=1;whiteSpace=wrap;fontSize=10;labelBackgroundColor=none;" value="&lt;b&gt;cccaseseventstream&lt;/b&gt;&lt;br&gt;Stream Ingest" vertex="1">
+          <mxGeometry height="90" width="150" x="350" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="es4" parent="grp-streams" style="rounded=1;html=1;whiteSpace=wrap;fontSize=10;labelBackgroundColor=none;" value="&lt;b&gt;cccomplaintseventstream&lt;/b&gt;&lt;br&gt;Stream Ingest" vertex="1">
+          <mxGeometry height="90" width="165" x="515" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="grp-kql" parent="grp-fabric" style="swimlane;startSize=28;fontSize=11;fontStyle=1;rounded=1;arcSize=4;labelBackgroundColor=none;" value="Eventhouse · airlinesEH  (KQL Database — real-time queryable)" vertex="1">
+          <mxGeometry height="160" width="700" x="20" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="kql1" parent="grp-kql" style="rounded=1;html=1;whiteSpace=wrap;fontSize=10;labelBackgroundColor=none;" value="&lt;b&gt;Passengers&lt;/b&gt;&lt;br&gt;KQL Table" vertex="1">
+          <mxGeometry height="90" width="150" x="20" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="kql2" parent="grp-kql" style="rounded=1;html=1;whiteSpace=wrap;fontSize=10;labelBackgroundColor=none;" value="&lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;Flights&lt;/b&gt;&lt;br&gt;KQL Table&lt;/font&gt;" vertex="1">
+          <mxGeometry height="90" width="150" x="185" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="kql3" parent="grp-kql" style="rounded=1;html=1;whiteSpace=wrap;fontSize=10;labelBackgroundColor=none;" value="&lt;b&gt;Cases&lt;/b&gt;&lt;br&gt;KQL Table" vertex="1">
+          <mxGeometry height="90" width="150" x="350" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="kql4" parent="grp-kql" style="rounded=1;html=1;whiteSpace=wrap;fontSize=10;labelBackgroundColor=none;" value="&lt;b&gt;Complaints&lt;/b&gt;&lt;br&gt;KQL Table" vertex="1">
+          <mxGeometry height="90" width="165" x="515" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="e-es1-kql1" edge="1" parent="grp-fabric" source="es1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;labelBackgroundColor=none;fontColor=default;" target="kql1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-es2-kql2" edge="1" parent="grp-fabric" source="es2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;labelBackgroundColor=none;fontColor=default;" target="kql2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-es3-kql3" edge="1" parent="grp-fabric" source="es3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;labelBackgroundColor=none;fontColor=default;" target="kql3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-es4-kql4" edge="1" parent="grp-fabric" source="es4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;labelBackgroundColor=none;fontColor=default;" target="kql4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dash" parent="grp-fabric" style="rounded=1;html=1;whiteSpace=wrap;strokeColor=none;fontSize=11;fillStyle=solid;labelBackgroundColor=none;" value="&lt;font style=&quot;&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font style=&quot;&quot;&gt;AirlinesDasboard&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;&quot;&gt;Live Dashboard&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="92" width="152" x="780" y="284" as="geometry" />
+        </mxCell>
+        <mxCell id="e-kql-dash" edge="1" parent="grp-fabric" source="grp-kql" style="edgeStyle=orthogonalEdgeStyle;rounded=1;labelBackgroundColor=none;fontColor=default;" target="dash" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="grp-lh" parent="grp-fabric" style="swimlane;startSize=28;fontSize=11;fontStyle=1;rounded=1;arcSize=4;labelBackgroundColor=none;" value="Lakehouse · airlinesLH  (OneLake / Delta)" vertex="1">
+          <mxGeometry height="200" width="700" x="20" y="488" as="geometry" />
+        </mxCell>
+        <mxCell id="sc1" parent="grp-lh" style="rounded=1;html=1;whiteSpace=wrap;fontSize=10;labelBackgroundColor=none;" value="&lt;b&gt;Shortcuts&lt;/b&gt;&lt;br&gt;Live View" vertex="1">
+          <mxGeometry height="70" width="140" x="20" y="77" as="geometry" />
+        </mxCell>
+        <mxCell id="delta1" parent="grp-lh" style="rounded=1;html=1;whiteSpace=wrap;fontSize=10;labelBackgroundColor=none;" value="&lt;b&gt;passengers&lt;/b&gt;&lt;br&gt;Ontology Store" vertex="1">
+          <mxGeometry height="60" width="120" x="200" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="delta2" parent="grp-lh" style="rounded=1;html=1;whiteSpace=wrap;fontSize=10;labelBackgroundColor=none;" value="&lt;b&gt;flights&lt;/b&gt;&lt;br&gt;Ontology Store" vertex="1">
+          <mxGeometry height="60" width="120" x="335" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="delta3" parent="grp-lh" style="rounded=1;html=1;whiteSpace=wrap;fontSize=10;labelBackgroundColor=none;" value="&lt;b&gt;cases&lt;/b&gt;&lt;br&gt;Ontology Store" vertex="1">
+          <mxGeometry height="60" width="120" x="200" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="delta4" parent="grp-lh" style="rounded=1;html=1;whiteSpace=wrap;fontSize=10;labelBackgroundColor=none;" value="&lt;b&gt;complaints&lt;/b&gt;&lt;br&gt;Ontology Store" vertex="1">
+          <mxGeometry height="60" width="120" x="335" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="nb" parent="grp-lh" style="rounded=1;html=1;whiteSpace=wrap;fontSize=10;labelBackgroundColor=none;" value="&lt;b&gt;LoadOntologyTables&lt;/b&gt;&lt;br&gt;Delta Copy" vertex="1">
+          <mxGeometry height="70" width="170" x="490" y="75" as="geometry" />
+        </mxCell>
+        <mxCell id="e-sc-nb" edge="1" parent="grp-lh" source="sc1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;labelBackgroundColor=none;fontColor=default;" target="nb">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="246" y="110" />
+              <mxPoint x="246" y="110" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-nb-d1" edge="1" parent="grp-lh" source="nb" style="edgeStyle=orthogonalEdgeStyle;rounded=1;labelBackgroundColor=none;fontColor=default;" target="delta1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-nb-d2" edge="1" parent="grp-lh" source="nb" style="edgeStyle=orthogonalEdgeStyle;rounded=1;labelBackgroundColor=none;fontColor=default;" target="delta2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-nb-d3" edge="1" parent="grp-lh" source="nb" style="edgeStyle=orthogonalEdgeStyle;rounded=1;labelBackgroundColor=none;fontColor=default;" target="delta3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-nb-d4" edge="1" parent="grp-lh" source="nb" style="edgeStyle=orthogonalEdgeStyle;rounded=1;labelBackgroundColor=none;fontColor=default;" target="delta4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-kql-sc" edge="1" parent="grp-fabric" source="grp-kql" style="edgeStyle=orthogonalEdgeStyle;dashed=1;fontSize=9;rounded=1;labelBackgroundColor=none;fontColor=default;" target="sc1" value="OneLake shortcut">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="370" y="460" />
+              <mxPoint x="110" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ont" parent="grp-fabric" style="rounded=1;html=1;whiteSpace=wrap;strokeColor=none;fontSize=11;labelBackgroundColor=none;" value="&lt;font style=&quot;&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font style=&quot;&quot;&gt;custcomplaintsont&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;&quot;&gt;Entity Graph&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="124" width="180" x="780" y="526" as="geometry" />
+        </mxCell>
+        <mxCell id="e-lh-ont" edge="1" parent="grp-fabric" source="grp-lh" style="edgeStyle=orthogonalEdgeStyle;rounded=1;labelBackgroundColor=none;fontColor=default;" target="ont" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sm" parent="grp-fabric" style="rounded=1;html=1;whiteSpace=wrap;strokeColor=none;fontSize=11;labelBackgroundColor=none;" value="&lt;b&gt;&lt;font style=&quot;&quot;&gt;Customer Complaints&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;font style=&quot;&quot;&gt;Data Agent&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="92" width="158" x="945" y="284" as="geometry" />
+        </mxCell>
+        <mxCell id="e-lh-sm" edge="1" parent="grp-fabric" source="ont" style="edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;rounded=1;labelBackgroundColor=none;fontColor=default;" target="sm" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-bridge-es1" edge="1" parent="1" source="consumer" style="edgeStyle=orthogonalEdgeStyle;dashed=1;fontSize=9;rounded=1;labelBackgroundColor=none;fontColor=default;" target="es1" value="Custom Endpoint">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="757" y="325" />
+              <mxPoint x="332" y="325" />
+              <mxPoint x="332" y="435" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-bridge-es2" edge="1" parent="1" source="consumer" style="edgeStyle=orthogonalEdgeStyle;dashed=1;fontSize=9;rounded=1;labelBackgroundColor=none;fontColor=default;" target="es2" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="757" y="325" />
+              <mxPoint x="497" y="325" />
+              <mxPoint x="497" y="435" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-bridge-es3" edge="1" parent="1" source="consumer" style="edgeStyle=orthogonalEdgeStyle;dashed=1;fontSize=9;rounded=1;labelBackgroundColor=none;fontColor=default;" target="es3" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="757" y="325" />
+              <mxPoint x="662" y="325" />
+              <mxPoint x="662" y="435" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-bridge-es4" edge="1" parent="1" source="consumer" style="edgeStyle=orthogonalEdgeStyle;dashed=1;fontSize=9;rounded=1;labelBackgroundColor=none;fontColor=default;" target="es4" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="757" y="325" />
+              <mxPoint x="827" y="325" />
+              <mxPoint x="827" y="435" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sreg" parent="1" style="rounded=1;html=1;whiteSpace=wrap;fontSize=10;labelBackgroundColor=none;" value="&lt;b&gt;kafka/register_schemas.py&lt;/b&gt;&lt;br&gt;Schema Registry" vertex="1">
+          <mxGeometry height="66" width="145" x="859" y="263" as="geometry" />
+        </mxCell>
+        <mxCell id="2" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=22;labelBackgroundColor=none;" value="Fabric Data Agents on Operational Data" vertex="1">
+          <mxGeometry height="46" width="1126" x="253" y="36" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,53 @@
+{
+ "fields": [
+  {
+   "name": "passenger_id",
+   "type": "long",
+   "doc": "Primary key (PostgreSQL BIGINT PK)"
+  },
+  {
+   "name": "first_name",
+   "type": "string",
+   "doc": "First name (VARCHAR 100)"
+  },
+  {
+   "name": "last_name",
+   "type": "string",
+   "doc": "Last name (VARCHAR 100)"
+  },
+  {
+   "name": "email",
+   "type": "string",
+   "doc": "Email address (VARCHAR 255, nullable)"
+  },
+  {
+   "name": "phone",
+   "type": "string",
+   "doc": "Phone number (VARCHAR 50, nullable)"
+  },
+  {
+   "name": "country",
+   "type": "string",
+   "doc": "Country name (VARCHAR 100, nullable)"
+  },
+  {
+   "name": "frequent_flyer_tier",
+   "type": "string",
+   "default": "None",
+   "doc": "Loyalty tier: None | Bronze | Silver | Gold | Platinum (VARCHAR 20)"
+  },
+  {
+   "name": "total_flights",
+   "type": "long",
+   "default": 0,
+   "doc": "Cumulative number of flights taken (BIGINT)"
+  },
+  {
+   "name": "member_since",
+   "type": "string",
+   "doc": "Programme enrolment date as ISO-8601 UTC string (TIMESTAMPTZ, nullable)"
+  }
+ ],
+ "type": "record",
+ "name": "Passenger"
+}

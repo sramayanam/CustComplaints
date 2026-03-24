@@ -70,14 +70,19 @@ Usage
 from __future__ import annotations
 
 import argparse
+import json
 import logging
+import os
 import signal
 import sys
+import uuid
 from functools import partial
 from typing import Any
 
 from confluent_kafka import Consumer, KafkaError, KafkaException, Message, Producer
-from utils import mask_key as _mask_key
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from .config import (
     CONSUMER_CONFIG_BASE,
@@ -101,6 +106,37 @@ from .config import (
     oauth_cb,
 )
 
+# ── Fabric SAS auth ────────────────────────────────────────────────────────────
+# When FABRIC_CONNECTION_STRING is set, use SASL PLAIN (SAS key) for the Fabric
+# producer instead of OAUTHBEARER.  Parse bootstrap + topic from the string so
+# a single env var replaces all per-topic namespace/topic vars.
+
+_FABRIC_CONN_STR: str | None = os.getenv("FABRIC_CONNECTION_STRING")
+
+
+def _parse_conn_str(conn_str: str) -> tuple[str, str]:
+    """Return (bootstrap_server, entity_path) from an AEH/Fabric connection string."""
+    parts = dict(seg.split("=", 1) for seg in conn_str.split(";") if "=" in seg)
+    host = parts["Endpoint"].removeprefix("sb://").rstrip("/")
+    return f"{host}:9093", parts["EntityPath"]
+
+
+def _fabric_producer_config(bootstrap: str, conn_str: str) -> dict:
+    """SASL PLAIN config for Fabric Eventstream when using SAS key auth."""
+    return {
+        "bootstrap.servers": bootstrap,
+        "security.protocol": "SASL_SSL",
+        "sasl.mechanism":    "PLAIN",
+        "sasl.username":     "$ConnectionString",
+        "sasl.password":     conn_str,
+        "acks":              "all",
+        "retries":           5,
+        "retry.backoff.ms":  1_000,
+        "socket.timeout.ms": 60_000,
+        "linger.ms":         20,
+        "message.max.bytes": 1_000_000,
+    }
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s – %(message)s",
@@ -123,19 +159,6 @@ signal.signal(signal.SIGTERM, _handle_signal)
 signal.signal(signal.SIGINT, _handle_signal)
 
 
-# ── Key masking ────────────────────────────────────────────────────────────────
-
-def _mask_key(key: Any) -> str:
-    """Return a masked representation of a Kafka message key for safe logging."""
-    if key is None:
-        return "<null>"
-    if isinstance(key, (bytes, bytearray)):
-        key = key.decode("utf-8", errors="replace")
-    s = str(key)
-    n = min(4, max(0, len(s) // 2))
-    return (s[:n] + "****") if n > 0 else "****"
-
-
 # ── Delivery callback ──────────────────────────────────────────────────────────
 
 _delivery_errors: list[str] = []
@@ -148,10 +171,10 @@ def _on_delivery(err: Any, msg: Any) -> None:
     """
     if err:
         _delivery_errors.append(
-            f"topic={msg.topic()} key={_mask_key(msg.key())} error={err}"
+            f"topic={msg.topic()} key={msg.key()} error={err}"
         )
         logger.error("Fabric delivery FAILED | topic=%s key=%s error=%s",
-                     msg.topic(), _mask_key(msg.key()), err)
+                     msg.topic(), msg.key(), err)
     else:
         logger.debug("Fabric delivered | topic=%s partition=%d offset=%d",
                      msg.topic(), msg.partition(), msg.offset())
@@ -217,20 +240,29 @@ def run_bridge(
     logger.info("Consumer subscribed | source=%s group=%s", source_topic, consumer_group)
 
     # ── Fabric producer ────────────────────────────────────────────────────────
-    fabric_producer = Producer({
-        "bootstrap.servers": fabric_bootstrap_servers,
-        "security.protocol": "SASL_SSL",
-        "sasl.mechanism":    "OAUTHBEARER",
-        "oauth_cb":          partial(oauth_cb, _credential, fabric_namespace_fqdn),
-        "acks":              "all",
-        "retries":           5,
-        "retry.backoff.ms":  1_000,
-        "socket.timeout.ms": 60_000,
-        "linger.ms":         20,
-        "message.max.bytes": 1_000_000,
-    })
-    logger.info("Fabric producer created | bootstrap=%s topic=%s",
-                fabric_bootstrap_servers, fabric_topic)
+    if _FABRIC_CONN_STR:
+        # SAS key auth — connection string overrides per-topic namespace vars
+        _cs_bootstrap, fabric_topic_from_cs = _parse_conn_str(_FABRIC_CONN_STR)
+        if not fabric_topic:
+            fabric_topic = fabric_topic_from_cs
+        fabric_producer = Producer(_fabric_producer_config(_cs_bootstrap, _FABRIC_CONN_STR))
+        logger.info("Fabric producer (SAS PLAIN) | bootstrap=%s topic=%s",
+                    _cs_bootstrap, fabric_topic)
+    else:
+        fabric_producer = Producer({
+            "bootstrap.servers": fabric_bootstrap_servers,
+            "security.protocol": "SASL_SSL",
+            "sasl.mechanism":    "OAUTHBEARER",
+            "oauth_cb":          partial(oauth_cb, _credential, fabric_namespace_fqdn),
+            "acks":              "all",
+            "retries":           5,
+            "retry.backoff.ms":  1_000,
+            "socket.timeout.ms": 60_000,
+            "linger.ms":         20,
+            "message.max.bytes": 1_000_000,
+        })
+        logger.info("Fabric producer (OAUTHBEARER) | bootstrap=%s topic=%s",
+                    fabric_bootstrap_servers, fabric_topic)
 
     total_forwarded = 0
     batch: list[Message] = []          # pending messages awaiting flush+commit
@@ -294,14 +326,46 @@ def run_bridge(
                     raise KafkaException(msg.error())
                 continue
 
-            # Forward verbatim: key, value, and all headers (schema-id etc.)
+            # Merge original headers with required CloudEvents 1.0 Kafka-binding
+            # headers.  Fabric Eventstream drops messages missing ce_type.
+            # ce_type maps topic → entity name matching the Fabric schema registry.
+            _CE_TYPE_MAP = {
+                TOPIC_PASSENGERS: "Passenger",
+                TOPIC_FLIGHTS:    "Flights",
+                TOPIC_CASES:      "case",
+                TOPIC_COMPLAINTS: "complaints",
+            }
+            _SCHEMA_REGISTRY_BASE = (
+                "https://rthprodbn73280331.eastus2.messagingcatalog.azure.net"
+                f"/schemagroups/{os.getenv('FABRIC_SCHEMA_SET_ID', '998f81b5-ceda-4f80-8b17-409388e5d508')}/schemas"
+            )
+            existing_headers: dict[str, bytes] = dict(msg.headers() or [])
+            if "ce_type" not in existing_headers:
+                entity_type = _CE_TYPE_MAP.get(source_topic, source_topic)
+                existing_headers["ce_specversion"]     = b"1.0"
+                existing_headers["ce_id"]              = str(uuid.uuid4()).encode()
+                existing_headers["ce_type"]            = entity_type.encode()
+                existing_headers["ce_source"]          = b"fabricstreams/producer"
+                existing_headers["ce_datacontenttype"] = b"application/json"
+                existing_headers["ce_dataschema"]      = f"{_SCHEMA_REGISTRY_BASE}/{entity_type}/versions/v1".encode()
+            merged_headers = list(existing_headers.items())
+
+            # Unwrap EventEnvelope → send only the flat payload to Fabric.
+            # Fabric's schema expects flat fields (passenger_id, first_name…)
+            # not the nested {event_id, table, payload: {…}} envelope.
+            try:
+                envelope = json.loads(msg.value())
+                fabric_value = json.dumps(envelope["payload"], ensure_ascii=False).encode("utf-8")
+            except (json.JSONDecodeError, KeyError):
+                fabric_value = msg.value()  # fallback: forward as-is
+
             while True:
                 try:
                     fabric_producer.produce(
                         topic=fabric_topic,
                         key=msg.key(),
-                        value=msg.value(),
-                        headers=msg.headers() or [],
+                        value=fabric_value,
+                        headers=merged_headers,
                         on_delivery=_on_delivery,
                     )
                     break

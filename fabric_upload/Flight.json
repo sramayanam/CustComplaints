@@ -1,0 +1,72 @@
+{
+ "fields": [
+  {
+   "name": "flight_id",
+   "type": "long",
+   "doc": "Primary key (PostgreSQL BIGINT PK)"
+  },
+  {
+   "name": "flight_number",
+   "type": "string",
+   "doc": "Airline flight number, unique (VARCHAR 10)"
+  },
+  {
+   "name": "origin_code",
+   "type": "string",
+   "doc": "IATA origin airport code (VARCHAR 3)"
+  },
+  {
+   "name": "origin_city",
+   "type": "string",
+   "doc": "Origin city name (VARCHAR 100)"
+  },
+  {
+   "name": "destination_code",
+   "type": "string",
+   "doc": "IATA destination airport code (VARCHAR 3)"
+  },
+  {
+   "name": "destination_city",
+   "type": "string",
+   "doc": "Destination city name (VARCHAR 100)"
+  },
+  {
+   "name": "scheduled_departure",
+   "type": "string",
+   "doc": "Scheduled departure as ISO-8601 UTC string (TIMESTAMPTZ)"
+  },
+  {
+   "name": "actual_departure",
+   "type": "string",
+   "doc": "Actual departure ISO-8601 UTC string (TIMESTAMPTZ, null until departed)"
+  },
+  {
+   "name": "scheduled_arrival",
+   "type": "string",
+   "doc": "Scheduled arrival as ISO-8601 UTC string (TIMESTAMPTZ)"
+  },
+  {
+   "name": "actual_arrival",
+   "type": "string",
+   "doc": "Actual arrival ISO-8601 UTC string (TIMESTAMPTZ, null until arrived)"
+  },
+  {
+   "name": "aircraft_type",
+   "type": "string",
+   "doc": "Aircraft type / model code (VARCHAR 50)"
+  },
+  {
+   "name": "flight_status",
+   "type": "string",
+   "doc": "Operational status: On Time | Delayed | Cancelled | Diverted | Scheduled | Departed (VARCHAR 20)"
+  },
+  {
+   "name": "delay_minutes",
+   "type": "long",
+   "default": 0,
+   "doc": "Departure delay in minutes; negative values indicate early departure (BIGINT)"
+  }
+ ],
+ "type": "record",
+ "name": "Flight"
+}
